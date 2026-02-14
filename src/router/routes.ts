@@ -1,69 +1,60 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router'
 
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/biz-pool',
     component: () => import('@/layout/index.vue'),
     children: [
       {
-        path: 'home',
-        component: () => import('@/views/home/index.vue'),
+        path: 'biz-pool',
+        component: () => import('@/views/bizPool/index.vue'),
         meta: {
-          title: 'common.tabbar.home',
-          keepAlive: true,
-        },
+          title: 'bizPool',
+          keepAlive: true
+        }
       },
       {
-        path: 'list',
-        component: () => import('@/views/list/index.vue'),
+        path: 'industry-trends',
+        component: () => import('@/views/industryTrends/index.vue'),
         meta: {
-          title: 'common.tabbar.list',
-          keepAlive: true,
-        },
+          title: 'industryTrends',
+          keepAlive: true
+        }
       },
       {
-        path: 'member',
-        component: () => import('@/views/member/index.vue'),
+        path: 'merchant-recruitment',
+        component: () => import('@/views/merchantRecruitment/index.vue'),
         meta: {
-          title: 'common.tabbar.member',
-          keepAlive: true,
-        },
+          title: 'merchantRecruitment',
+          keepAlive: true
+        }
       },
       {
-        path: 'demo',
-        component: () => import('@/views/demo/index.vue'),
+        path: 'work-orders',
+        component: () => import('@/views/workOrders/index.vue'),
         meta: {
-          title: 'common.tabbar.demo',
-          keepAlive: true,
-        },
-      },
-      {
-        name: 'listDetails',
-        path: '/details',
-        component: () => import('@/views/list/details/index.vue'),
-        meta: {
-          title: 'common.list.details',
-          border: false,
-        },
-      },
-    ],
+          title: 'workOrders',
+          keepAlive: true
+        }
+      }
+    ]
   },
-  {
-    name: 'login',
-    path: '/login',
-    component: () => import('@/views/login/index.vue'),
-    meta: {
-      title: '',
-      keepAlive: true,
-    },
-  },
+  // {
+  //   name: 'login',
+  //   path: '/login',
+  //   component: () => import('@/views/login/index.vue'),
+  //   meta: {
+  //     title: '',
+  //     keepAlive: true
+  //   }
+  // },
   // 匹配不到重定向会主页
   {
     // 找不到路由重定向到404页面
     path: '/:pathMatch(.*)',
-    redirect: '/Home',
-  },
-];
+    redirect: '/Home'
+  }
+]
 
-export default routes;
+export default routes
