@@ -1,103 +1,67 @@
+<script setup lang="ts">
+import { BOTTOM_BAR } from '@/constant'
+import useLayout from './useLayout'
+const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange } = useLayout()
+</script>
 <template>
-  <div class="main-page">
-    <van-nav-bar title="1" :left-arrow="!tabbarVisible" @click-left="goBack" />
-    <div class="main-box" :class="{ tabbar: tabbarVisible, border: showBorder }">
-      <RouterView v-slot="{ Component }" v-if="$route.meta.keepAlive">
-        <keep-alive>
-          <component :is="Component" :key="$route.path" />
-        </keep-alive>
-      </RouterView>
-      <RouterView v-if="!$route.meta.keepAlive" :key="$route.path" />
-    </div>
-    <nut-tabbar
-      unactive-color="#364636"
-      active-color="#1989fa"
-      v-model="activeTab"
-      v-show="tabbarVisible"
-      @tab-switch="tabSwitch"
-      safe-area-inset-bottom
-    >
-      <nut-tabbar-item v-for="item in tabItem" :key="item.key" tab-title="2" :icon="item.icon" />
-    </nut-tabbar>
+  <div class="layout-page">
+    <!-- 主页面 -->
+    <RouterView v-slot="{ Component }" v-if="isMainPage">
+      <var-app-bar safe-area-top :title="appBarTitle">
+        <template #content>
+          <var-collapse-transition
+            class="bar-content"
+            :expand="appBarKey === BOTTOM_BAR.INDUSTRY_TRENDS"
+          >
+            <p>行业动态</p>
+            <p>实时追踪产业资讯，把握招商先机</p>
+          </var-collapse-transition>
+        </template>
+      </var-app-bar>
+
+      <component class="container" :is="Component" />
+
+      <var-bottom-navigation v-model:active="curPath" @change="handleChange">
+        <var-bottom-navigation-item
+          v-for="bar in bottomBarList"
+          :key="bar.id"
+          :name="bar.id"
+          :label="bar.label"
+          :icon="bar.icon"
+        />
+      </var-bottom-navigation>
+    </RouterView>
+    <!-- 子页面 -->
+    <RouterView v-else></RouterView>
   </div>
 </template>
 
-<script lang="ts" setup name="BasicLayoutPage">
-import { Home, Horizontal, My, Location } from '@nutui/icons-vue'
-
-const tabItem = [
-  { key: 'biz-pool', icon: Home },
-  { key: 'industry-trends', icon: Horizontal },
-  { key: 'merchant-recruitment', icon: My },
-  { key: 'work-orders', icon: Location }
-]
-
-const router = useRouter()
-
-const activeTab = ref(0)
-
-const tabbarVisible = ref(true)
-
-const showBorder = ref(true)
-
-watch(
-  () => router,
-  () => {
-    const judgeRoute = tabItem.some(
-      (item) => item.key === router.currentRoute.value.path.replace('/', '')
-    )
-    activeTab.value = tabItem.findIndex(
-      (item) => item.key === router.currentRoute.value.path.replace('/', '')
-    )
-    tabbarVisible.value = judgeRoute
-    showBorder.value = judgeRoute
-  },
-  { deep: true, immediate: true }
-)
-
-const tabSwitch = (_item: any, index: number) => {
-  switch (index) {
-    case 0:
-      router.push('/biz-pool')
-      break
-    case 1:
-      router.push('/industry-trends')
-      break
-    case 2:
-      router.push('/merchant-recruitment')
-      break
-    case 3:
-      router.push('/work-orders')
-      break
-  }
-  activeTab.value = index
-}
-
-const goBack = () => {
-  router.go(-1)
-}
-</script>
-
 <style scoped lang="scss">
-.nut-navbar {
-  margin-bottom: 0;
-}
-
-.main-page {
+.layout-page {
   display: flex;
   flex-direction: column;
-  width: 100dvw;
-  height: 100dvh;
+  width: 100%;
+  height: 100%;
 
-  .main-box {
-    flex: auto;
-    min-height: 0;
-    overflow: hidden auto;
+  :deep(.var-app-bar) {
+    --app-bar-title-padding: 0 30px;
+    --app-bar-left-gap: 0;
+
+    flex-shrink: 0;
   }
-}
 
-.border {
-  padding-right: 30px;
-  padding-left: 30px;
+  .bar-content {
+    padding: 0 30px 20px;
+  }
+
+  :deep(.container) {
+    flex-grow: 1;
+    width: 100%;
+    min-height: 0;
+  }
+
+  :deep(.var-bottom-navigation) {
+    flex-shrink: 0;
+  }
 }
 </style>

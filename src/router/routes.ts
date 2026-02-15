@@ -1,5 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
+import { BOTTOM_BAR } from '@/constant'
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -10,32 +12,36 @@ export const routes: RouteRecordRaw[] = [
         path: 'biz-pool',
         component: () => import('@/views/bizPool/index.vue'),
         meta: {
-          title: 'bizPool',
-          keepAlive: true
+          title: '招商线索池',
+          mainPage: true,
+          key: BOTTOM_BAR.BIZ_POOL
         }
       },
       {
         path: 'industry-trends',
         component: () => import('@/views/industryTrends/index.vue'),
         meta: {
-          title: 'industryTrends',
-          keepAlive: true
+          title: '行业动态',
+          mainPage: true,
+          key: BOTTOM_BAR.INDUSTRY_TRENDS
         }
       },
       {
         path: 'merchant-recruitment',
         component: () => import('@/views/merchantRecruitment/index.vue'),
         meta: {
-          title: 'merchantRecruitment',
-          keepAlive: true
+          title: '招商UNI',
+          mainPage: true,
+          key: BOTTOM_BAR.MERCHANT_RECRUITMENT
         }
       },
       {
         path: 'work-orders',
         component: () => import('@/views/workOrders/index.vue'),
         meta: {
-          title: 'workOrders',
-          keepAlive: true
+          title: '我的工作单',
+          mainPage: true,
+          key: BOTTOM_BAR.WORK_ORDERS
         }
       }
     ]
@@ -46,7 +52,7 @@ export const routes: RouteRecordRaw[] = [
   //   component: () => import('@/views/login/index.vue'),
   //   meta: {
   //     title: '',
-  //     keepAlive: true
+  //     mainPage: true
   //   }
   // },
   // 匹配不到重定向会主页

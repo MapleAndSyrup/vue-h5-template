@@ -6,8 +6,15 @@
   font-weight: normal;
 }
 
+/* 阻止 iOS 回弹效果，确保页面铺满屏幕（包括刘海屏） */
+html,
 body {
-  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
   font-family:
     Inter,
     -apple-system,
@@ -29,4 +36,10 @@ body {
     background-color 0.5s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 主容器占满全屏 */
+#app {
+  width: 100%;
+  height: 100%;
 }
