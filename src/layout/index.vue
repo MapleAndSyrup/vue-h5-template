@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { BOTTOM_BAR } from '@/constant'
 import useLayout from './useLayout'
+import { px } from '@/utils/px2vw'
+import type { CSSProperties } from 'vue'
 const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange } = useLayout()
+
+const barStyle = computed<CSSProperties>(() => {
+  const isSecondPage = appBarKey.value === BOTTOM_BAR.INDUSTRY_TRENDS
+  return {
+    height: isSecondPage ? 'auto' : '0',
+    padding: isSecondPage ? px([0, 30, 10, 30]) : 0
+  }
+})
 </script>
 <template>
   <div class="layout-page">
@@ -9,13 +19,10 @@ const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange
     <RouterView v-slot="{ Component }" v-if="isMainPage">
       <var-app-bar safe-area-top :title="appBarTitle">
         <template #content>
-          <var-collapse-transition
-            class="bar-content"
-            :expand="appBarKey === BOTTOM_BAR.INDUSTRY_TRENDS"
-          >
+          <div class="bar-content" :style="barStyle">
             <p>行业动态</p>
             <p>实时追踪产业资讯，把握招商先机</p>
-          </var-collapse-transition>
+          </div>
         </template>
       </var-app-bar>
 
@@ -51,7 +58,8 @@ const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange
   }
 
   .bar-content {
-    padding: 0 30px 20px;
+    overflow: hidden;
+    transition: all 0.3s;
   }
 
   :deep(.container) {

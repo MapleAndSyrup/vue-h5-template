@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import BizItem from '@/components/BizItem.vue'
+import { fullLeadMockData } from './mock'
+
 const searchVal = ref('')
 const curTab = ref('全部行业')
 
@@ -25,8 +28,10 @@ const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '�
 
     <div class="scroll-container">
       <div class="list">
-        <div v-for="value in 100" :key="value">{{ value }}</div>
+        <BizItem v-for="item in fullLeadMockData" :key="item.id" :mock-item="item" />
       </div>
+
+      <var-back-top :duration="300" :bottom="100" :right="10" />
     </div>
   </div>
 </template>
@@ -72,8 +77,17 @@ const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '�
     overflow-y: auto;
 
     .list {
+      column-gap: 16px;
       width: 100%;
       padding: 0 30px;
+
+      /* 瀑布流布局 */
+      column-count: 2;
+
+      > * {
+        margin-bottom: 16px;
+        break-inside: avoid;
+      }
     }
   }
 }
