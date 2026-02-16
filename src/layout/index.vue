@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { BOTTOM_BAR } from '@/constant'
 import useLayout from './useLayout'
-import { px } from '@/utils/px2vw'
 import type { CSSProperties } from 'vue'
 const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange } = useLayout()
 
@@ -9,7 +8,7 @@ const barStyle = computed<CSSProperties>(() => {
   const isSecondPage = appBarKey.value === BOTTOM_BAR.INDUSTRY_TRENDS
   return {
     height: isSecondPage ? 'auto' : '0',
-    padding: isSecondPage ? px([0, 30, 10, 30]) : 0
+    padding: isSecondPage ? '0 10px 10px 10px' : 0
   }
 })
 </script>
@@ -51,7 +50,7 @@ const barStyle = computed<CSSProperties>(() => {
   height: 100%;
 
   :deep(.var-app-bar) {
-    --app-bar-title-padding: 0 30px;
+    --app-bar-title-padding: 0 10px;
     --app-bar-left-gap: 0;
 
     flex-shrink: 0;
