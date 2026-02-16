@@ -16,11 +16,7 @@ defineProps<{
 // close-button	自定义关闭按钮
 </script>
 <template>
-  <var-card class="biz-item" ripple>
-    <div class="biz-item-content">
-      <var-image :src="mockItem.image" />
-    </div>
-  </var-card>
+  <var-card ripple title="s" :src="mockItem.image" image-width="100%"></var-card>
 </template>
 
 <style scoped lang="scss"></style>

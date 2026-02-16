@@ -3,9 +3,8 @@
  * @description 按需加载，自动引入
  */
 
-import AutoImport from 'unplugin-auto-import/vite';
-import { VarletImportResolver } from '@varlet/import-resolver';
-import { VantResolver } from '@vant/auto-import-resolver';
+import AutoImport from 'unplugin-auto-import/vite'
+import { VarletImportResolver } from '@varlet/import-resolver'
 
 export const ConfigAutoImportPlugin = () => {
   return AutoImport({
@@ -15,12 +14,12 @@ export const ConfigAutoImportPlugin = () => {
       'pinia',
       'vue-router',
       {
-        '@vueuse/core': [],
-      },
+        '@vueuse/core': []
+      }
     ],
     eslintrc: {
-      enabled: true,
+      enabled: true
     },
-    resolvers: [VarletImportResolver({ autoImport: true }), VantResolver()],
-  });
-};
+    resolvers: [VarletImportResolver({ autoImport: true })]
+  })
+}

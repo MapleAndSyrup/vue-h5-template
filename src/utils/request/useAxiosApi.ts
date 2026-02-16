@@ -1,11 +1,9 @@
-import { useAxios } from '@vueuse/integrations';
-
-import 'vant/es/toast/style';
+import { useAxios } from '@vueuse/integrations'
 
 /**
  * reactive useFetchApi
  */
 
 export default function useAxiosApi(url: string, config: any) {
-  return useAxios(url, config);
+  return useAxios(url, config)
 }

@@ -1,39 +1,39 @@
-import { createFetch } from '@vueuse/core';
-import { showNotify } from 'vant';
+import { createFetch } from '@vueuse/core'
+import { Snackbar } from '@varlet/ui'
 
 const useFetchApi = createFetch({
   baseUrl: '',
   options: {
     async beforeFetch({ options }) {
-      const myToken = 'token';
+      const myToken = 'token'
       options.headers = {
         ...options.headers,
-        Authorization: `Bearer ${myToken}`,
-      };
-      return { options };
+        Authorization: `Bearer ${myToken}`
+      }
+      return { options }
     },
     afterFetch(ctx) {
-      const { data, response } = ctx;
+      const { data, response } = ctx
       if (response.status >= 200 && response.status < 300) {
         try {
-          const jsonObj = data;
+          const jsonObj = data
           if (jsonObj.code != 200) {
-            showNotify({ type: 'danger', message: jsonObj.message || 'Error' });
+            Snackbar.error(jsonObj.message || 'Error')
           }
 
-          ctx.data = jsonObj.data;
+          ctx.data = jsonObj.data
         } catch (error) {
-          console.error(error);
-          ctx.data = null;
+          console.error(error)
+          ctx.data = null
         }
       } else {
-        showNotify({ type: 'danger', message: response.statusText || 'Error' });
-        ctx.data = null;
+        Snackbar.error(response.statusText || 'Error')
+        ctx.data = null
       }
 
-      return ctx;
-    },
-  },
-});
+      return ctx
+    }
+  }
+})
 
-export default useFetchApi;
+export default useFetchApi
