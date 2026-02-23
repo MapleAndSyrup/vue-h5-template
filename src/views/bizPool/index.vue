@@ -37,13 +37,17 @@ const handleSearchIconClick = async () => {
 </script>
 <template>
   <div ref="bizPoolRef" class="biz-pool" @scroll="handleScroll">
-    <var-icon
+    <var-button
       v-show="showSearchIcon"
-      name="magnify"
       class="search-icon"
-      color="#fff"
+      type="primary"
+      round
+      icon-container
       @click="handleSearchIconClick"
-    />
+    >
+      <var-icon name="magnify" />
+    </var-button>
+
     <div class="scroll-content">
       <div ref="inputRef" style="flex-shrink: 0; width: calc(100% - 20px)">
         <var-input
@@ -86,7 +90,7 @@ const handleSearchIconClick = async () => {
 
   .search-icon {
     position: fixed;
-    top: 20px;
+    top: 12px;
     right: 20px;
     z-index: 100;
   }

@@ -31,7 +31,9 @@ const scrollToHistoryItem = useDebounceFn((id: string) => {
   if (!container) return
   const targetEl = container.querySelector(`[data-history-id="${id}"]`)
   if (!targetEl) return
-  targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // 考虑 history-list 的 10px padding，滚动到距离顶部 10px 的位置
+  const scrollTop = (targetEl as HTMLElement).offsetTop - 10
+  container.scrollTo({ top: scrollTop, behavior: 'smooth' })
 }, 100)
 
 // 关闭弹窗
