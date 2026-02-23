@@ -1,6 +1,13 @@
-<script setup lang="ts"></script>
-<template>
-  <div class="merchantRecruitment">merchantRecruitment</div>
-</template>
+<script setup lang="ts">
+import history from './history.vue'
 
-<style scoped lang="scss"></style>
+const showHistory = ref(false)
+
+const curHistoryId = ref('8x7k9m2p4n5q')
+</script>
+<template>
+  <div class="merchant-recruitment">
+    <var-button @click="showHistory = true">ss</var-button>
+    <history v-model:show="showHistory" v-model:history-id="curHistoryId" />
+  </div>
+</template>
