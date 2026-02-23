@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import BizItem from '@/components/BizItem.vue'
+import type { _InputComponent as VarInputInstance } from '@varlet/ui'
 import { fullLeadMockData } from './mock'
+
+import BizItem from '@/views/components/BizItem.vue'
 
 const searchVal = ref('')
 const curTab = ref('全部行业')
 
 const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '新能源']
 
+// 展示搜索图标
 const showSearchIcon = ref(false)
+// 输入框盒子ref
 const inputRef = ref<HTMLElement | null>(null)
 const bizPoolRef = ref<HTMLElement | null>(null)
-const varInputRef = ref<any>(null)
+// 组件输入框ref
+const varInputRef = ref<VarInputInstance | null>(null)
 
 // 检测 var-input 是否被 tabs 遮挡
 const handleScroll = (e: Event) => {
@@ -21,15 +26,13 @@ const handleScroll = (e: Event) => {
 }
 
 // 点击搜索图标回到顶部并 focus 输入框
-const handleSearchIconClick = () => {
+const handleSearchIconClick = async () => {
+  await nextTick()
+  if (!bizPoolRef.value || !varInputRef.value) return
   // 滚动到顶部
-  if (bizPoolRef.value) {
-    bizPoolRef.value.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  bizPoolRef.value.scrollTo({ top: 0, behavior: 'smooth' })
   // focus 输入框
-  setTimeout(() => {
-    varInputRef.value?.focus()
-  }, 300)
+  varInputRef.value?.focus()
 }
 </script>
 <template>
@@ -42,7 +45,7 @@ const handleSearchIconClick = () => {
       @click="handleSearchIconClick"
     />
     <div class="scroll-content">
-      <div ref="inputRef" style=" flex-shrink: 0;width: calc(100% - 20px)">
+      <div ref="inputRef" style="flex-shrink: 0; width: calc(100% - 20px)">
         <var-input
           ref="varInputRef"
           v-model="searchVal"

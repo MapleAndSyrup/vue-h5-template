@@ -38,7 +38,10 @@ const barStyle = computed<CSSProperties>(() => {
       </var-bottom-navigation>
     </RouterView>
     <!-- 子页面 -->
-    <RouterView v-else></RouterView>
+    <RouterView v-else v-slot="{ Component }">
+      <var-app-bar safe-area-top :title="appBarTitle"></var-app-bar>
+      <component class="container" :is="Component" />
+    </RouterView>
   </div>
 </template>
 

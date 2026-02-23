@@ -46,15 +46,22 @@ export const routes: RouteRecordRaw[] = [
       }
     ]
   },
-  // {
-  //   name: 'login',
-  //   path: '/login',
-  //   component: () => import('@/views/login/index.vue'),
-  //   meta: {
-  //     title: '',
-  //     mainPage: true
-  //   }
-  // },
+  {
+    path: '/sub',
+    redirect: '/sub/detail-page',
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: 'detail-page',
+        component: () => import('@/views/detailPage/index.vue'),
+        meta: {
+          title: '线索详情',
+          mainPage: false,
+          key: 10
+        }
+      }
+    ]
+  },
   // 匹配不到重定向会主页
   {
     // 找不到路由重定向到404页面
