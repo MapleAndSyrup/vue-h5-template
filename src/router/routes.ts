@@ -39,7 +39,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'work-orders',
         component: () => import('@/views/workOrders/index.vue'),
         meta: {
-          title: '我的工作单',
+          title: '我的线索',
           mainPage: true,
           key: BOTTOM_BAR.WORK_ORDERS
         }

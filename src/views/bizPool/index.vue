@@ -5,8 +5,8 @@ import { fullLeadMockData } from './mock'
 import BizItem from '@/views/components/BizItem.vue'
 
 const searchVal = ref('')
-const curTab = ref('全部行业')
 
+const curTab = ref('全部行业')
 const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '新能源']
 
 // 展示搜索图标

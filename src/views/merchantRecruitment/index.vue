@@ -1,16 +1,41 @@
 <script setup lang="ts">
 import history from './history.vue'
-import container from './container.vue'
+import conversation from './conversation.vue'
 
 const showHistory = ref(false)
 
 const curHistoryId = ref('8x7k9m2p4n5q')
 
-const a = ref('')
-
 const addConversation = () => {
   console.log('新建消息')
 }
+
+const inputVal = ref('')
+const inputRef = ref()
+// 自动调整高度
+const adjustHeight = () => {
+  // 获取 var-input 内部的 textarea 元素
+  const el = inputRef.value?.$el?.querySelector('textarea') as HTMLTextAreaElement | undefined
+  if (!el) return
+
+  // 临时设置以获取真实 scrollHeight
+  el.style.height = 'auto'
+  el.style.overflowY = 'hidden'
+
+  // 计算高度：在 100px ~ 200px 之间
+  let height = el.scrollHeight
+  height = Math.max(height, 32) // 最小 100px
+  height = Math.min(height, 400) // 最大 200px
+
+  el.style.height = height + 'px'
+  // 如果内容超过 200px，显示滚动条
+  el.style.overflowY = el.scrollHeight > 200 ? 'auto' : 'hidden'
+}
+
+// 初始化高度
+onMounted(() => {
+  adjustHeight()
+})
 </script>
 
 <template>
@@ -29,10 +54,10 @@ const addConversation = () => {
     <var-chip :round="false" type="primary" block size="large">智能招商助手</var-chip>
     <var-chip :round="false" type="primary" block>为您推荐匹配的招商企业，提高招商效率</var-chip>
 
-    <container />
+    <conversation />
 
     <var-paper class="input-box" :elevation="2">
-      <var-input v-model="a" textarea :rows="4" />
+      <var-input ref="inputRef" v-model="inputVal" textarea :rows="1" @input="adjustHeight" />
 
       <var-button type="primary" round>
         <var-icon style="transform: rotate(180deg)" name="arrow-down" />
@@ -68,7 +93,6 @@ const addConversation = () => {
   .input-box {
     --field-decorator-standard-normal-margin-top: 0;
     --field-decorator-standard-normal-margin-bottom: 0;
-    --input-textarea-height: unset;
 
     display: flex;
     flex-shrink: 0;

@@ -1,14 +1,14 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="conversation-container">
+  <div class="conversation">
     <div class="container">
-      <var-loading type="cube" />
+      <var-loading style="display: inline-block" type="cube" />
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.conversation-container {
+.conversation {
   flex-grow: 1;
   width: 100%;
   min-height: 0;

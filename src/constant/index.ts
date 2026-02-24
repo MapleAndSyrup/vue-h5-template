@@ -6,6 +6,6 @@ export enum BOTTOM_BAR {
   INDUSTRY_TRENDS = 'industry-trends',
   /** 招商uni */
   MERCHANT_RECRUITMENT = 'merchant-recruitment',
-  /** 我的工作单 */
+  /** 我的线索 */
   WORK_ORDERS = 'work-orders'
 }

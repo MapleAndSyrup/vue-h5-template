@@ -19,7 +19,7 @@ export default function useLayout() {
       icon: 'xml',
       label: '招商UNI'
     },
-    { id: BOTTOM_BAR.WORK_ORDERS, path: 'work-orders', icon: 'account-circle', label: '我的工作单' }
+    { id: BOTTOM_BAR.WORK_ORDERS, path: 'work-orders', icon: 'account-circle', label: '我的线索' }
   ]
   // 当前底部导航
   const curPath = ref(BOTTOM_BAR.BIZ_POOL)
@@ -42,5 +42,5 @@ export default function useLayout() {
     curPath.value = appBarKey.value
   })
 
-  return { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange }
+  return { isMainPage, appBarTitle, bottomBarList, curPath, handleChange }
 }

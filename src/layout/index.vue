@@ -1,29 +1,12 @@
 <script setup lang="ts">
-import { BOTTOM_BAR } from '@/constant'
 import useLayout from './useLayout'
-import type { CSSProperties } from 'vue'
-const { isMainPage, appBarTitle, appBarKey, bottomBarList, curPath, handleChange } = useLayout()
-
-const barStyle = computed<CSSProperties>(() => {
-  const isSecondPage = appBarKey.value === BOTTOM_BAR.INDUSTRY_TRENDS
-  return {
-    height: isSecondPage ? 'auto' : '0',
-    padding: isSecondPage ? '0 10px 10px 10px' : 0
-  }
-})
+const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLayout()
 </script>
 <template>
   <div class="layout-page">
     <!-- 主页面 -->
     <RouterView v-slot="{ Component }" v-if="isMainPage">
-      <var-app-bar safe-area-top :title="appBarTitle">
-        <template #content>
-          <div class="bar-content" :style="barStyle">
-            <p>行业动态</p>
-            <p>实时追踪产业资讯，把握招商先机</p>
-          </div>
-        </template>
-      </var-app-bar>
+      <var-app-bar safe-area-top :title="appBarTitle" />
 
       <component class="container" :is="Component" />
 
@@ -39,7 +22,7 @@ const barStyle = computed<CSSProperties>(() => {
     </RouterView>
     <!-- 子页面 -->
     <RouterView v-else v-slot="{ Component }">
-      <var-app-bar safe-area-top :title="appBarTitle"></var-app-bar>
+      <var-app-bar safe-area-top :title="appBarTitle" />
       <component class="container" :is="Component" />
     </RouterView>
   </div>
