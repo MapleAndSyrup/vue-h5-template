@@ -1,10 +1,11 @@
-import { queryAiWeeklyPlanAnalysis } from '@/api'
-import { type AiWeeklyPlanAnalysisData } from '@/api/types'
+import { queryAiWeeklyPlanAnalysis, queryFollowUpLeads } from '@/api'
+import type { AiWeeklyPlanAnalysisData, FollowUpLeadsData } from '@/api/types'
 
 import { useRequest } from '@/utils/tools'
 
 export default function useWorkOrders() {
-  const analysisLoading = ref(false)
+  // AI周计划分析loading
+  const analysisLoading = ref(true)
   // AI周计划分析
   const analysisList = ref<AiWeeklyPlanAnalysisData>()
   // 获取AI周计划分析
@@ -15,19 +16,36 @@ export default function useWorkOrders() {
     })
     analysisList.value = data
   }
-  // 页面初始化
-  const pageInit = async () => {
-    // 获取AI周计划分析
-    await useRequest(analysisLoading, getAiWeeklyPlanAnalysis)
+
+  // 跟进线索loading
+  const followUpLeadsLoading = ref(true)
+  // 跟进线索
+  const followUpLeadsData = ref<FollowUpLeadsData>()
+  // 获取跟进线索列表
+  const getFollowUpLeads = async () => {
+    const { data } = await queryFollowUpLeads({
+      company_id: 'company1',
+      index: '001'
+    })
+    followUpLeadsData.value = data
   }
+
   onMounted(async () => {
-    await pageInit()
+    // 获取AI周计划分析
+    await Promise.allSettled([
+      useRequest(analysisLoading, getAiWeeklyPlanAnalysis),
+      useRequest(followUpLeadsLoading, getFollowUpLeads)
+    ])
   })
 
   return {
     /** 周计划分析loading */
     analysisLoading,
     /** 周计划分析列表 */
-    analysisList
+    analysisList,
+    /** 跟进线索loading */
+    followUpLeadsLoading,
+    /** 跟进线索 */
+    followUpLeadsData
   }
 }

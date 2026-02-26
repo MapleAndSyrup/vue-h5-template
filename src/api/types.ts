@@ -18,3 +18,24 @@ export interface AiWeeklyPlanAnalysisItem {
 
 /** AI 周报计划分析 - 响应数据 */
 export type AiWeeklyPlanAnalysisData = { weekly_plan_analysis: AiWeeklyPlanAnalysisItem[] }
+
+/** 跟进线索 - 单条线索 */
+export interface FollowUpLeadItem {
+  /** 线索名称 */
+  lead_name: string
+  /** 公司名称 */
+  company_name: string
+  /** 线索简介 */
+  lead_intro: string
+  /** 当前跟进状态 */
+  current_follow_up_status: string
+  /** 下次跟进节点 */
+  next_follow_up_node: string
+  /** 注意事项 */
+  precautions: string
+  /** 创建日期 */
+  create_date: string
+}
+
+/** 跟进线索 - 响应数据 */
+export type FollowUpLeadsData = { follow_up_leads: FollowUpLeadItem[] }

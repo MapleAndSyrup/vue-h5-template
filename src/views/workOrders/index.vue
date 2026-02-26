@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useWorkOrders from './useWorkOrders'
-const { analysisLoading, analysisList } = useWorkOrders()
+const { analysisLoading, analysisList, followUpLeadsLoading, followUpLeadsData } = useWorkOrders()
 
 const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?.time_period)
 </script>
@@ -31,7 +31,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               v-for="(item, index) in analysisList?.weekly_plan_analysis"
               :key="index"
             >
-              <var-badge type="danger" dot />
+              <var-badge type="primary" dot />
 
               <var-space direction="column">
                 <p style="font-size: var(--font-size-lg)">{{ item?.overview }}</p>
@@ -52,7 +52,31 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
         </nav>
       </var-sticky>
 
-      <div class="list"></div>
+      <div class="list">
+        <!-- loading 状态显示骨架屏 -->
+        <template v-if="followUpLeadsLoading">
+          <var-skeleton v-for="i in 2" :key="i" card :rows="0" :loading="true" />
+        </template>
+        <!-- 有数据时显示卡片 -->
+        <template v-else>
+          <var-card v-for="item in followUpLeadsData?.follow_up_leads" :key="item.lead_name" ripple>
+            <template #title>
+              <var-space
+                justify="space-between"
+                align="center"
+                style="
+                  padding: var(--card-title-padding);
+                  margin: var(--card-title-margin);
+                  color: var(--card-title-color);
+                "
+              >
+                <span>{{ item.company_name }}</span>
+                <var-chip type="info">{{ timePeriod }}</var-chip>
+              </var-space>
+            </template>
+          </var-card>
+        </template>
+      </div>
     </div>
   </div>
 </template>
