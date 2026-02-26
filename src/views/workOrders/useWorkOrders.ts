@@ -4,8 +4,7 @@ import { type AiWeeklyPlanAnalysisData } from '@/api/types'
 import { useRequest } from '@/utils/tools'
 
 export default function useWorkOrders() {
-  const pageLoading = ref(false)
-
+  const analysisLoading = ref(false)
   // AI周计划分析
   const analysisList = ref<AiWeeklyPlanAnalysisData>()
   // 获取AI周计划分析
@@ -19,14 +18,16 @@ export default function useWorkOrders() {
   // 页面初始化
   const pageInit = async () => {
     // 获取AI周计划分析
-    await Promise.allSettled([getAiWeeklyPlanAnalysis()])
+    await useRequest(analysisLoading, getAiWeeklyPlanAnalysis)
   }
   onMounted(async () => {
-    useRequest(pageLoading, pageInit)
+    await pageInit()
   })
 
   return {
-    pageLoading,
+    /** 周计划分析loading */
+    analysisLoading,
+    /** 周计划分析列表 */
     analysisList
   }
 }

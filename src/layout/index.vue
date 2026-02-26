@@ -7,9 +7,7 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
     <!-- 主页面 -->
     <RouterView v-slot="{ Component }" v-if="isMainPage">
       <var-app-bar safe-area-top :title="appBarTitle" />
-
       <component class="container" :is="Component" />
-
       <var-bottom-navigation v-model:active="curPath" @change="handleChange">
         <var-bottom-navigation-item
           v-for="bar in bottomBarList"
