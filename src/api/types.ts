@@ -108,3 +108,99 @@ export interface CompanyInfoData {
   /** 负责人 */
   responsible_representative: string
 }
+
+/** 投资匹配 - 响应数据 */
+export interface InvestmentMatchData {
+  /** 行业匹配度 */
+  industry_match: number
+  /** 政策匹配度 */
+  policy_match: number
+  /** 资源匹配度 */
+  resource_match: number
+  /** 匹配分析 */
+  match_analysis: string
+  /** 标签列表 */
+  tag: string[]
+}
+
+/** 未来发展 - 响应数据 */
+export interface FutureDevelopData {
+  /** 市场前景 */
+  market_outlook: string
+  /** 技术优势 */
+  technical_advantage: string
+  /** 优势列表 */
+  advantages: string[]
+  /** 扩张计划 */
+  expansion_plan: string
+  /** 预期产值 */
+  expected_output_value: string
+}
+
+/** 股权信息 - 股权结构单条 */
+export interface EquityStructureItem {
+  /** 股东名称 */
+  shareholder_name: string
+  /** 持股比例 */
+  share_ratio: number
+  /** 股东类型 */
+  shareholder_type: string
+}
+
+/** 股权信息 - 融资历史单条 */
+export interface FundingHistoryItem {
+  /** 融资轮次 */
+  round: string
+  /** 融资时间 */
+  time: string
+  /** 投资方 */
+  investors: string[]
+  /** 融资金额 */
+  amount: string
+}
+
+/** 股权信息 - 响应数据 */
+export interface EquityInfoData {
+  /** 融资阶段 */
+  funding_stage: string
+  /** 主要投资方 */
+  main_investors: string[]
+  /** 估值范围 */
+  valuation_range: string
+  /** 股权结构 */
+  equity_structure: EquityStructureItem[]
+  /** IPO计划 */
+  ipo_plan: string
+  /** 实际控制人 */
+  actual_controller: string
+  /** 融资历史 */
+  funding_history: FundingHistoryItem[]
+}
+
+/** 相关舆情 - 新闻单条 */
+export interface NewsItem {
+  /** 新闻标题 */
+  news_title: string
+  /** 内容 */
+  content: string
+  /** 时间 */
+  time: string
+  /** 类型 */
+  type: string
+}
+
+/** 相关舆情 - 响应数据 */
+export type RelatedOpinionData = { news_list: NewsItem[] }
+
+/** 其他关注 - 单条 */
+export interface AttentionItem {
+  /** 序号 */
+  serial_number: number
+  /** 关注维度 */
+  attention_dimension: string
+  /** 具体事项 */
+  specific_matter: string
+}
+
+/** 其他关注 - 响应数据 */
+export type OtherAttentionData = { attention_list: AttentionItem[] }
