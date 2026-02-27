@@ -35,7 +35,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
 
               <var-space direction="column">
                 <p style="font-size: var(--font-size-lg)">{{ item?.overview }}</p>
-                <p style="color: var(-color-info)">{{ item?.details }}</p>
+                <p style="color: var(--color-info)">{{ item?.details }}</p>
               </var-space>
             </var-paper>
           </var-space>
@@ -59,19 +59,30 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
         </template>
         <!-- 有数据时显示卡片 -->
         <template v-else>
-          <var-card v-for="item in followUpLeadsData?.follow_up_leads" :key="item.lead_name" ripple>
-            <template #title>
-              <var-space
-                justify="space-between"
-                align="center"
-                style="
-                  padding: var(--card-title-padding);
-                  margin: var(--card-title-margin);
-                  color: var(--card-title-color);
-                "
-              >
-                <span>{{ item.company_name }}</span>
-                <var-chip type="info">{{ timePeriod }}</var-chip>
+          <var-card
+            v-for="item in followUpLeadsData?.follow_up_leads"
+            :key="item?.lead_name"
+            :title="item?.lead_name"
+            ripple
+          >
+            <var-space class="lead-content" direction="column">
+              <span>线索简述</span>
+              <p>{{ item?.lead_intro }}</p>
+              <span>当前跟进情况</span>
+              <p>{{ item?.current_follow_up_status }}</p>
+              <span>下一跟进节点</span>
+              <p>{{ item?.next_follow_up_node }}</p>
+              <span>注意事项</span>
+              <p>{{ item?.precautions }}</p>
+            </var-space>
+
+            <template #extra>
+              <var-space style="width: 100%" justify="space-between" align="center">
+                <span style="font-size: var(--font-size-md); color: var(--color-info)">
+                  创建于:{{ item?.create_date }}
+                </span>
+
+                <var-button type="primary">查看详情</var-button>
               </var-space>
             </template>
           </var-card>
@@ -129,6 +140,16 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
       flex-direction: column;
       row-gap: 10px;
       padding: 0 10px 10px;
+
+      .lead-content {
+        span {
+          color: var(--color-info);
+        }
+
+        p {
+          color: var(--color-text);
+        }
+      }
     }
   }
 }

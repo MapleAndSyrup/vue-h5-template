@@ -30,12 +30,11 @@ export default function useWorkOrders() {
     followUpLeadsData.value = data
   }
 
-  onMounted(async () => {
+  onMounted(() => {
     // 获取AI周计划分析
-    await Promise.allSettled([
-      useRequest(analysisLoading, getAiWeeklyPlanAnalysis),
-      useRequest(followUpLeadsLoading, getFollowUpLeads)
-    ])
+    useRequest(analysisLoading, getAiWeeklyPlanAnalysis)
+    // 获取跟进线索
+    useRequest(followUpLeadsLoading, getFollowUpLeads)
   })
 
   return {
