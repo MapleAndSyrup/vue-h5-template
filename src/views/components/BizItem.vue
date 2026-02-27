@@ -1,49 +1,50 @@
 <script setup lang="ts">
-import { type MockItem } from '@/views/bizPool/mock'
+import type { ChatBusinessSearchItem } from '@/api/types'
 
-defineProps<{
-  mockItem: MockItem
+const props = defineProps<{
+  bizItem: ChatBusinessSearchItem
 }>()
+
+const hiddenName = computed(() => {
+  const name = props.bizItem.company_name
+  if (name.length <= 4) return name
+  return `${name.slice(0, 2)}****${name.slice(-2)}(信息已隐藏)`
+})
+
+const tags = computed(() => {
+  const _tags = props.bizItem?.tag
+  return [..._tags, props?.bizItem?.region, props?.bizItem?.industry]
+})
 </script>
 <template>
-  <var-card
-    class="card"
-    ripple
-    :title="`${mockItem?.hiddenName}(信息已隐藏)`"
-    :subtitle="mockItem?.description"
-  >
+  <var-card class="card" ripple :title="hiddenName" :subtitle="bizItem?.lead_intro">
     <template #image>
-      <var-image :src="mockItem?.image" />
+      <var-image
+        src="https://rrcc-resource.oss-cn-chengdu.aliyuncs.com/InteractiveTraining/image/AARRR.png"
+      />
     </template>
 
     <div class="chips">
-      <var-chip
-        v-for="(tag, index) in mockItem?.tags"
-        :key="index"
-        type="primary"
-        plain
-        round
-        size="small"
-      >
+      <var-chip v-for="(tag, index) in tags" :key="index" type="primary" plain round size="small">
         {{ tag }}
       </var-chip>
     </div>
 
-    <template #extra>
+    <!-- <template #extra>
       <div class="extra">
-        <p>线索ID：{{ mockItem?.id }}</p>
+        <p>线索ID：{{ bizItem?.id }}</p>
 
         <var-button text>
           <var-icon name="view" />
-          <span style="margin-left: 4px">{{ mockItem?.views }}</span>
+          <span style="margin-left: 4px">{{ bizItem?.views }}</span>
         </var-button>
 
         <var-button text>
           <var-icon name="star-outline" />
-          <span style="margin-left: 4px">{{ mockItem?.likes }}</span>
+          <span style="margin-left: 4px">{{ bizItem?.likes }}</span>
         </var-button>
       </div>
-    </template>
+    </template> -->
   </var-card>
 </template>
 

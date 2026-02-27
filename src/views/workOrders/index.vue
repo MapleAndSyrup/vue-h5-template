@@ -46,24 +46,19 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
         <nav>
           <p>跟进中的线索</p>
 
-          <ul>
+          <!-- <ul>
             <var-button v-for="value in 6" :key="value" type="primary">全部</var-button>
-          </ul>
+          </ul> -->
         </nav>
       </var-sticky>
 
-      <div class="list">
-        <!-- loading 状态显示骨架屏 -->
-        <template v-if="followUpLeadsLoading">
-          <var-skeleton v-for="i in 2" :key="i" card :rows="0" :loading="true" />
-        </template>
-        <!-- 有数据时显示卡片 -->
-        <template v-else>
+      <var-skeleton card :loading="followUpLeadsLoading">
+        <div class="list">
+          <!-- 有数据时显示卡片 -->
           <var-card
             v-for="item in followUpLeadsData?.follow_up_leads"
             :key="item?.lead_name"
             :title="item?.lead_name"
-            ripple
           >
             <var-space class="lead-content" direction="column">
               <span>线索简述</span>
@@ -71,7 +66,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               <span>当前跟进情况</span>
               <p>{{ item?.current_follow_up_status }}</p>
               <span>下一跟进节点</span>
-              <p>{{ item?.next_follow_up_node }}</p>
+              <var-chip type="info">{{ item?.next_follow_up_node }}</var-chip>
               <span>注意事项</span>
               <p>{{ item?.precautions }}</p>
             </var-space>
@@ -86,8 +81,8 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               </var-space>
             </template>
           </var-card>
-        </template>
-      </div>
+        </div>
+      </var-skeleton>
     </div>
   </div>
 </template>
