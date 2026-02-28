@@ -17,6 +17,9 @@ import type {
 } from '@/api/types'
 
 export default function useDetail() {
+  // 是否隐藏
+  const isHidden = ref(true)
+
   // 页面通用参数
   const params = ref({ index: '1', company_id: '' })
 
@@ -82,6 +85,7 @@ export default function useDetail() {
 
   const route = useRoute()
   onMounted(() => {
+    isHidden.value = route.query?.isHidden ? true : false
     const companyId = route.query?.companyId as string
     params.value.company_id = `company${companyId}`
     useRequest(companyInfoLoading, getCompanyInfo)
@@ -93,6 +97,7 @@ export default function useDetail() {
   })
 
   return {
+    isHidden,
     companyInfoLoading,
     companyInfoData,
     investmentMatchLoading,

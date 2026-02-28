@@ -45,7 +45,7 @@ const handleSearch = () => {
 }
 
 const handleToDetail = (router: Router, index: number) => {
-  router.push({ path: '/sub/detail-page', query: { companyId: index + 1 } })
+  router.push({ path: '/sub/detail-page', query: { companyId: index + 1, isHidden: 1 } })
 }
 </script>
 <template>
