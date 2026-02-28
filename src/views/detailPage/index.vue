@@ -81,23 +81,138 @@ const {
       </var-skeleton>
       <!-- 投资匹配 -->
       <var-skeleton :loading="investmentMatchLoading">
-        <var-card title="招商匹配度">{{ investmentMatchData }}</var-card>
+        <var-card title="招商匹配度">
+          <var-divider />
+
+          <var-row :gutter="[10, 10]">
+            <var-col :span="24">
+              <p>产业匹配度</p>
+              <var-progress line-width="6" :value="investmentMatchData?.industry_match" label />
+            </var-col>
+
+            <var-col :span="24">
+              <p>政策匹配度</p>
+              <var-progress line-width="6" :value="investmentMatchData?.policy_match" label />
+            </var-col>
+
+            <var-col :span="24">
+              <p>资源匹配度</p>
+              <var-progress line-width="6" :value="investmentMatchData?.resource_match" label />
+            </var-col>
+
+            <var-col :span="24">
+              <div style="display: flex; gap: 10px">
+                <var-chip
+                  v-for="(tag, index) in investmentMatchData?.tag"
+                  :key="index"
+                  type="primary"
+                  size="small"
+                >
+                  {{ tag }}
+                </var-chip>
+              </div>
+            </var-col>
+          </var-row>
+        </var-card>
       </var-skeleton>
       <!-- 未来发展 -->
       <var-skeleton :loading="futureDevelopLoading">
-        <var-card title="未来发展">{{ futureDevelopData }}</var-card>
+        <var-card title="未来发展">
+          <var-divider />
+          <var-row :gutter="[10, 10]">
+            <var-col :span="24">
+              <p>市场前景</p>
+              <p class="main-text">{{ futureDevelopData?.market_outlook }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>技术优势</p>
+              <p class="main-text">{{ futureDevelopData?.technical_advantage }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>扩张计划</p>
+              <p class="main-text">{{ futureDevelopData?.expansion_plan }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>预期产值</p>
+              <p class="main-text">{{ futureDevelopData?.expected_output_value }}</p>
+            </var-col>
+          </var-row>
+        </var-card>
       </var-skeleton>
       <!-- 股权信息 -->
       <var-skeleton :loading="equityInfoLoading">
-        <var-card title="股权情况">{{ equityInfoData }}</var-card>
+        <var-card title="股权情况">
+          <var-divider />
+          <var-row :gutter="[10, 10]">
+            <var-col :span="24">
+              <p>融资阶段</p>
+              <p class="main-text">{{ equityInfoData?.funding_stage }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>主要投资方</p>
+              <var-skeleton v-if="isHidden" :rows="1" loading />
+              <p class="main-text" v-else>{{ equityInfoData?.main_investors }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>估值范围</p>
+              <p class="main-text">{{ equityInfoData?.valuation_range }}</p>
+            </var-col>
+            <var-col :span="24">
+              <p>股权结构</p>
+              <var-skeleton v-if="isHidden" :rows="1" loading />
+              <p class="main-text" v-else>{{ equityInfoData?.equity_structure }}</p>
+            </var-col>
+          </var-row>
+        </var-card>
       </var-skeleton>
       <!-- 相关舆情 -->
       <var-skeleton :loading="relatedOpinionLoading">
-        <var-card title="相关舆情">{{ relatedOpinionData }}</var-card>
+        <var-card title="相关舆情">
+          <var-divider />
+          <var-row :gutter="[10, 10]">
+            <template v-for="(news, index) in relatedOpinionData?.news_list" :key="index">
+              <var-col :span="24">
+                <p class="main-text">{{ news?.news_title }}</p>
+                <p>{{ news?.time }}·{{ news?.type }}</p>
+              </var-col>
+              <var-divider v-if="index + 1 < (relatedOpinionData?.news_list?.length ?? 0)" />
+            </template>
+          </var-row>
+        </var-card>
       </var-skeleton>
       <!-- 其他关注 -->
       <var-skeleton :loading="otherAttentionLoading">
-        <var-card title="其他注意事项">{{ otherAttentionData }}</var-card>
+        <var-card title="其他注意事项">
+          <var-row :gutter="[10, 10]">
+            <var-col
+              v-for="attention in isHidden
+                ? otherAttentionData?.attention_list.filter(
+                    ({ serial_number }) => serial_number <= 1
+                  )
+                : otherAttentionData?.attention_list"
+              :key="attention.serial_number"
+              :span="24"
+            >
+              <p>{{ attention?.attention_dimension }}</p>
+              <p class="main-text">{{ attention?.specific_matter }}</p>
+            </var-col>
+
+            <var-col :span="24">
+              <var-chip
+                block
+                type="warning"
+                style="
+                  justify-content: flex-start;
+                  height: auto;
+                  padding: 4px;
+                  font-size: var(--font-size-sm);
+                "
+              >
+                完整信息需申请高级权限查看
+              </var-chip>
+            </var-col>
+          </var-row>
+        </var-card>
       </var-skeleton>
     </var-space>
   </div>
@@ -108,8 +223,10 @@ const {
   overflow-y: auto;
 
   .var-col {
+    --skeleton-row-height: 20px;
+    --skeleton-row-border-radius: 4px;
+
     flex-direction: column !important;
-    row-gap: 10px;
 
     :deep(.var-skeleton__content) {
       padding: 0;
