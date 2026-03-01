@@ -10,7 +10,7 @@ import { type Ref } from 'vue'
 export async function useRequest<T>(
   loading: Ref<boolean>,
   cb: () => Promise<T> | T,
-  minDuration: number = 1000
+  minDuration: number = 300
 ): Promise<T> {
   const startTime = Date.now()
   try {

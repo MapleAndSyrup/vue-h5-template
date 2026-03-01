@@ -35,6 +35,7 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
         </template>
       </var-app-bar>
       <component class="container" :is="Component" />
+      <div style="padding-bottom: env(safe-area-inset-bottom)"></div>
     </RouterView>
   </div>
 </template>

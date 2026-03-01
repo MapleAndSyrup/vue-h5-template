@@ -6,7 +6,8 @@ import type {
   EquityInfoData,
   RelatedOpinionData,
   LandingRequirementDetailData,
-  ContactPersonData
+  ContactPersonData,
+  OtherAttentionData
 } from '@/api/types'
 
 const companyInfoLoading = inject<Ref<boolean>>('companyInfoLoading')
@@ -48,6 +49,9 @@ const contacts = computed(() => {
     }
   })
 })
+
+const otherAttentionLoading = inject<Ref<boolean>>('otherAttentionLoading')
+const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAttentionData')
 </script>
 <template>
   <var-space direction="column" style="padding: 10px">
@@ -139,7 +143,7 @@ const contacts = computed(() => {
                   padding: 4px 8px;
                 "
               >
-                <p>企业简介</p>
+                <p style=" font-weight: bold;color: var(--color-primary)">企业简介</p>
                 <p>{{ companyInfoData?.company_intro }}</p>
               </var-chip>
             </var-col>
@@ -192,7 +196,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>匹配分析详情</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">匹配分析详情</p>
               <p>{{ investmentMatchData?.match_analysis }}</p>
             </var-chip>
           </var-col>
@@ -228,7 +232,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>市场前景</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">市场前景</p>
               <p>{{ futureDevelopData?.market_outlook }}</p>
             </var-chip>
           </var-col>
@@ -244,7 +248,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>技术优势</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">技术优势</p>
               <p>{{ futureDevelopData?.technical_advantage }}</p>
             </var-chip>
           </var-col>
@@ -260,7 +264,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>扩张计划</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">扩张计划</p>
               <p>{{ futureDevelopData?.expansion_plan }}</p>
             </var-chip>
           </var-col>
@@ -276,7 +280,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>预期产值</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">预期产值</p>
               <p>{{ futureDevelopData?.expected_output_value }}</p>
             </var-chip>
           </var-col>
@@ -330,7 +334,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>融资历史</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">融资历史</p>
 
               <var-table>
                 <thead>
@@ -368,7 +372,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>股权结构</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">股权结构</p>
               <p>{{ equityStructure }}</p>
             </var-chip>
           </var-col>
@@ -408,7 +412,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>具体需求</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">具体需求</p>
               <p
                 v-for="(specific, index) in landingRequirementData?.specific_requirements"
                 :key="index"
@@ -429,7 +433,7 @@ const contacts = computed(() => {
                 padding: 4px 8px;
               "
             >
-              <p>选址偏好</p>
+              <p style=" font-weight: bold;color: var(--color-primary)">选址偏好</p>
               <p>{{ landingRequirementData?.location_preference }}</p>
             </var-chip>
           </var-col>
@@ -450,7 +454,7 @@ const contacts = computed(() => {
                 <var-avatar>{{ contact?.firstName }}</var-avatar>
 
                 <var-space direction="column" :size="[0, 0]">
-                  <span style=" font-size: var(--font-size-lg);color: var(--color-primary)">
+                  <span style="font-size: var(--font-size-lg); color: var(--color-primary)">
                     {{ contact?.name }}
                   </span>
                   <span style="font-size: var(--font-size-sm)">{{ contact?.position }}</span>
@@ -478,6 +482,38 @@ const contacts = computed(() => {
         </var-row>
       </var-card>
     </var-skeleton>
+
+    <var-skeleton :loading="otherAttentionLoading">
+      <var-card title="其他注意事项">
+        <var-row :gutter="[10, 10]">
+          <var-col
+            v-for="attention in otherAttentionData?.attention_list"
+            :key="attention.serial_number"
+            :span="24"
+          >
+            <p>{{ attention?.attention_dimension }}</p>
+            <p class="main-text">{{ attention?.specific_matter }}</p>
+          </var-col>
+        </var-row>
+      </var-card>
+    </var-skeleton>
+
+    <var-row :gutter="[10, 10]">
+      <var-col :span="12">
+        <var-button>
+          <var-icon name="download-outline" style="margin-right: 4px" />
+          下载完整资料
+        </var-button>
+      </var-col>
+      <var-col :span="12">
+        <var-button type="primary">
+          <var-icon name="calendar-month" style="margin-right: 4px" />
+          预约实地考察
+        </var-button>
+      </var-col>
+    </var-row>
+
+    <var-back-top :duration="300" :bottom="100" :right="10" />
   </var-space>
 </template>
 
@@ -517,6 +553,10 @@ const contacts = computed(() => {
 
 .var-card {
   --card-title-color: var(--color-primary);
+
+  :deep(.var-card__title) {
+    font-weight: bold;
+  }
 }
 
 .var-table {

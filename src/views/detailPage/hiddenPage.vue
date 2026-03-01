@@ -218,6 +218,8 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
         </var-row>
       </var-card>
     </var-skeleton>
+
+    <var-back-top :duration="300" :bottom="100" :right="10" />
   </var-space>
 </template>
 
@@ -252,6 +254,14 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
   :deep(.var-chip__text-normal) {
     width: 100%;
+  }
+}
+
+.var-card {
+  --card-title-color: var(--color-primary);
+
+  :deep(.var-card__title) {
+    font-weight: bold;
   }
 }
 </style>
