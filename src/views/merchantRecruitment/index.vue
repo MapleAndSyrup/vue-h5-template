@@ -40,16 +40,16 @@ onMounted(() => {
 
 <template>
   <div class="merchant-recruitment">
-    <history v-model:show="showHistory" v-model:history-id="curHistoryId" />
+    <Teleport to="#toolbar-right">
+      <var-button type="primary" round icon-container @click="addConversation">
+        <var-icon name="plus" />
+      </var-button>
+      <var-button type="primary" round icon-container @click="showHistory = true">
+        <var-icon name="history" />
+      </var-button>
+    </Teleport>
 
-    <!-- 打开历史 -->
-    <var-button class="history-btn" type="primary" round icon-container @click="showHistory = true">
-      <var-icon name="history" />
-    </var-button>
-    <!-- 打开新对话 -->
-    <var-button class="add-btn" type="primary" round icon-container @click="addConversation">
-      <var-icon name="plus" />
-    </var-button>
+    <history v-model:show="showHistory" v-model:history-id="curHistoryId" />
 
     <var-chip :round="false" type="primary" block size="large">智能招商助手</var-chip>
     <var-chip :round="false" type="primary" block>为您推荐匹配的招商企业，提高招商效率</var-chip>
@@ -70,21 +70,6 @@ onMounted(() => {
 .merchant-recruitment {
   display: flex;
   flex-direction: column;
-
-  .history-btn,
-  .add-btn {
-    position: fixed;
-    top: 12px;
-    z-index: 100;
-  }
-
-  .history-btn {
-    right: 20px;
-  }
-
-  .add-btn {
-    right: 60px;
-  }
 
   :deep(.var-chip) {
     flex-shrink: 0;

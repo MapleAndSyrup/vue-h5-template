@@ -50,16 +50,11 @@ const handleToDetail = (router: Router, index: number) => {
 </script>
 <template>
   <div ref="bizPoolRef" class="biz-pool" @scroll="handleScroll">
-    <var-button
-      v-show="showSearchIcon"
-      class="search-icon"
-      type="primary"
-      round
-      icon-container
-      @click="handleSearchIconClick"
-    >
-      <var-icon name="magnify" />
-    </var-button>
+    <Teleport v-if="showSearchIcon" to="#toolbar-right">
+      <var-button type="primary" round icon-container @click="handleSearchIconClick">
+        <var-icon name="magnify" />
+      </var-button>
+    </Teleport>
 
     <div class="scroll-content">
       <div ref="inputRef" style="flex-shrink: 0; width: calc(100% - 20px)">
@@ -108,13 +103,6 @@ const handleToDetail = (router: Router, index: number) => {
 .biz-pool {
   position: relative;
   overflow-y: scroll;
-
-  .search-icon {
-    position: fixed;
-    top: 12px;
-    right: 20px;
-    z-index: 100;
-  }
 
   .scroll-content {
     display: flex;

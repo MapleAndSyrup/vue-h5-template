@@ -6,9 +6,16 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
   <div class="layout-page">
     <!-- 主页面 -->
     <RouterView v-slot="{ Component }" v-if="isMainPage">
-      <var-app-bar safe-area-top :title="appBarTitle" />
+      <var-app-bar safe-area-top :title="appBarTitle">
+        <template #right>
+          <div
+            id="toolbar-right"
+            style="display: flex; gap: 8px; align-items: center; padding-right: 8px"
+          ></div>
+        </template>
+      </var-app-bar>
       <component class="container" :is="Component" />
-      <var-bottom-navigation v-model:active="curPath" @change="handleChange">
+      <var-bottom-navigation safe-area v-model:active="curPath" @change="handleChange">
         <var-bottom-navigation-item
           v-for="bar in bottomBarList"
           :key="bar.id"
