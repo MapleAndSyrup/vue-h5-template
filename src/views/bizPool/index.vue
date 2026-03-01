@@ -87,7 +87,7 @@ const handleToDetail = (router: Router, index: number) => {
         <div class="list">
           <BizItem
             v-for="(item, index) in chatBusinessSearchData?.search_results"
-            :key="index"
+            :key="item?.id"
             :biz-item="item"
             @click="handleToDetail($router, index)"
           />

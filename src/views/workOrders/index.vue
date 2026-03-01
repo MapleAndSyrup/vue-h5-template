@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useWorkOrders from './useWorkOrders'
-const { analysisLoading, analysisList, followUpLeadsLoading, followUpLeadsData } = useWorkOrders()
+const { analysisLoading, analysisList, followUpLeadsLoading, followUpLeadsData, handleToDetail } =
+  useWorkOrders()
 
 const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?.time_period)
 </script>
@@ -56,7 +57,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
         <div class="list">
           <!-- 有数据时显示卡片 -->
           <var-card
-            v-for="item in followUpLeadsData?.follow_up_leads"
+            v-for="(item, index) in followUpLeadsData?.follow_up_leads"
             :key="item?.lead_name"
             :title="item?.lead_name"
           >
@@ -77,7 +78,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
                   创建于:{{ item?.create_date }}
                 </span>
 
-                <var-button type="primary">查看详情</var-button>
+                <var-button type="primary" @click="handleToDetail(index)">查看详情</var-button>
               </var-space>
             </template>
           </var-card>

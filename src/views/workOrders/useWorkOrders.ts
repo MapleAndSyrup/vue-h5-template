@@ -4,6 +4,8 @@ import type { AiWeeklyPlanAnalysisData, FollowUpLeadsData } from '@/api/types'
 import { useRequest } from '@/utils/tools'
 
 export default function useWorkOrders() {
+  const router = useRouter()
+
   // AI周计划分析loading
   const analysisLoading = ref(true)
   // AI周计划分析
@@ -37,6 +39,10 @@ export default function useWorkOrders() {
     useRequest(followUpLeadsLoading, getFollowUpLeads)
   })
 
+  const handleToDetail = (index: number) => {
+    router.push({ path: '/sub/detail-page', query: { companyId: index + 1, isHidden: 0 } })
+  }
+
   return {
     /** 周计划分析loading */
     analysisLoading,
@@ -45,6 +51,8 @@ export default function useWorkOrders() {
     /** 跟进线索loading */
     followUpLeadsLoading,
     /** 跟进线索 */
-    followUpLeadsData
+    followUpLeadsData,
+    /** 去详情页面 */
+    handleToDetail
   }
 }

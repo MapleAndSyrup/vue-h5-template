@@ -5,7 +5,9 @@ import {
   queryFutureDevelop,
   queryEquityInfo,
   queryRelatedOpinion,
-  queryOtherAttention
+  queryOtherAttention,
+  queryLandingRequirementDetail,
+  queryContactPerson
 } from '@/api'
 import type {
   CompanyInfoData,
@@ -13,12 +15,22 @@ import type {
   FutureDevelopData,
   EquityInfoData,
   RelatedOpinionData,
-  OtherAttentionData
+  OtherAttentionData,
+  LandingRequirementDetailData,
+  ContactPersonData
 } from '@/api/types'
+
+import hiddenPage from './hiddenPage.vue'
+import completePage from './completePage.vue'
 
 export default function useDetail() {
   // 是否隐藏
   const isHidden = ref(true)
+
+  // 当前组件
+  const currentComponent = computed(() => {
+    return isHidden.value ? hiddenPage : completePage
+  })
 
   // 页面通用参数
   const params = ref({ index: '1', company_id: '' })
@@ -83,21 +95,68 @@ export default function useDetail() {
     otherAttentionData.value = data
   }
 
+  // 落地需求详情loading
+  const landingRequirementLoading = ref(true)
+  // 落地需求详情
+  const landingRequirementData = ref<LandingRequirementDetailData>()
+  // 请求落地需求详情
+  const getLandingRequirementDetail = async () => {
+    const { data } = await queryLandingRequirementDetail(params.value)
+    landingRequirementData.value = data
+  }
+
+  // 对接联系人loading
+  const contactPersonLoading = ref(true)
+  // 对接联系人
+  const contactPersonData = ref<ContactPersonData>()
+  // 请求对接联系人
+  const getContactPerson = async () => {
+    const { data } = await queryContactPerson(params.value)
+    contactPersonData.value = data
+  }
+
   const route = useRoute()
   onMounted(() => {
-    isHidden.value = route.query?.isHidden ? true : false
+    isHidden.value = Number(route.query?.isHidden) ? true : false
     const companyId = route.query?.companyId as string
     params.value.company_id = `company${companyId}`
     useRequest(companyInfoLoading, getCompanyInfo)
     useRequest(investmentMatchLoading, getInvestmentMatch)
     useRequest(futureDevelopLoading, getFutureDevelop)
     useRequest(equityInfoLoading, getEquityInfo)
+    useRequest(landingRequirementLoading, getLandingRequirementDetail)
+    useRequest(contactPersonLoading, getContactPerson)
     useRequest(relatedOpinionLoading, getRelatedOpinion)
     useRequest(otherAttentionLoading, getOtherAttention)
   })
 
+  provide('companyInfoLoading', companyInfoLoading)
+  provide('companyInfoData', companyInfoData)
+
+  provide('investmentMatchLoading', investmentMatchLoading)
+  provide('investmentMatchData', investmentMatchData)
+
+  provide('futureDevelopLoading', futureDevelopLoading)
+  provide('futureDevelopData', futureDevelopData)
+
+  provide('equityInfoLoading', equityInfoLoading)
+  provide('equityInfoData', equityInfoData)
+
+  provide('relatedOpinionLoading', relatedOpinionLoading)
+  provide('relatedOpinionData', relatedOpinionData)
+
+  provide('otherAttentionLoading', otherAttentionLoading)
+  provide('otherAttentionData', otherAttentionData)
+
+  provide('landingRequirementLoading', landingRequirementLoading)
+  provide('landingRequirementData', landingRequirementData)
+
+  provide('contactPersonLoading', contactPersonLoading)
+  provide('contactPersonData', contactPersonData)
+
   return {
     isHidden,
+    currentComponent,
     companyInfoLoading,
     companyInfoData,
     investmentMatchLoading,
@@ -109,6 +168,10 @@ export default function useDetail() {
     relatedOpinionLoading,
     relatedOpinionData,
     otherAttentionLoading,
-    otherAttentionData
+    otherAttentionData,
+    landingRequirementLoading,
+    landingRequirementData,
+    contactPersonLoading,
+    contactPersonData
   }
 }

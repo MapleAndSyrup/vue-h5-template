@@ -4,7 +4,7 @@ import { useRequest } from '@/utils/tools'
 
 export default function useBizPool() {
   const listLoading = ref(true)
-  const chatBusinessSearchParams = ref<ChatBusinessSearchParams>({ index: '1', name: '' })
+  const chatBusinessSearchParams = ref<ChatBusinessSearchParams>({ index: '1', name: '', tag: '' })
   const chatBusinessSearchData = ref<ChatBusinessSearchData>()
   const getChatBusinessSearch = async () => {
     const { data } = await queryChatBusinessSearch(chatBusinessSearchParams.value)

@@ -12,7 +12,9 @@ import type {
   FutureDevelopData,
   EquityInfoData,
   RelatedOpinionData,
-  OtherAttentionData
+  OtherAttentionData,
+  LandingRequirementDetailData,
+  ContactPersonData
 } from './types'
 
 /**
@@ -108,4 +110,26 @@ export function queryOtherAttention(
   data: CompanyInfoParams
 ): Promise<ApiResponse<OtherAttentionData>> {
   return http.post(`/api/chat_business/other_attention_mock`, data)
+}
+
+/**
+ * 落地需求详情
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<LandingRequirementDetailData>> }
+ */
+export function queryLandingRequirementDetail(
+  data: CompanyInfoParams
+): Promise<ApiResponse<LandingRequirementDetailData>> {
+  return http.post(`/api/chat_business/landing_requirement_detail_mock`, data)
+}
+
+/**
+ * 对接联系人
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<ContactPersonData>> }
+ */
+export function queryContactPerson(
+  data: CompanyInfoParams
+): Promise<ApiResponse<ContactPersonData>> {
+  return http.post(`/api/chat_business/contact_person_mock`, data)
 }

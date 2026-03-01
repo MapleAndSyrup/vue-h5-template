@@ -46,10 +46,13 @@ export interface ChatBusinessSearchParams {
   name: string
   /** 索引 */
   index: string
+  /** 类型 */
+  tag: string
 }
 
 /** 招商线索搜索 - 单条结果 */
 export interface ChatBusinessSearchItem {
+  id: string
   /** 线索名称 */
   lead_name: string
   /** 公司名称 */
@@ -60,6 +63,8 @@ export interface ChatBusinessSearchItem {
   industry: string
   /** 所属地区 */
   region: string
+  /** 图片地址 */
+  pic_url: string
   /** 标签列表 */
   tag: string[]
 }
@@ -204,3 +209,39 @@ export interface AttentionItem {
 
 /** 其他关注 - 响应数据 */
 export type OtherAttentionData = { attention_list: AttentionItem[] }
+
+/** 落地需求详情 - 响应数据 */
+export interface LandingRequirementDetailData {
+  /** ID */
+  id: string
+  /** 需求类型 */
+  requirement_type: string
+  /** 计划投资金额 */
+  planned_investment: string
+  /** 土地需求 */
+  land_demand: string
+  /** 人员规模 */
+  personnel_scale: string
+  /** 具体需求列表 */
+  specific_requirements: string[]
+  /** 位置偏好 */
+  location_preference: string
+}
+
+/** 联系人 */
+export interface ContactPersonItem {
+  /** 姓名 */
+  name: string
+  /** 职位 */
+  position: string
+  /** 联系方式 */
+  contact_info: string
+}
+
+/** 对接联系人 - 响应数据 */
+export interface ContactPersonData {
+  /** ID */
+  id: string
+  /** 联系人列表 */
+  contacts: ContactPersonItem[]
+}
