@@ -118,8 +118,7 @@ export default function useDetail() {
   const route = useRoute()
   onMounted(() => {
     isHidden.value = Number(route.query?.isHidden) ? true : false
-    const companyId = route.query?.companyId as string
-    params.value.company_id = `company${companyId}`
+    params.value.company_id = route.query?.companyId as string
     useRequest(companyInfoLoading, getCompanyInfo)
     useRequest(investmentMatchLoading, getInvestmentMatch)
     useRequest(futureDevelopLoading, getFutureDevelop)

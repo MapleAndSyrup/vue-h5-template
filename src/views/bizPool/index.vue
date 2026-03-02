@@ -44,8 +44,8 @@ const handleSearch = () => {
   getChatBusinessSearch()
 }
 
-const handleToDetail = (router: Router, index: number) => {
-  router.push({ path: '/sub/detail-page', query: { companyId: index + 1, isHidden: 1 } })
+const handleToDetail = (router: Router, companyId: string) => {
+  router.push({ path: '/sub/detail-page', query: { companyId, isHidden: 1 } })
 }
 </script>
 <template>
@@ -86,10 +86,10 @@ const handleToDetail = (router: Router, index: number) => {
       <var-skeleton card :loading="listLoading">
         <div class="list">
           <BizItem
-            v-for="(item, index) in chatBusinessSearchData?.search_results"
+            v-for="item in chatBusinessSearchData?.search_results"
             :key="item?.id"
             :biz-item="item"
-            @click="handleToDetail($router, index)"
+            @click="handleToDetail($router, item?.company_id)"
           />
         </div>
       </var-skeleton>

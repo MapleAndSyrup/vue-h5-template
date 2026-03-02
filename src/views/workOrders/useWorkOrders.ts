@@ -13,7 +13,7 @@ export default function useWorkOrders() {
   // 获取AI周计划分析
   const getAiWeeklyPlanAnalysis = async () => {
     const { data } = await queryAiWeeklyPlanAnalysis({
-      company_id: 'company1',
+      company_id: '',
       index: '001'
     })
     analysisList.value = data
@@ -39,8 +39,8 @@ export default function useWorkOrders() {
     useRequest(followUpLeadsLoading, getFollowUpLeads)
   })
 
-  const handleToDetail = (index: number) => {
-    router.push({ path: '/sub/detail-page', query: { companyId: index + 1, isHidden: 0 } })
+  const handleToDetail = (companyId: string) => {
+    router.push({ path: '/sub/detail-page', query: { companyId, isHidden: 0 } })
   }
 
   return {

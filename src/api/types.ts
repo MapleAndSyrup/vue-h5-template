@@ -38,7 +38,13 @@ export interface FollowUpLeadItem {
 }
 
 /** 跟进线索 - 响应数据 */
-export type FollowUpLeadsData = { follow_up_leads: FollowUpLeadItem[] }
+export type FollowUpLeadsData = {
+  /** id */
+  id: string
+  /** 公司id */
+  company_id: string
+  follow_up_leads: FollowUpLeadItem[]
+}
 
 /** 招商线索搜索 - 请求参数 */
 export interface ChatBusinessSearchParams {
@@ -52,6 +58,9 @@ export interface ChatBusinessSearchParams {
 
 /** 招商线索搜索 - 单条结果 */
 export interface ChatBusinessSearchItem {
+  /** 公司id */
+  company_id: string
+  /** id */
   id: string
   /** 线索名称 */
   lead_name: string
