@@ -14,7 +14,9 @@ import type {
   RelatedOpinionData,
   OtherAttentionData,
   LandingRequirementDetailData,
-  ContactPersonData
+  ContactPersonData,
+  AiExpressParams,
+  AiExpressData
 } from './types'
 
 /**
@@ -132,4 +134,13 @@ export function queryContactPerson(
   data: CompanyInfoParams
 ): Promise<ApiResponse<ContactPersonData>> {
   return http.post(`/api/chat_business/contact_person_mock`, data)
+}
+
+/**
+ * AI 快递
+ * @param { AiExpressParams } data 请求参数
+ * @returns { Promise<ApiResponse<AiExpressData>> }
+ */
+export function queryAiExpress(data: AiExpressParams): Promise<ApiResponse<AiExpressData>> {
+  return http.post(`/api/chat_business/ai_express_mock`, data)
 }

@@ -254,3 +254,21 @@ export interface ContactPersonData {
   /** 联系人列表 */
   contacts: ContactPersonItem[]
 }
+
+/** AI 快递 - 请求参数 */
+export interface AiExpressParams {
+  /** 索引 */
+  index: string
+  /** 公司ID */
+  company_id: string
+}
+
+/** AI 快递 - 响应数据 */
+export interface AiExpressData {
+  /** ID */
+  id: string
+  /** 摘要 */
+  summary: string
+  /** 投资视角分析 */
+  investment_perspective_analysis: string
+}

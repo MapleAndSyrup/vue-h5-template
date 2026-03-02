@@ -143,7 +143,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                   padding: 4px 8px;
                 "
               >
-                <p style=" font-weight: bold;color: var(--color-primary)">企业简介</p>
+                <p style="font-weight: bold; color: var(--color-primary)">企业简介</p>
                 <p>{{ companyInfoData?.company_intro }}</p>
               </var-chip>
             </var-col>
@@ -196,7 +196,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">匹配分析详情</p>
+              <p style="font-weight: bold; color: var(--color-primary)">匹配分析详情</p>
               <p>{{ investmentMatchData?.match_analysis }}</p>
             </var-chip>
           </var-col>
@@ -232,7 +232,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">市场前景</p>
+              <p style="font-weight: bold; color: var(--color-primary)">市场前景</p>
               <p>{{ futureDevelopData?.market_outlook }}</p>
             </var-chip>
           </var-col>
@@ -248,7 +248,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">技术优势</p>
+              <p style="font-weight: bold; color: var(--color-primary)">技术优势</p>
               <p>{{ futureDevelopData?.technical_advantage }}</p>
             </var-chip>
           </var-col>
@@ -264,7 +264,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">扩张计划</p>
+              <p style="font-weight: bold; color: var(--color-primary)">扩张计划</p>
               <p>{{ futureDevelopData?.expansion_plan }}</p>
             </var-chip>
           </var-col>
@@ -280,7 +280,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">预期产值</p>
+              <p style="font-weight: bold; color: var(--color-primary)">预期产值</p>
               <p>{{ futureDevelopData?.expected_output_value }}</p>
             </var-chip>
           </var-col>
@@ -334,7 +334,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">融资历史</p>
+              <p style="font-weight: bold; color: var(--color-primary)">融资历史</p>
 
               <var-table>
                 <thead>
@@ -372,7 +372,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">股权结构</p>
+              <p style="font-weight: bold; color: var(--color-primary)">股权结构</p>
               <p>{{ equityStructure }}</p>
             </var-chip>
           </var-col>
@@ -412,7 +412,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">具体需求</p>
+              <p style="font-weight: bold; color: var(--color-primary)">具体需求</p>
               <p
                 v-for="(specific, index) in landingRequirementData?.specific_requirements"
                 :key="index"
@@ -433,7 +433,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 padding: 4px 8px;
               "
             >
-              <p style=" font-weight: bold;color: var(--color-primary)">选址偏好</p>
+              <p style="font-weight: bold; color: var(--color-primary)">选址偏好</p>
               <p>{{ landingRequirementData?.location_preference }}</p>
             </var-chip>
           </var-col>
