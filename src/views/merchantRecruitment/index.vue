@@ -1,55 +1,38 @@
 <script setup lang="ts">
-import history from './history.vue'
+// import history from './history.vue'
 import conversation from './conversation.vue'
 
-const showHistory = ref(false)
+import useMerchantRecruitment from './useMerchantRecruitment'
 
-const curHistoryId = ref('8x7k9m2p4n5q')
-
-const addConversation = () => {
-  console.log('新建消息')
-}
-
-const inputVal = ref('')
-const inputRef = ref()
-// 自动调整高度
-const adjustHeight = () => {
-  // 获取 var-input 内部的 textarea 元素
-  const el = inputRef.value?.$el?.querySelector('textarea') as HTMLTextAreaElement | undefined
-  if (!el) return
-
-  // 临时设置以获取真实 scrollHeight
-  el.style.height = 'auto'
-  el.style.overflowY = 'hidden'
-
-  // 计算高度：在 100px ~ 200px 之间
-  let height = el.scrollHeight
-  height = Math.max(height, 32) // 最小 100px
-  height = Math.min(height, 400) // 最大 200px
-
-  el.style.height = height + 'px'
-  // 如果内容超过 200px，显示滚动条
-  el.style.overflowY = el.scrollHeight > 200 ? 'auto' : 'hidden'
-}
-
-// 初始化高度
-onMounted(() => {
-  adjustHeight()
-})
+const {
+  // showHistory,
+  // inputRef,
+  chatStreamParams,
+  adjustHeight,
+  // addConversation,
+  sendMessage
+  // handleChangeId
+} = useMerchantRecruitment()
 </script>
 
 <template>
   <div class="merchant-recruitment">
-    <Teleport to="#toolbar-right">
+    <!-- TODO -->
+    <!-- <Teleport to="#toolbar-right" defer>
       <var-button type="primary" round icon-container @click="addConversation">
         <var-icon name="plus" />
       </var-button>
       <var-button type="primary" round icon-container @click="showHistory = true">
         <var-icon name="history" />
       </var-button>
-    </Teleport>
+    </Teleport> -->
 
-    <history v-model:show="showHistory" v-model:history-id="curHistoryId" />
+    <!-- TODO -->
+    <!-- <history
+      v-model:show="showHistory"
+      :history-id="chatStreamParams.session_id"
+      @change-id="handleChangeId"
+    /> -->
 
     <var-chip :round="false" type="primary" block size="large">智能招商助手</var-chip>
     <var-chip :round="false" type="primary" block>为您推荐匹配的招商企业，提高招商效率</var-chip>
@@ -57,9 +40,15 @@ onMounted(() => {
     <conversation />
 
     <var-paper class="input-box" :elevation="2">
-      <var-input ref="inputRef" v-model="inputVal" textarea :rows="1" @input="adjustHeight" />
+      <var-input
+        ref="inputRef"
+        v-model="chatStreamParams.message"
+        textarea
+        :rows="1"
+        @input="adjustHeight"
+      />
 
-      <var-button type="primary" round>
+      <var-button type="primary" round @click="sendMessage">
         <var-icon style="transform: rotate(180deg)" name="arrow-down" />
       </var-button>
     </var-paper>

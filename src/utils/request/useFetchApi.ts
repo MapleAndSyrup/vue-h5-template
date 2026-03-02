@@ -1,5 +1,4 @@
 import { createFetch } from '@vueuse/core'
-import { Snackbar } from '@varlet/ui'
 
 const useFetchApi = createFetch({
   baseUrl: '',

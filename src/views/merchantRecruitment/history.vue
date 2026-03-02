@@ -8,10 +8,9 @@ const props = defineProps<{
 }>()
 const emits = defineEmits<{
   (e: 'update:show', val: boolean): void
-  (e: 'update:historyId', val: string): void
+  (e: 'changeId', val: string): void
 }>()
 const show = useVModel(props, 'show', emits)
-const historyId = useVModel(props, 'historyId', emits)
 
 // 滚动容器 ref
 const contentContainerRef = ref<HTMLDivElement | null>(null)
@@ -20,9 +19,9 @@ const contentContainerRef = ref<HTMLDivElement | null>(null)
 const handlePopupOpen = async () => {
   // 还原到全部对话
   active.value = CONVERSION_ENUM.ALL_CONVERSION
-  if (!historyId.value) return
+  if (!props.historyId) return
   await nextTick()
-  scrollToHistoryItem(historyId.value)
+  scrollToHistoryItem(props.historyId)
 }
 
 // 滚动到指定历史记录
@@ -64,7 +63,7 @@ const filledConversionList = computed(() => {
 })
 
 const handleClickHistory = (id: string) => {
-  historyId.value = id
+  emits('changeId', id)
   show.value = false
 }
 </script>

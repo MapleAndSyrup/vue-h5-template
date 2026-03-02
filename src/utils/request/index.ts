@@ -6,7 +6,6 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig
 } from 'axios'
-import { Snackbar } from '@varlet/ui'
 
 // 统一 API 响应类型
 export interface ApiResponse<T = any> {

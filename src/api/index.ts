@@ -16,7 +16,9 @@ import type {
   LandingRequirementDetailData,
   ContactPersonData,
   AiExpressParams,
-  AiExpressData
+  AiExpressData,
+  ChatStreamParams,
+  ChatStreamChunk
 } from './types'
 
 /**
@@ -143,4 +145,94 @@ export function queryContactPerson(
  */
 export function queryAiExpress(data: AiExpressParams): Promise<ApiResponse<AiExpressData>> {
   return http.post(`/api/chat_business/ai_express_mock`, data)
+}
+
+/**
+ * 流式聊天 - 使用 EventSource 实现 SSE 流式响应
+ * @param params
+ * @param callbacks
+ * @returns
+ */
+export function queryChatStream(
+  params: ChatStreamParams,
+  callbacks: {
+    onMessage: (chunk: ChatStreamChunk) => void
+    onError?: (error: Error) => void
+    onComplete?: () => void
+  }
+): AbortController {
+  // 创建取消控制器，用于手动取消请求
+  const controller = new AbortController()
+  // 70秒超时保护，超时后自动取消请求
+  const timeoutId = setTimeout(() => {
+    controller.abort()
+    callbacks.onError?.(new Error('请求超时，请稍后重试'))
+  }, 70000)
+
+  const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://42.121.162.224:8004'
+  const url = `${baseURL}/api/chat_business/chat_business_stream`
+
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+    signal: controller.signal
+  })
+    .then(async (response) => {
+      // 请求成功，清除超时计时器
+      clearTimeout(timeoutId)
+
+      if (!response.ok) throw new Error(`HTTP Error: ${response.status}`)
+
+      if (!response.body) throw new Error('Response body is null')
+
+      // 获取响应体的流读取器
+      const reader = response.body?.getReader()
+      if (!reader) throw new Error('Response body is null')
+
+      // 创建文本解码器，将二进制数据转字符串
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      // 递归读取流数据
+      const readStream = async (): Promise<void> => {
+        return reader.read().then(({ done, value }) => {
+          if (done) return callbacks?.onComplete?.()
+
+          // 解码二进制数据
+          buffer += decoder.decode(value, { stream: true })
+
+          // 按行分割
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || ''
+
+          // 逐行解析JSON，触发消息回调
+          for (const line of lines) {
+            if (line.trim()) {
+              try {
+                callbacks.onMessage?.(JSON.parse(line))
+              } catch {
+                console.warn('Failed to parse line:', line)
+              }
+            }
+          }
+
+          // 继续读取下一批数据
+          return readStream()
+        })
+      }
+
+      return readStream()
+    })
+    .catch((error) => {
+      // 清除超时计时器
+      clearTimeout(timeoutId)
+      // 非取消操作的错误才触发回调
+      if (error.name !== 'AbortError') {
+        callbacks.onError?.(error instanceof Error ? error : new Error(String(error)))
+      }
+    })
+
+  // 返回控制器，供外部取消请求
+  return controller
 }

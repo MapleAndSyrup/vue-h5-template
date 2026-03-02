@@ -272,3 +272,33 @@ export interface AiExpressData {
   /** 投资视角分析 */
   investment_perspective_analysis: string
 }
+
+/** 流式聊天 - 上下文 */
+export interface ChatStreamContext {
+  [key: string]: any
+}
+
+/** 流式聊天 - 请求参数 */
+export interface ChatStreamParams {
+  /** 消息内容 */
+  message: string
+  /** 会话ID */
+  session_id: string
+  /** 是否流式返回 */
+  stream: true
+  /** 上下文信息 */
+  context: ChatStreamContext
+}
+
+/** 流式聊天 - 单个数据块 */
+export interface ChatStreamChunk {
+  /** 数据内容 */
+  content: string
+  context: unknown
+  /** 是否结束 */
+  finished: boolean
+  /** 内容id */
+  session_id: string
+  /** 时间戳 */
+  timestamp: string
+}
