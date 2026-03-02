@@ -1,5 +1,6 @@
 import { queryChatStream } from '@/api'
 import type { ChatStreamParams } from '@/api/types'
+import useMerchantRecruitmentStore from './store'
 
 // 生成唯一ID：时间戳 + 随机数
 const generateUniqueId = (): string => {
@@ -9,11 +10,16 @@ const generateUniqueId = (): string => {
 }
 
 export default function useMerchantRecruitment() {
+  const store = useMerchantRecruitmentStore()
+
   // 展示历史消息
   const showHistory = ref(false)
 
+  // 新建会话
   const addConversation = () => {
-    console.log('新建消息')
+    store.clearMessages()
+    chatStreamParams.value.session_id = ''
+    chatStreamParams.value.message = ''
   }
 
   // 输入框ref
@@ -43,26 +49,80 @@ export default function useMerchantRecruitment() {
     message: '',
     session_id: '',
     stream: true,
-    context: {
-      additionalProp1: {}
-    }
+    context: { additionalProp1: {} }
   })
 
   // 发送消息
-  const sendMessage = async () => {
+  const sendMessage = () => {
     const { session_id, message } = chatStreamParams.value
-    if (session_id.trim() === '') {
-      // 设置唯一 session_id
-      chatStreamParams.value.session_id = generateUniqueId()
-    }
 
     if (message.trim() === '') return Snackbar.warning('不能发送空白文本')
 
-    queryChatStream(chatStreamParams.value!, {
+    // 如果正在流式输出，先取消
+    if (store.isStreaming) {
+      store.cancelRequest()
+    }
+
+    // 确保有 session_id
+    if (session_id.trim() === '') {
+      chatStreamParams.value.session_id = generateUniqueId()
+    }
+
+    // 添加用户消息
+    store.addMessage({ role: 'user', content: message, status: 'completed' })
+
+    // 清空输入框并重置高度
+
+    nextTick(() => {
+      chatStreamParams.value.message = ''
+
+      nextTick(() => adjustHeight())
+    })
+
+    // 添加 AI 消息占位（streaming 状态）
+    const aiMsgId = store.addMessage({ role: 'ai', content: '', status: 'streaming' })
+    store.isStreaming = true
+
+    // 发起流式请求
+    const controller = queryChatStream(chatStreamParams.value, {
       onMessage: (chunk) => {
-        console.log('chunk', chunk.content)
+        // 检测超时消息：content 包含"请求超时"且 finished 为 false
+        if (chunk.content.includes('请求超时') && !chunk.finished) {
+          // 显示超时错误消息
+          store.appendAiContent(aiMsgId, chunk)
+          // 标记为错误状态并重置所有状态
+          store.errorMessage(aiMsgId)
+          setTimeout(() => {
+            Snackbar.error('请求超时，请稍后重试')
+          }, 0)
+          return
+        }
+        store.appendAiContent(aiMsgId, chunk)
+      },
+      onComplete: () => {
+        store.completeMessage(aiMsgId)
+      },
+      onError: (error) => {
+        console.error('stream error:', error)
+        store.errorMessage(aiMsgId)
+        setTimeout(() => {
+          Snackbar.error(error.message || '请求失败')
+        }, 0)
       }
     })
+
+    store.abortController = controller
+  }
+
+  // 停止生成
+  const stopGenerate = () => {
+    store.cancelRequest()
+  }
+
+  // 改变历史记录id
+  const handleChangeId = (id: string) => {
+    store.clearMessages()
+    chatStreamParams.value.session_id = id
   }
 
   onMounted(() => {
@@ -70,8 +130,10 @@ export default function useMerchantRecruitment() {
     adjustHeight()
   })
 
-  // 改变历史记录id
-  // const handleChangeId = (id: string) => {}
+  // 页面卸载时取消请求
+  onBeforeUnmount(() => {
+    store.cancelRequest()
+  })
 
   return {
     /** 展示历史消息 */
@@ -80,13 +142,17 @@ export default function useMerchantRecruitment() {
     inputRef,
     /** 流式接口参数 */
     chatStreamParams,
+    /** 是否正在流式输出 */
+    isStreaming: computed(() => store.isStreaming),
     /** 自动调整高度 */
     adjustHeight,
     /** 新建消息 */
     addConversation,
     /** 发送消息 */
-    sendMessage
+    sendMessage,
     /** 改变历史记录id */
-    // handleChangeId
+    handleChangeId,
+    /** 停止生成 */
+    stopGenerate
   }
 }

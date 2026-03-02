@@ -1,16 +1,17 @@
 <script setup lang="ts">
 // import history from './history.vue'
 import conversation from './conversation.vue'
-
 import useMerchantRecruitment from './useMerchantRecruitment'
 
 const {
   // showHistory,
-  // inputRef,
+  inputRef,
   chatStreamParams,
+  isStreaming,
   adjustHeight,
   // addConversation,
-  sendMessage
+  sendMessage,
+  stopGenerate
   // handleChangeId
 } = useMerchantRecruitment()
 </script>
@@ -45,10 +46,16 @@ const {
         v-model="chatStreamParams.message"
         textarea
         :rows="1"
+        :disabled="isStreaming"
         @input="adjustHeight"
       />
 
-      <var-button type="primary" round @click="sendMessage">
+      <!-- 流式输出中：停止按钮 -->
+      <var-button v-if="isStreaming" type="primary" round @click="stopGenerate">
+        <var-icon name="radio-marked" />
+      </var-button>
+      <!-- 正常状态：发送按钮 -->
+      <var-button v-else type="primary" round @click="sendMessage">
         <var-icon style="transform: rotate(180deg)" name="arrow-down" />
       </var-button>
     </var-paper>
