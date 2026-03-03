@@ -4,11 +4,11 @@ import { StyleProvider, Themes } from '@varlet/ui'
 onMounted(() => {
   // 检测系统主题并设置
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  StyleProvider(mediaQuery.matches ? Themes.md3Dark : Themes.md3Light)
+  StyleProvider(mediaQuery.matches ? Themes.dark : null)
 
   // 监听系统主题变化
   mediaQuery.addEventListener('change', (e) => {
-    StyleProvider(e.matches ? Themes.md3Dark : Themes.md3Light)
+    StyleProvider(e.matches ? Themes.dark : null)
   })
 })
 </script>
