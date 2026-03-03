@@ -19,7 +19,7 @@ const tags = computed(() => {
 <template>
   <var-card class="card" ripple :title="hiddenName" :subtitle="bizItem?.lead_intro">
     <template #image>
-      <var-image :src="bizItem?.pic_url" />
+      <var-image style="height: 160px" fit="cover" :src="bizItem?.pic_url" />
     </template>
 
     <div class="chips">

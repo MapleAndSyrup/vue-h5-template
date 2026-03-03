@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import JoCard from '../components/JoCard.vue'
+import JoChip from '../components/JoChip.vue'
+
 import useWorkOrders from './useWorkOrders'
 const { analysisLoading, analysisList, followUpLeadsLoading, followUpLeadsData, handleToDetail } =
   useWorkOrders()
@@ -10,49 +13,35 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
     <var-space direction="column">
       <!-- 周计划分析 -->
       <var-skeleton style="padding: 10px" card :rows="0" :loading="analysisLoading">
-        <var-card
-          variant="filled"
-          style="
-
-            --card-filled-background: var(--color-primary);
-            --card-content-color: var(--color-on-primary);
-          "
-        >
+        <jo-card>
           <template #title>
-            <var-space
-              justify="space-between"
-              align="center"
-              style="
-                padding: var(--card-title-padding);
-                margin: var(--card-title-margin);
-                color: var(--color-on-primary);
-              "
-            >
+            <var-space justify="space-between" align="center">
               <span>AI周计划分析</span>
-              <var-chip type="info">{{ timePeriod }}</var-chip>
+              <var-chip>{{ timePeriod }}</var-chip>
             </var-space>
           </template>
 
-          <var-row :gutter="[10, 10]">
-            <var-col
-              :span="24"
-              v-for="(item, index) in analysisList?.weekly_plan_analysis"
-              :key="index"
-            >
-              <var-badge style="margin-right: 10px" dot />
+          <var-space direction="column">
+            <jo-chip v-for="(item, index) in analysisList?.weekly_plan_analysis" :key="index">
+              <template #title>
+                <var-space align="center">
+                  <var-badge type="warning" dot />
+                  <span style="font-size: 20px; color: #000">{{ item?.overview }}</span>
+                </var-space>
+              </template>
 
-              <var-space direction="column">
-                <p style="font-size: var(--font-size-lg)">{{ item?.overview }}</p>
-                <p style="color: var(--color-on-primary)">{{ item?.details }}</p>
+              <var-space :wrap="false" align="center">
+                <var-badge style="opacity: 0" type="warning" dot />
+                <span>{{ item?.details }}</span>
               </var-space>
-            </var-col>
-          </var-row>
-        </var-card>
+            </jo-chip>
+          </var-space>
+        </jo-card>
       </var-skeleton>
 
       <var-sticky>
         <nav>
-          <p>跟进中的线索</p>
+          <p style=" font-size: 24px; font-weight: 700;color: var(--color-primary)">跟进中的线索</p>
 
           <!-- <ul>
             <var-button v-for="value in 6" :key="value" type="primary">全部</var-button>
@@ -74,16 +63,14 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               <span>当前跟进情况</span>
               <p>{{ item?.current_follow_up_status }}</p>
               <span>下一跟进节点</span>
-              <var-chip type="info">{{ item?.next_follow_up_node }}</var-chip>
+              <jo-chip type="warning">{{ item?.next_follow_up_node }}</jo-chip>
               <span>注意事项</span>
               <p>{{ item?.precautions }}</p>
             </var-space>
 
             <template #extra>
               <var-space style="width: 100%" justify="space-between" align="center">
-                <span style="font-size: var(--font-size-md); color: var(--color-info)">
-                  创建于:{{ item?.create_date }}
-                </span>
+                <span style="font-size: var(--font-size-md)">创建于:{{ item?.create_date }}</span>
 
                 <var-button type="primary" @click="handleToDetail(followUpLeadsData?.company_id!)">
                   查看详情
@@ -138,12 +125,16 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
   }
 
   .lead-content {
-    span {
-      color: var(--color-info);
-    }
-
     p {
       color: var(--color-text);
+    }
+  }
+
+  .var-card {
+    --card-border-radius: 16px;
+
+    :deep(.var-card__title) {
+      font-weight: bold;
     }
   }
 }

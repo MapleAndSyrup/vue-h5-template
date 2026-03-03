@@ -51,9 +51,7 @@ const handleToDetail = (router: Router, companyId: string) => {
 <template>
   <div ref="bizPoolRef" class="biz-pool" @scroll="handleScroll">
     <Teleport v-if="showSearchIcon" to="#toolbar-right">
-      <var-button type="primary" round icon-container @click="handleSearchIconClick">
-        <var-icon name="magnify" />
-      </var-button>
+      <var-icon name="magnify" @click="handleSearchIconClick" />
     </Teleport>
 
     <div class="scroll-content">

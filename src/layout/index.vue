@@ -27,10 +27,10 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
     </RouterView>
     <!-- 子页面 -->
     <RouterView v-else v-slot="{ Component }">
-      <var-app-bar safe-area-top :title="appBarTitle">
+      <var-app-bar safe-area-top :title="appBarTitle" color="#fff" text-color="#1a237e">
         <template #left>
-          <var-button color="transparent" text-color="#fff" round text @click="$router.back()">
-            <var-icon name="chevron-left" :size="24" />
+          <var-button color="transparent" text-color="#1a237e" round text @click="$router.back()">
+            <var-icon color="#1a237e" name="chevron-left" :size="24" />
           </var-button>
         </template>
       </var-app-bar>

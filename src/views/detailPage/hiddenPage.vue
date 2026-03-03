@@ -8,6 +8,9 @@ import type {
   OtherAttentionData
 } from '@/api/types'
 
+import JoTag from '../components/JoTag.vue'
+import JoChip from '../components/JoChip.vue'
+
 const companyInfoLoading = inject<Ref<boolean>>('companyInfoLoading')
 const companyInfoData = inject<Ref<CompanyInfoData | undefined>>('companyInfoData')
 
@@ -60,29 +63,17 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
           </var-col>
           <var-col :span="24">
             <div style="display: flex; gap: 10px">
-              <var-chip
+              <jo-tag
                 v-for="(tag, index) in companyInfoData?.tag"
                 :key="index"
-                type="primary"
-                size="small"
+                style=" color: #1a237e;background-color: #e8f0fe"
               >
                 {{ tag }}
-              </var-chip>
+              </jo-tag>
             </div>
           </var-col>
           <var-col :span="24">
-            <var-chip
-              block
-              type="warning"
-              style="
-                justify-content: flex-start;
-                height: auto;
-                padding: 4px 8px;
-                font-size: var(--font-size-sm);
-              "
-            >
-              根据隐私保护政策，企业具体名称和联系方式已做隐藏处理
-            </var-chip>
+            <jo-chip>根据隐私保护政策，企业具体名称和联系方式已做隐藏处理</jo-chip>
           </var-col>
         </var-row>
       </var-card>
@@ -110,14 +101,13 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
           <var-col :span="24">
             <div style="display: flex; gap: 10px">
-              <var-chip
+              <jo-tag
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
-                type="primary"
-                size="small"
+                style=" color: #1a237e;background-color: #e8f0fe"
               >
                 {{ tag }}
-              </var-chip>
+              </jo-tag>
             </div>
           </var-col>
         </var-row>
@@ -202,18 +192,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
           </var-col>
 
           <var-col :span="24">
-            <var-chip
-              block
-              type="warning"
-              style="
-                justify-content: flex-start;
-                height: auto;
-                padding: 4px 8px;
-                font-size: var(--font-size-sm);
-              "
-            >
-              完整信息需申请高级权限查看
-            </var-chip>
+            <jo-chip>完整信息需申请高级权限查看</jo-chip>
           </var-col>
         </var-row>
       </var-card>
@@ -258,7 +237,8 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 }
 
 .var-card {
-  --card-title-color: var(--color-primary);
+  --card-title-color: #1a237e;
+  --card-border-radius: 16px;
 
   :deep(.var-card__title) {
     font-weight: bold;

@@ -2,6 +2,9 @@
 const curTab = ref('全部行业')
 const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '新能源']
 
+import JoCard from '../components/JoCard.vue'
+import JoChip from '../components/JoChip.vue'
+
 import useIndustryTrends from './useIndustryTrends'
 const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
 </script>
@@ -12,52 +15,23 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
 
     <div style="display: flex; flex-direction: column">
       <var-skeleton card :rows="0" style="padding: 10px" :loading="aiExpressLoading">
-        <var-card
-          variant="filled"
-          style="
-
-            --card-filled-background: var(--color-primary);
-            --card-content-color: var(--color-on-primary);
-          "
-        >
+        <jo-card>
           <template #title>
-            <var-space
-              style="
-                padding: var(--card-title-padding);
-                margin: var(--card-title-margin);
-                color: var(--color-on-primary);
-              "
-            >
-              <span>AI今日行业动态快报</span>
-            </var-space>
+            <span>AI今日行业动态快报</span>
           </template>
 
           <template #subtitle>
-            <var-space style="padding: var(--card-title-padding); color: var(--color-on-primary)">
-              <span style="font-size: var(--font-size-md)">{{ todayDate }}</span>
-            </var-space>
+            <span>{{ todayDate }}</span>
           </template>
 
-          <var-space direction="column">
-            <p>{{ aiExpressData?.summary }}</p>
+          <p>{{ aiExpressData?.summary }}</p>
 
-            <var-chip
-              block
-              type="info"
-              style="
-                flex-direction: column;
-                justify-content: flex-start;
-                height: auto;
-                padding: 4px 8px;
-              "
-            >
-              <p style="font-weight: bold; color: var(--color-primary)">招商视角分析：</p>
-              <p>
-                {{ aiExpressData?.investment_perspective_analysis }}
-              </p>
-            </var-chip>
-          </var-space>
-        </var-card>
+          <jo-chip>
+            <template #title>招商视角分析：</template>
+
+            <span>{{ aiExpressData?.investment_perspective_analysis }}</span>
+          </jo-chip>
+        </jo-card>
       </var-skeleton>
 
       <var-sticky>
