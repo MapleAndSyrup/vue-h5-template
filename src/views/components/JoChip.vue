@@ -23,6 +23,10 @@ const slot = useSlots()
       <slot name="title"></slot>
     </div>
 
+    <div v-if="slot?.subtitle" class="jo-chip-subtitle">
+      <slot name="subtitle"></slot>
+    </div>
+
     <slot></slot>
   </div>
 </template>
@@ -41,6 +45,11 @@ const slot = useSlots()
 
   .jo-chip-title {
     font-weight: bolder;
+  }
+
+  .jo-chip-subtitle {
+    font-size: 12px;
+    color: #999;
   }
 }
 </style>

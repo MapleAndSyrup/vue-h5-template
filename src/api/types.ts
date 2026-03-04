@@ -273,6 +273,62 @@ export interface AiExpressData {
   investment_perspective_analysis: string
 }
 
+/** 当前跟进节点 - 响应数据 */
+export interface CurrentFollowUpNodeData {
+  /** ID */
+  id: string
+  /** 概览 */
+  overview: string
+  /** 详情 */
+  details: string
+  /** 注意事项 */
+  precautions: string
+  /** 跟进时间 */
+  follow_up_time: string
+}
+
+/** AI跟进建议 - 响应数据 */
+export interface AiFollowUpSuggestionData {
+  /** ID */
+  id: string
+  /** 地方招商情况分析 */
+  local_investment_analysis: string
+  /** 企业情况分析 */
+  enterprise_analysis: string
+  /** 行业适配度分析 */
+  industry_adaptability_analysis: string
+  /** 建议招商策略 */
+  suggested_investment_strategy: string
+  /** 核心谈判策略 */
+  core_negotiation_strategy: string
+  /** 下一步跟进重点 */
+  next_follow_up_focus: string
+  /** 潜在风险提示 */
+  potential_risk_tips: string
+  /** 风险应对建议 */
+  risk_response_suggestions: string
+}
+
+/** 历史跟进节点 - 单条 */
+export interface HistoricalNodeItem {
+  /** 时间 */
+  time: string
+  /** 节点概览 */
+  node_overview: string
+  /** 节点详情 */
+  node_details: string
+  /** 联系人 */
+  contact_person: string
+}
+
+/** 历史跟进节点 - 响应数据 */
+export interface HistoricalFollowUpNodesData {
+  /** ID */
+  id: string
+  /** 历史节点列表 */
+  historical_nodes: HistoricalNodeItem[]
+}
+
 /** 流式聊天 - 上下文 */
 export interface ChatStreamContext {
   [key: string]: any

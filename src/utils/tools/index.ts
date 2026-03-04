@@ -1,6 +1,19 @@
 import { type Ref } from 'vue'
 
 /**
+ * 格式化时间字符串为 'YYYY-MM-DD HH:mm'
+ * @param dateStr ISO 8601 格式时间字符串，如 "2026-01-15T10:30:00+08:00"
+ * @returns 格式化后的字符串，如 "2026-01-15 10:30"；传入无效值时返回 '-'
+ */
+export function formatDate(dateStr: string | undefined | null): string {
+  if (!dateStr) return '-'
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return '-'
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
+/**
  * 自带loading的请求
  * @param loading loading状态
  * @param cb 回调函数

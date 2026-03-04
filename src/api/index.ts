@@ -18,7 +18,10 @@ import type {
   AiExpressParams,
   AiExpressData,
   ChatStreamParams,
-  ChatStreamChunk
+  ChatStreamChunk,
+  CurrentFollowUpNodeData,
+  AiFollowUpSuggestionData,
+  HistoricalFollowUpNodesData
 } from './types'
 
 /**
@@ -136,6 +139,39 @@ export function queryContactPerson(
   data: CompanyInfoParams
 ): Promise<ApiResponse<ContactPersonData>> {
   return http.post(`/api/chat_business/contact_person_mock`, data)
+}
+
+/**
+ * 当前跟进节点
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<CurrentFollowUpNodeData>> }
+ */
+export function queryCurrentFollowUpNode(
+  data: CompanyInfoParams
+): Promise<ApiResponse<CurrentFollowUpNodeData>> {
+  return http.post(`/api/chat_business/current_follow_up_node_mock`, data)
+}
+
+/**
+ * AI跟进建议
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<AiFollowUpSuggestionData>> }
+ */
+export function queryAiFollowUpSuggestion(
+  data: CompanyInfoParams
+): Promise<ApiResponse<AiFollowUpSuggestionData>> {
+  return http.post(`/api/chat_business/ai_follow_up_suggestion_mock`, data)
+}
+
+/**
+ * 历史跟进节点
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<HistoricalFollowUpNodesData>> }
+ */
+export function queryHistoricalFollowUpNodes(
+  data: CompanyInfoParams
+): Promise<ApiResponse<HistoricalFollowUpNodesData>> {
+  return http.post(`/api/chat_business/historical_follow_up_nodes_mock`, data)
 }
 
 /**

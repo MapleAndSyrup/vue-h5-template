@@ -40,7 +40,7 @@ export default function useWorkOrders() {
   })
 
   const handleToDetail = (companyId: string) => {
-    router.push({ path: '/sub/detail-page', query: { companyId, isHidden: 0 } })
+    router.push({ path: '/sub/follow-up', query: { companyId } })
   }
 
   return {
