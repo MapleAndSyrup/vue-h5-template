@@ -12,6 +12,9 @@ const generateUniqueId = (): string => {
 export default function useMerchantRecruitment() {
   const store = useMerchantRecruitmentStore()
 
+  // 是否在当前页面（用于控制错误提示）
+  const isActive = ref(false)
+
   // 展示历史消息
   const showHistory = ref(false)
 
@@ -92,9 +95,7 @@ export default function useMerchantRecruitment() {
           store.appendAiContent(aiMsgId, chunk)
           // 标记为错误状态并重置所有状态
           store.errorMessage(aiMsgId)
-          setTimeout(() => {
-            Snackbar.error('请求超时，请稍后重试')
-          }, 0)
+          if (isActive.value) setTimeout(() => Snackbar.error('请求超时，请稍后重试'), 0)
           return
         }
         store.appendAiContent(aiMsgId, chunk)
@@ -105,9 +106,7 @@ export default function useMerchantRecruitment() {
       onError: (error) => {
         console.error('stream error:', error)
         store.errorMessage(aiMsgId)
-        setTimeout(() => {
-          Snackbar.error(error.message || '请求失败')
-        }, 0)
+        if (isActive.value) setTimeout(() => Snackbar.error(error.message || '请求失败'), 0)
       }
     })
 
@@ -125,14 +124,28 @@ export default function useMerchantRecruitment() {
     chatStreamParams.value.session_id = id
   }
 
-  onMounted(() => {
-    // 初始化高度
-    adjustHeight()
+  onBeforeUnmount(() => {
+    isActive.value = false
   })
 
-  // 页面卸载时取消请求
-  onBeforeUnmount(() => {
-    store.cancelRequest()
+  onMounted(async () => {
+    isActive.value = true
+    // 初始化高度
+    adjustHeight()
+
+    // 首次进入（消息列表为空）时，从配置文件加载欢迎语
+    if (store.messages.length === 0) {
+      try {
+        const res = await fetch('/app-config.json')
+        const config = await res.json()
+        const welcome = config?.merchantRecruitment?.welcomeMessage
+        if (welcome) {
+          store.addMessage({ role: 'ai', content: welcome, status: 'completed' })
+        }
+      } catch {
+        // 配置加载失败，静默忽略
+      }
+    }
   })
 
   return {

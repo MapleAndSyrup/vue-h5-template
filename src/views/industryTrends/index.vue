@@ -10,8 +10,21 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
 </script>
 <template>
   <div class="industry-trends">
-    <var-chip :round="false" type="primary" block size="large">行业动态</var-chip>
-    <var-chip :round="false" type="primary" block>实时追踪产业资讯，把握招商先机</var-chip>
+    <Teleport to="#app-bar-content" defer>
+      <div
+        style="
+          display: flex;
+          flex-shrink: 0;
+          flex-direction: column;
+          row-gap: 10px;
+          padding: 0 10px 10px;
+          color: var(--app-bar-text-color);
+        "
+      >
+        <strong style="font-size: 24px">行业动态</strong>
+        <p style="font-size: 14px">实时追踪产业资讯，把握招商先机</p>
+      </div>
+    </Teleport>
 
     <div style="display: flex; flex-direction: column">
       <var-skeleton card :rows="0" style="padding: 10px" :loading="aiExpressLoading">
@@ -57,10 +70,6 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
   width: 100%;
   max-width: 100vw;
   overflow-y: auto;
-
-  .var-chip {
-    flex-shrink: 0;
-  }
 
   .tabs {
     box-sizing: border-box;

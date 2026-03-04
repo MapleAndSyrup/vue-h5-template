@@ -1,0 +1,14 @@
+{
+  "merchantRecruitment": {
+    "welcomeMessage": "您好！我是智能招商助手，可以为您推荐匹配的招商企业，提高招商效率。请问有什么可以帮助您的？"
+  },
+  "bizPool": {
+    "tags": [
+      { "label": "全部行业", "value": "" },
+      { "label": "科技互联网", "value": "互联网" },
+      { "label": "制造业", "value": "制造业" },
+      { "label": "金融投资", "value": "金融投资" },
+      { "label": "新能源", "value": "新能源" }
+    ]
+  }
+}

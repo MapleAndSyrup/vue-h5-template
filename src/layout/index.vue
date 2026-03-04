@@ -6,12 +6,20 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
   <div class="layout-page">
     <!-- 主页面 -->
     <RouterView v-slot="{ Component }" v-if="isMainPage">
-      <var-app-bar safe-area-top :title="appBarTitle">
+      <var-app-bar
+        safe-area-top
+        :title="appBarTitle"
+        color="linear-gradient(135deg, #1a6dff 0%, #0d4cd3 100%)"
+      >
         <template #right>
           <div
             id="toolbar-right"
             style="display: flex; gap: 8px; align-items: center; padding-right: 8px"
           ></div>
+        </template>
+
+        <template #content>
+          <div id="app-bar-content"></div>
         </template>
       </var-app-bar>
       <component class="container" :is="Component" />
@@ -54,9 +62,9 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
     flex-shrink: 0;
   }
 
-  .bar-content {
-    overflow: hidden;
-    transition: all 0.3s;
+  :deep(.var-app-bar__title) {
+    font-size: 22px;
+    font-weight: bold;
   }
 
   :deep(.container) {

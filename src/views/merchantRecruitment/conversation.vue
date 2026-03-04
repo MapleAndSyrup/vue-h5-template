@@ -30,10 +30,26 @@ watch(() => store.messages, scrollToBottom, { deep: true })
     <div class="message-list">
       <div v-for="msg in store.messages" :key="msg.id" class="message-item" :class="msg.role">
         <!-- AI 消息：左侧头像 -->
-        <var-avatar v-if="msg.role === 'ai'" class="avatar" type="primary" size="36">AI</var-avatar>
+        <var-avatar v-if="msg.role === 'ai'" class="avatar" size="36">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <circle cx="12" cy="2" r="1.2" fill="white" />
+            <path d="M12 3.2V5.5" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+            <rect x="1" y="9" width="2.5" height="5" rx="1.25" fill="white" />
+            <rect x="20.5" y="9" width="2.5" height="5" rx="1.25" fill="white" />
+            <rect x="3" y="5.5" width="18" height="12" rx="2.5" fill="white" />
+            <circle cx="8.5" cy="10" r="2" fill="#0d4cd3" />
+            <circle cx="15.5" cy="10" r="2" fill="#0d4cd3" />
+            <rect x="7" y="14" width="10" height="2" rx="1" fill="#0d4cd3" />
+          </svg>
+        </var-avatar>
 
         <!-- 用户消息：右侧头像 -->
-        <var-avatar v-else type="primary" class="avatar" size="36">我</var-avatar>
+        <var-avatar v-else class="avatar" size="36">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <circle cx="12" cy="8" r="4.5" fill="white" />
+            <path d="M3 21c0-4.97 4.03-9 9-9s9 4.03 9 9z" fill="white" />
+          </svg>
+        </var-avatar>
 
         <div class="message-body">
           <div class="message-meta">
@@ -44,11 +60,7 @@ watch(() => store.messages, scrollToBottom, { deep: true })
           <div class="message-content">
             <!-- streaming 且内容为空：显示 loading -->
             <template v-if="msg.status === 'streaming' && msg.content === ''">
-              <var-loading
-                style="display: inline-block"
-                type="cube"
-                color="var(--color-on-primary)"
-              />
+              <var-loading style="display: inline-block" type="cube" color="#1a237e" />
             </template>
             <!-- 有内容时显示文本 -->
             <template v-else>
@@ -108,9 +120,10 @@ watch(() => store.messages, scrollToBottom, { deep: true })
       }
 
       .message-content {
-        color: var(--color-on-primary);
-        background: var(--color-primary);
+        color: #333;
+        background: #fff;
         border-radius: 0 12px 12px;
+        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 8%);
       }
     }
 
@@ -128,10 +141,10 @@ watch(() => store.messages, scrollToBottom, { deep: true })
       }
 
       .message-content {
-        color: var(--color-on-primary);
-        text-align: right;
-        background: var(--color-primary);
+        color: #fff;
+        background: linear-gradient(135deg, #1a6dff 0%, #0d4cd3 100%);
         border-radius: 12px 0 12px 12px;
+        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 8%);
       }
     }
 
@@ -139,6 +152,7 @@ watch(() => store.messages, scrollToBottom, { deep: true })
       flex-shrink: 0;
       font-size: 12px;
       font-weight: bold;
+      background: linear-gradient(135deg, #1a6dff 0%, #0d4cd3 100%) !important;
     }
 
     .message-body {

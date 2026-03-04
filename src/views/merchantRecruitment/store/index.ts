@@ -50,15 +50,20 @@ const useMerchantRecruitmentStore = defineStore('merchantRecruitment', () => {
     abortController.value = null
   }
 
-  /** 取消当前请求，保留已输出内容 */
+  /** 取消当前请求，保留已输出内容；内容为空则删除该条消息 */
   const cancelRequest = () => {
     if (abortController.value) {
       abortController.value.abort()
       abortController.value = null
     }
-    // 将所有 streaming 状态的消息标记为 completed
-    messages.value.forEach((m) => {
-      if (m.status === 'streaming') m.status = 'completed'
+    // 内容非空：标记为 completed；内容为空：直接删除
+    messages.value = messages.value.filter((m) => {
+      if (m.status !== 'streaming') return true
+      if (m.content.trim() !== '') {
+        m.status = 'completed'
+        return true
+      }
+      return false
     })
     isStreaming.value = false
   }

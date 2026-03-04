@@ -35,8 +35,10 @@ const {
       @change-id="handleChangeId"
     /> -->
 
-    <var-chip :round="false" type="primary" block size="large">智能招商助手</var-chip>
-    <var-chip :round="false" type="primary" block>为您推荐匹配的招商企业，提高招商效率</var-chip>
+    <header>
+      <strong style="font-size: 24px">智能招商助手</strong>
+      <p style="font-size: 14px">为您推荐匹配的招商企业，提高招商效率</p>
+    </header>
 
     <conversation />
 
@@ -67,8 +69,19 @@ const {
   display: flex;
   flex-direction: column;
 
-  :deep(.var-chip) {
+  header {
+    display: flex;
     flex-shrink: 0;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    color: var(--app-bar-text-color);
+    background: linear-gradient(135deg, #1a6dff 0%, #0d4cd3 100%);
+
+    strong {
+      line-height: normal;
+    }
   }
 
   .input-box {

@@ -1,52 +1,24 @@
 <script setup lang="ts">
-import type { _InputComponent as VarInputInstance } from '@varlet/ui'
-// import { fullLeadMockData } from './mock'
-
-import type { Router } from 'vue-router'
-
 import useBizPool from './useBizPool'
-const { listLoading, chatBusinessSearchParams, chatBusinessSearchData, getChatBusinessSearch } =
-  useBizPool()
+const {
+  tags,
+  listLoading,
+  chatBusinessSearchParams,
+  chatBusinessSearchData,
+  varInputRef,
+  bizPoolRef,
+  inputRef,
+  tagsRef,
+  showSearchIcon,
+  getChatBusinessSearch,
+  handleChangeTag,
+  handleToDetail,
+  handleScroll,
+  handleSearchIconClick,
+  handleSearch
+} = useBizPool()
 
 import BizItem from '@/views/components/BizItem.vue'
-
-// const curTab = ref('全部行业')
-// const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '新能源']
-
-// 展示搜索图标
-const showSearchIcon = ref(false)
-// 输入框盒子ref
-const inputRef = ref<HTMLElement | null>(null)
-const bizPoolRef = ref<HTMLElement | null>(null)
-// 组件输入框ref
-const varInputRef = ref<VarInputInstance | null>(null)
-
-// 检测 var-input 是否被 tabs 遮挡
-const handleScroll = (e: Event) => {
-  if (!inputRef.value) return
-  const scrollTop = (e.target as HTMLElement).scrollTop
-  const offsetTop = inputRef.value.offsetTop
-  showSearchIcon.value = scrollTop >= offsetTop + inputRef.value.offsetHeight
-}
-
-// 点击搜索图标回到顶部并 focus 输入框
-const handleSearchIconClick = async () => {
-  await nextTick()
-  if (!bizPoolRef.value || !varInputRef.value) return
-  // 滚动到顶部
-  bizPoolRef.value.scrollTo({ top: 0, behavior: 'smooth' })
-  // focus 输入框
-  varInputRef.value?.focus()
-}
-
-const handleSearch = () => {
-  if (!chatBusinessSearchParams.value.name) return
-  getChatBusinessSearch()
-}
-
-const handleToDetail = (router: Router, companyId: string) => {
-  router.push({ path: '/sub/detail-page', query: { companyId, isHidden: 1 } })
-}
 </script>
 <template>
   <div ref="bizPoolRef" class="biz-pool" @scroll="handleScroll">
@@ -70,19 +42,23 @@ const handleToDetail = (router: Router, companyId: string) => {
         </var-input>
       </div>
 
-      <!-- <div class="tabs">
-        <var-button
-          v-for="tab in tabs"
-          :type="curTab === tab ? 'primary' : undefined"
-          :key="tab"
-          @click="curTab = tab"
-        >
-          {{ tab }}
-        </var-button>
-      </div> -->
+      <var-sticky style="width: 100%">
+        <div ref="tagsRef" class="tags">
+          <var-button
+            v-for="{ label, value } in tags"
+            type="primary"
+            :key="label"
+            @click="handleChangeTag(value, $event)"
+            :text="chatBusinessSearchParams.tag !== value"
+            :outline="chatBusinessSearchParams.tag !== value"
+          >
+            {{ label }}
+          </var-button>
+        </div>
+      </var-sticky>
 
       <var-skeleton card :loading="listLoading">
-        <div class="list">
+        <div class="list" v-if="chatBusinessSearchData?.search_results?.length">
           <BizItem
             v-for="item in chatBusinessSearchData?.search_results"
             :key="item?.id"
@@ -90,6 +66,8 @@ const handleToDetail = (router: Router, companyId: string) => {
             @click="handleToDetail($router, item?.company_id)"
           />
         </div>
+
+        <div class="empty" v-else>这里什么都没有...</div>
       </var-skeleton>
 
       <var-back-top :duration="300" :bottom="100" :right="10" />
@@ -105,34 +83,31 @@ const handleToDetail = (router: Router, companyId: string) => {
   .scroll-content {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
     align-items: center;
     padding: 20px 0 0;
 
-    // .tabs {
-    //   position: sticky;
-    //   top: 0;
-    //   z-index: 10;
-    //   display: flex;
-    //   flex-shrink: 0;
-    //   column-gap: 20px;
-    //   align-items: center;
-    //   width: 100%;
-    //   padding: 20px 10px;
-    //   overflow-x: auto;
+    .tags {
+      display: flex;
+      flex-shrink: 0;
+      column-gap: 20px;
+      align-items: center;
+      width: 100%;
+      padding: 20px 10px;
+      overflow-x: auto;
 
-    //   /* 隐藏滚动条 */
-    //   scrollbar-width: none; /* Firefox */
-    //   background: var(--color-body);
-    //   -ms-overflow-style: none; /* IE/Edge */
-    //   &::-webkit-scrollbar {
-    //     display: none; /* Chrome/Safari/Webkit */
-    //   }
+      /* 隐藏滚动条 */
+      scrollbar-width: none; /* Firefox */
+      background: var(--color-body);
+      -ms-overflow-style: none; /* IE/Edge */
+      &::-webkit-scrollbar {
+        display: none; /* Chrome/Safari/Webkit */
+      }
 
-    //   .var-button {
-    //     flex-shrink: 0;
-    //   }
-    // }
+      .var-button {
+        flex-shrink: 0;
+        border-radius: 30px;
+      }
+    }
 
     .list {
       column-gap: 16px;
@@ -146,6 +121,18 @@ const handleToDetail = (router: Router, companyId: string) => {
         margin-bottom: 20px;
         break-inside: avoid;
       }
+    }
+
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 10px 10px;
+      margin: 100px auto;
+      font-size: 20px;
     }
   }
 }

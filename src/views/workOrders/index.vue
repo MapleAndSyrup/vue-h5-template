@@ -41,7 +41,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
 
       <var-sticky>
         <nav>
-          <p style=" font-size: 24px; font-weight: 700;color: var(--color-primary)">跟进中的线索</p>
+          <p style="font-size: 24px; font-weight: 700; color: var(--color-primary)">跟进中的线索</p>
 
           <!-- <ul>
             <var-button v-for="value in 6" :key="value" type="primary">全部</var-button>
