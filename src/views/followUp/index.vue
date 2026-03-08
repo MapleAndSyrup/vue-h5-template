@@ -87,7 +87,7 @@ const rows = computed(() => {
         <var-row :gutter="[10, 10]">
           <template v-for="{ label, value } in rows" :key="label">
             <var-col :span="6">
-              <span style=" font-size: 14px;color: #666">{{ label }}</span>
+              <span style="font-size: 14px; color: #666">{{ label }}</span>
             </var-col>
             <var-col :span="18">
               <span style="font-size: 14px; font-weight: 500; color: #1a1a1a">{{ value }}</span>
@@ -124,7 +124,7 @@ const rows = computed(() => {
             <var-tab-item v-for="{ label, list } in tabsData" :name="label" :key="label">
               <var-space direction="column">
                 <template v-for="{ label, value } in list" :key="label">
-                  <span style=" font-weight: 600;color: var(--color-primary)">{{ label }}</span>
+                  <span style="font-weight: 600; color: var(--color-primary)">{{ label }}</span>
                   <p v-for="(line, i) in splitLines(value)" :key="i" style="color: #333">
                     {{ line }}
                   </p>
@@ -162,7 +162,8 @@ const rows = computed(() => {
         查看线索详情
       </var-button>
       <var-button size="large" type="primary">节点更新</var-button>
-      <var-button size="large" type="success">会议上传</var-button>
+      <!-- TODO -->
+      <!-- <var-button size="large" type="success">会议上传</var-button> -->
     </div>
   </div>
 </template>

@@ -1,12 +1,21 @@
 <script setup lang="ts">
-const curTab = ref('全部行业')
-const tabs = ['全部行业', '科技互联网', '制造业', '金融投资', '新能源']
-
 import JoCard from '../components/JoCard.vue'
 import JoChip from '../components/JoChip.vue'
 
+const chipsType = ['primary', 'success', 'danger', 'warning', 'info'] as const
+
 import useIndustryTrends from './useIndustryTrends'
-const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
+const {
+  tagsRef,
+  tags,
+  aiExpressLoading,
+  aiExpressData,
+  todayDate,
+  industryNewsLoading,
+  industryNewsParams,
+  industryNewsData,
+  handleChangeTag
+} = useIndustryTrends()
 </script>
 <template>
   <div class="industry-trends">
@@ -37,28 +46,98 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
             <span>{{ todayDate }}</span>
           </template>
 
-          <p>{{ aiExpressData?.summary }}</p>
+          <!-- <p>{{ aiExpressData?.summary }}</p> -->
 
-          <jo-chip>
+          <jo-chip v-for="value in aiExpressData?.express_list" :key="value?.id">
             <template #title>招商视角分析：</template>
 
-            <span>{{ aiExpressData?.investment_perspective_analysis }}</span>
+            <span>{{ value?.investment_perspective_analysis }}</span>
           </jo-chip>
         </jo-card>
       </var-skeleton>
 
-      <var-sticky>
-        <div class="tabs">
+      <var-sticky style="width: 100%">
+        <div ref="tagsRef" class="tags">
           <var-button
-            v-for="tab in tabs"
-            :type="curTab === tab ? 'primary' : undefined"
-            :key="tab"
-            @click="curTab = tab"
+            v-for="{ label, value } in tags"
+            type="primary"
+            :key="label"
+            @click="handleChangeTag(value, $event)"
+            :text="industryNewsParams.tag !== value"
+            :outline="industryNewsParams.tag !== value"
           >
-            {{ tab }}
+            {{ label }}
           </var-button>
         </div>
       </var-sticky>
+
+      <var-skeleton card :rows="0" style="padding: 10px" :loading="industryNewsLoading">
+        <var-space direction="column">
+          <var-card v-for="news in industryNewsData?.news_list" :key="news?.id">
+            <template #title>
+              <p style="padding: var(--card-title-padding); margin: var(--card-title-margin)">
+                {{ news?.title }}
+              </p>
+            </template>
+
+            <template #subtitle>
+              <var-space
+                align="center"
+                style="padding: var(--card-subtitle-padding); margin: var(--card-subtitle-margin)"
+              >
+                <var-chip :type="chipsType[1]" size="small">{{ news?.category }}</var-chip>
+                <span style="font-size: 13px">{{ news?.publish_date }}</span>
+              </var-space>
+            </template>
+
+            <var-space direction="column">
+              <p>{{ news?.content }}</p>
+
+              <var-space>
+                <var-chip v-for="tag in news?.tags" type="primary" :key="tag" size="mini">
+                  {{ tag }}
+                </var-chip>
+              </var-space>
+
+              <var-row :gutter="[10, 10]">
+                <var-col :span="12">
+                  <var-space direction="column">
+                    <span>影响主体</span>
+                    <p style="color: #222">
+                      {{ news?.related_entities?.join('、') }}
+                    </p>
+                  </var-space>
+                </var-col>
+
+                <var-col :span="12">
+                  <var-space direction="column">
+                    <span>涉及概念</span>
+                    <p style="color: #222">{{ news?.concepts?.join('、') }}</p>
+                  </var-space>
+                </var-col>
+
+                <var-col :span="12">
+                  <var-space direction="column">
+                    <span>来源</span>
+                    <p style="color: #222">{{ news?.source }}</p>
+                  </var-space>
+                </var-col>
+
+                <var-col :span="12">
+                  <var-space direction="column">
+                    <span>招商相关性</span>
+                    <p style="color: #222">{{ news?.relevance }}</p>
+                  </var-space>
+                </var-col>
+              </var-row>
+            </var-space>
+
+            <template #extra>
+              <p>来源：{{ news?.source_info }}</p>
+            </template>
+          </var-card>
+        </var-space>
+      </var-skeleton>
     </div>
   </div>
 </template>
@@ -71,14 +150,13 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
   max-width: 100vw;
   overflow-y: auto;
 
-  .tabs {
-    box-sizing: border-box;
+  .tags {
     display: flex;
+    flex-shrink: 0;
     column-gap: 20px;
     align-items: center;
     width: 100%;
-    max-width: 100%;
-    padding: 10px;
+    padding: 20px 10px;
     overflow-x: auto;
 
     /* 隐藏滚动条 */
@@ -91,6 +169,27 @@ const { todayDate, aiExpressData, aiExpressLoading } = useIndustryTrends()
 
     .var-button {
       flex-shrink: 0;
+      border-radius: 30px;
+    }
+  }
+
+  .var-card {
+    border-radius: 20px;
+
+    :deep(.var-card__container) {
+      padding-bottom: 0;
+    }
+
+    :deep(.var-card__footer) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      font-size: 13px;
+      color: #777;
+      background-color: #f9f9f9;
+      border-top: 1px solid #eee;
     }
   }
 }

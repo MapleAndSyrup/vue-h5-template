@@ -5,8 +5,8 @@
   "bizPool": {
     "tags": [
       { "label": "全部行业", "value": "" },
-      { "label": "科技互联网", "value": "互联网" },
       { "label": "制造业", "value": "制造业" },
+      { "label": "科技互联网", "value": "网" },
       { "label": "金融投资", "value": "金融投资" },
       { "label": "新能源", "value": "新能源" }
     ]

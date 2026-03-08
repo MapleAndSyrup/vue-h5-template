@@ -21,7 +21,9 @@ import type {
   ChatStreamChunk,
   CurrentFollowUpNodeData,
   AiFollowUpSuggestionData,
-  HistoricalFollowUpNodesData
+  HistoricalFollowUpNodesData,
+  IndustryNewsParams,
+  IndustryNewsData
 } from './types'
 
 /**
@@ -172,6 +174,17 @@ export function queryHistoricalFollowUpNodes(
   data: CompanyInfoParams
 ): Promise<ApiResponse<HistoricalFollowUpNodesData>> {
   return http.post(`/api/chat_business/historical_follow_up_nodes_mock`, data)
+}
+
+/**
+ * 行业动态
+ * @param { IndustryNewsParams } data 请求参数
+ * @returns { Promise<ApiResponse<IndustryNewsData>> }
+ */
+export function queryIndustryNews(
+  data: IndustryNewsParams
+): Promise<ApiResponse<IndustryNewsData>> {
+  return http.post(`/api/chat_business/industry_news_mock`, data)
 }
 
 /**

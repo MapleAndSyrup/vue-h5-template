@@ -260,17 +260,21 @@ export interface AiExpressParams {
   /** 索引 */
   index: string
   /** 公司ID */
-  company_id: string
+  tag: string
 }
 
 /** AI 快递 - 响应数据 */
 export interface AiExpressData {
   /** ID */
   id: string
-  /** 摘要 */
-  summary: string
-  /** 投资视角分析 */
-  investment_perspective_analysis: string
+  express_list: {
+    id: string
+    tag: string
+    /** 摘要 */
+    summary: string
+    /** 投资视角分析 */
+    investment_perspective_analysis: string
+  }[]
 }
 
 /** 当前跟进节点 - 响应数据 */
@@ -327,6 +331,48 @@ export interface HistoricalFollowUpNodesData {
   id: string
   /** 历史节点列表 */
   historical_nodes: HistoricalNodeItem[]
+}
+
+/** 行业动态 - 请求参数 */
+export interface IndustryNewsParams {
+  /** 索引 */
+  index: string
+  /** 标签 */
+  tag: string
+}
+
+/** 行业动态 - 单条新闻 */
+export interface IndustryNewsItem {
+  /** 新闻ID */
+  id: string
+  /** 标题 */
+  title: string
+  /** 分类 */
+  category: string
+  /** 发布日期 */
+  publish_date: string
+  /** 内容 */
+  content: string
+  /** 标签列表 */
+  tags: string[]
+  /** 相关实体 */
+  related_entities: string[]
+  /** 概念 */
+  concepts: string[]
+  /** 来源 */
+  source: string
+  /** 相关度 */
+  relevance: string
+  /** 来源信息 */
+  source_info: string
+}
+
+/** 行业动态 - 响应数据 */
+export interface IndustryNewsData {
+  /** ID */
+  id: string
+  /** 新闻列表 */
+  news_list: IndustryNewsItem[]
 }
 
 /** 流式聊天 - 上下文 */
