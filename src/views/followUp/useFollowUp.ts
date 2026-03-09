@@ -4,13 +4,15 @@ import {
   queryCompanyInfo,
   queryCurrentFollowUpNode,
   queryAiFollowUpSuggestion,
-  queryHistoricalFollowUpNodes
+  queryHistoricalFollowUpNodes,
+  queryContactPerson
 } from '@/api'
 import type {
   CompanyInfoData,
   CurrentFollowUpNodeData,
   AiFollowUpSuggestionData,
-  HistoricalFollowUpNodesData
+  HistoricalFollowUpNodesData,
+  ContactPersonData
 } from '@/api/types'
 
 export default function useFollowUp() {
@@ -25,6 +27,14 @@ export default function useFollowUp() {
   const getCompanyInfo = async () => {
     const { data } = await queryCompanyInfo(params.value)
     companyInfoData.value = data
+  }
+
+  // 对接联系人
+  const contactPersonData = ref<ContactPersonData>()
+  // 请求对接联系人
+  const getContactPerson = async () => {
+    const { data } = await queryContactPerson(params.value)
+    contactPersonData.value = data
   }
 
   // 当前跟进节点 loading
@@ -60,7 +70,10 @@ export default function useFollowUp() {
   const route = useRoute()
   onMounted(() => {
     params.value.company_id = route.query?.companyId as string
-    useRequest(companyInfoLoading, getCompanyInfo)
+    useRequest(companyInfoLoading, async () => {
+      getCompanyInfo()
+      getContactPerson()
+    })
     useRequest(currentFollowUpNodeLoading, getCurrentFollowUpNode)
     useRequest(aiFollowUpSuggestionLoading, getAiFollowUpSuggestion)
     useRequest(historicalFollowUpNodesLoading, getHistoricalFollowUpNodes)
@@ -76,6 +89,7 @@ export default function useFollowUp() {
   return {
     companyInfoLoading,
     companyInfoData,
+    contactPersonData,
     currentFollowUpNodeLoading,
     currentFollowUpNodeData,
     aiFollowUpSuggestionLoading,

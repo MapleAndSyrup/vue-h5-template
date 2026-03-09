@@ -255,8 +255,14 @@ export interface ContactPersonItem {
 export interface ContactPersonData {
   /** ID */
   id: string
+  /** 公司id */
+  company_id: string
   /** 联系人列表 */
   contacts: ContactPersonItem[]
+  /** 提供方式 */
+  source_channel: string
+  /** 联系人 */
+  responsible_representative: string
 }
 
 /** AI 快递 - 请求参数 */

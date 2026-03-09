@@ -8,6 +8,7 @@ import useFollowUp from './useFollowUp'
 const {
   companyInfoLoading,
   companyInfoData,
+  contactPersonData,
   // currentFollowUpNodeLoading,
   // currentFollowUpNodeData,
   aiFollowUpSuggestionLoading,
@@ -69,13 +70,17 @@ const tabsData = computed(() => {
 })
 
 const rows = computed(() => {
-  if (!companyInfoData.value) return undefined
+  if (!companyInfoData.value || !contactPersonData.value) return undefined
   const { responsible_representative } = companyInfoData.value
+  const { contacts, source_channel } = contactPersonData.value
+  const contact = contacts?.[0]
+
+  const contactInfo = `${contact?.contact_info.slice(0, 4)}****${contact?.contact_info.slice(-4)}`
   return [
-    { label: '联系人：', value: responsible_representative },
-    { label: '联系方式：', value: '138****8888' },
-    { label: '来源渠道：', value: '2024数字经济峰会 · 2024-05-10' },
-    { label: '负责代表：', value: '李思源 · 招商二部' }
+    { label: '联系人：', value: contact?.name },
+    { label: '联系方式：', value: contactInfo },
+    { label: '来源渠道：', value: source_channel },
+    { label: '负责代表：', value: responsible_representative }
   ]
 })
 </script>
