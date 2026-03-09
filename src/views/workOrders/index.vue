@@ -72,7 +72,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               <var-space style="width: 100%" justify="space-between" align="center">
                 <span style="font-size: var(--font-size-md)">创建于:{{ item?.create_date }}</span>
 
-                <var-button type="primary" @click="handleToDetail(followUpLeadsData?.company_id!)">
+                <var-button type="primary" @click="handleToDetail('company11')">
                   查看详情
                 </var-button>
               </var-space>

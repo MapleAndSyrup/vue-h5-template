@@ -8,7 +8,7 @@ const props = defineProps<{
 const hiddenName = computed(() => {
   const name = props.bizItem.company_name
   if (name.length <= 4) return name
-  return `${name.slice(0, 2)}****${name.slice(-2)}(信息已隐藏)`
+  return `${name.slice(3, 5)}****${name.slice(-2)}(信息已隐藏)`
 })
 
 const tags = computed(() => {

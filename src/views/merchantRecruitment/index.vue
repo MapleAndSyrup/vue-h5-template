@@ -50,6 +50,7 @@ const {
         :rows="1"
         :disabled="isStreaming"
         @input="adjustHeight"
+        @keydown.enter.prevent="!isStreaming && sendMessage()"
       />
 
       <!-- 流式输出中：停止按钮 -->

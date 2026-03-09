@@ -23,6 +23,10 @@ const scrollToBottom = () => {
 
 // 监听消息变化，自动滚动到底部
 watch(() => store.messages, scrollToBottom, { deep: true })
+
+onMounted(() => {
+  scrollToBottom()
+})
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import JoCard from '../components/JoCard.vue'
-import JoChip from '../components/JoChip.vue'
+// import JoCard from '../components/JoCard.vue'
+// import JoChip from '../components/JoChip.vue'
 
 const chipsType = ['primary', 'success', 'danger', 'warning', 'info'] as const
 
@@ -8,9 +8,9 @@ import useIndustryTrends from './useIndustryTrends'
 const {
   tagsRef,
   tags,
-  aiExpressLoading,
-  aiExpressData,
-  todayDate,
+  // aiExpressLoading,
+  // aiExpressData,
+  // todayDate,
   industryNewsLoading,
   industryNewsParams,
   industryNewsData,
@@ -36,7 +36,7 @@ const {
     </Teleport>
 
     <div style="display: flex; flex-direction: column">
-      <var-skeleton card :rows="0" style="padding: 10px" :loading="aiExpressLoading">
+      <!-- <var-skeleton card :rows="0" style="padding: 10px" :loading="aiExpressLoading">
         <jo-card>
           <template #title>
             <span>AI今日行业动态快报</span>
@@ -46,15 +46,21 @@ const {
             <span>{{ todayDate }}</span>
           </template>
 
-          <!-- <p>{{ aiExpressData?.summary }}</p> -->
+          <template v-if="aiExpressData?.express_list?.length">
+            <template v-for="item in aiExpressData?.express_list" :key="item?.id">
+              <p>{{ item?.summary }}</p>
 
-          <jo-chip v-for="value in aiExpressData?.express_list" :key="value?.id">
-            <template #title>招商视角分析：</template>
+              <jo-chip>
+                <template #title>招商视角分析：</template>
 
-            <span>{{ value?.investment_perspective_analysis }}</span>
-          </jo-chip>
+                <span>{{ item?.investment_perspective_analysis }}</span>
+              </jo-chip>
+            </template>
+          </template>
+
+          <p v-else>暂无内容</p>
         </jo-card>
-      </var-skeleton>
+      </var-skeleton> -->
 
       <var-sticky style="width: 100%">
         <div ref="tagsRef" class="tags">
@@ -73,72 +79,77 @@ const {
 
       <var-skeleton card :rows="0" style="padding: 10px" :loading="industryNewsLoading">
         <var-space direction="column">
-          <var-card v-for="news in industryNewsData?.news_list" :key="news?.id">
-            <template #title>
-              <p style="padding: var(--card-title-padding); margin: var(--card-title-margin)">
-                {{ news?.title }}
-              </p>
-            </template>
+          <template v-if="industryNewsData?.news_list?.length">
+            <var-card v-for="news in industryNewsData?.news_list" :key="news?.id">
+              <template #title>
+                <p style="padding: var(--card-title-padding); margin: var(--card-title-margin)">
+                  {{ news?.title }}
+                </p>
+              </template>
 
-            <template #subtitle>
-              <var-space
-                align="center"
-                style="padding: var(--card-subtitle-padding); margin: var(--card-subtitle-margin)"
-              >
-                <var-chip :type="chipsType[1]" size="small">{{ news?.category }}</var-chip>
-                <span style="font-size: 13px">{{ news?.publish_date }}</span>
+              <template #subtitle>
+                <var-space
+                  align="center"
+                  style="padding: var(--card-subtitle-padding); margin: var(--card-subtitle-margin)"
+                >
+                  <var-chip :type="chipsType[1]" size="small">{{ news?.category }}</var-chip>
+                  <span style="font-size: 13px">{{ news?.publish_date }}</span>
+                </var-space>
+              </template>
+
+              <var-space direction="column">
+                <p>{{ news?.content }}</p>
+
+                <var-space>
+                  <var-chip v-for="tag in news?.tags" type="primary" :key="tag" size="mini">
+                    {{ tag }}
+                  </var-chip>
+                </var-space>
+
+                <var-row :gutter="[10, 10]">
+                  <var-col :span="12">
+                    <var-space direction="column">
+                      <span>影响主体</span>
+                      <p style="color: #222">
+                        {{ news?.related_entities?.join('、') }}
+                      </p>
+                    </var-space>
+                  </var-col>
+
+                  <var-col :span="12">
+                    <var-space direction="column">
+                      <span>涉及概念</span>
+                      <p style="color: #222">{{ news?.concepts?.join('、') }}</p>
+                    </var-space>
+                  </var-col>
+
+                  <var-col :span="12">
+                    <var-space direction="column">
+                      <span>来源</span>
+                      <p style="color: #222">{{ news?.source }}</p>
+                    </var-space>
+                  </var-col>
+
+                  <var-col :span="12">
+                    <var-space direction="column">
+                      <span>招商相关性</span>
+                      <p style="color: #222">{{ news?.relevance }}</p>
+                    </var-space>
+                  </var-col>
+                </var-row>
               </var-space>
-            </template>
 
-            <var-space direction="column">
-              <p>{{ news?.content }}</p>
+              <template #extra>
+                <p>来源：{{ news?.source_info }}</p>
+              </template>
+            </var-card>
+          </template>
 
-              <var-space>
-                <var-chip v-for="tag in news?.tags" type="primary" :key="tag" size="mini">
-                  {{ tag }}
-                </var-chip>
-              </var-space>
-
-              <var-row :gutter="[10, 10]">
-                <var-col :span="12">
-                  <var-space direction="column">
-                    <span>影响主体</span>
-                    <p style="color: #222">
-                      {{ news?.related_entities?.join('、') }}
-                    </p>
-                  </var-space>
-                </var-col>
-
-                <var-col :span="12">
-                  <var-space direction="column">
-                    <span>涉及概念</span>
-                    <p style="color: #222">{{ news?.concepts?.join('、') }}</p>
-                  </var-space>
-                </var-col>
-
-                <var-col :span="12">
-                  <var-space direction="column">
-                    <span>来源</span>
-                    <p style="color: #222">{{ news?.source }}</p>
-                  </var-space>
-                </var-col>
-
-                <var-col :span="12">
-                  <var-space direction="column">
-                    <span>招商相关性</span>
-                    <p style="color: #222">{{ news?.relevance }}</p>
-                  </var-space>
-                </var-col>
-              </var-row>
-            </var-space>
-
-            <template #extra>
-              <p>来源：{{ news?.source_info }}</p>
-            </template>
-          </var-card>
+          <p style="width: 100%; text-align: center" v-else>暂无内容</p>
         </var-space>
       </var-skeleton>
     </div>
+    <var-back-top :duration="300" :bottom="100" :right="10" />
   </div>
 </template>
 

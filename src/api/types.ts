@@ -91,6 +91,10 @@ export interface CompanyInfoParams {
 
 /** 公司详情 - 响应数据 */
 export interface CompanyInfoData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
   /** 公司名称 */
   name: string
   /** 所属行业 */

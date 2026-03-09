@@ -19,7 +19,8 @@ const {
 
 const active = ref('综合分析')
 
-const tabs = ['综合分析', '策略建议', '风险提示']
+// '风险提示'
+const tabs = ['综合分析', '策略建议']
 
 // 按分号拆分文本，过滤空项
 const splitLines = (text: string) =>
@@ -36,9 +37,9 @@ const tabsData = computed(() => {
     industry_adaptability_analysis,
     suggested_investment_strategy,
     core_negotiation_strategy,
-    next_follow_up_focus,
-    potential_risk_tips,
-    risk_response_suggestions
+    next_follow_up_focus
+    // potential_risk_tips,
+    // risk_response_suggestions
   } = aiFollowUpSuggestionData.value
   return [
     {
@@ -56,14 +57,14 @@ const tabsData = computed(() => {
         { label: '核心谈判策略', value: core_negotiation_strategy },
         { label: '下一步跟进重点', value: next_follow_up_focus }
       ]
-    },
-    {
-      label: '风险提示',
-      list: [
-        { label: '潜在风险提示', value: potential_risk_tips },
-        { label: '风险应对建议', value: risk_response_suggestions }
-      ]
     }
+    // {
+    //   label: '风险提示',
+    //   list: [
+    //     { label: '潜在风险提示', value: potential_risk_tips },
+    //     { label: '风险应对建议', value: risk_response_suggestions }
+    //   ]
+    // }
   ]
 })
 
@@ -158,10 +159,11 @@ const rows = computed(() => {
     </var-skeleton>
 
     <div class="space" justify="space-between">
-      <var-button type="primary" text outline size="large" @click="checkDetail($router)">
+      <!-- text outline -->
+      <var-button type="primary" size="large" @click="checkDetail($router)">
         查看线索详情
       </var-button>
-      <var-button size="large" type="primary">节点更新</var-button>
+      <!-- <var-button size="large" type="primary">节点更新</var-button> -->
       <!-- TODO -->
       <!-- <var-button size="large" type="success">会议上传</var-button> -->
     </div>
@@ -189,7 +191,8 @@ const rows = computed(() => {
     width: 100%;
 
     .var-button {
-      width: calc((100% - 20px) / 3);
+      // width: calc((100% - 20px) / 3);
+      width: 100%;
     }
   }
 }

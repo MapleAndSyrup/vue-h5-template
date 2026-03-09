@@ -141,7 +141,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
             <var-col :span="24">
               <div style="display: flex; gap: 10px">
                 <jo-tag
-                  style=" color: #1a237e;background-color: #e8f0fe"
+                  style="color: #1a237e; background-color: #e8f0fe"
                   v-for="(tag, index) in companyInfoData?.tag"
                   :key="index"
                 >
@@ -186,7 +186,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
-                style=" color: #1a237e;background-color: #e8f0fe"
+                style="color: #1a237e; background-color: #e8f0fe"
               >
                 {{ tag }}
               </jo-tag>
@@ -233,7 +233,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in futureDevelopData?.advantages"
                 :key="index"
-                style=" color: #1a237e;background-color: #e8f0fe"
+                style="color: #1a237e; background-color: #e8f0fe"
               >
                 {{ tag }}
               </jo-tag>
@@ -413,7 +413,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
       </var-card>
     </var-skeleton>
 
-    <var-row :gutter="[10, 10]">
+    <!-- <var-row :gutter="[10, 10]">
       <var-col :span="12">
         <var-button text outline text-color="#1a237e" size="large">
           <var-icon name="download-outline" style="margin-right: 4px" />
@@ -426,7 +426,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
           预约实地考察
         </var-button>
       </var-col>
-    </var-row>
+    </var-row> -->
 
     <var-back-top :duration="300" :bottom="100" :right="10" />
   </var-space>
