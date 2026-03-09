@@ -16,7 +16,7 @@ import JoChip from '../components/JoChip.vue'
 const companyInfoLoading = inject<Ref<boolean>>('companyInfoLoading')
 const companyInfoData = inject<Ref<CompanyInfoData | undefined>>('companyInfoData')
 
-const simName = computed(() => companyInfoData?.value?.name?.slice(0, 2))
+const simName = computed(() => companyInfoData?.value?.name?.slice(2, 5))
 
 const investmentMatchLoading = inject<Ref<boolean>>('investmentMatchLoading')
 const investmentMatchData = inject<Ref<InvestmentMatchData | undefined>>('investmentMatchData')
@@ -73,8 +73,8 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                   color: #1a237e;
                   border-radius: 12px;
                 "
-                :width="80"
-                :height="80"
+                :width="120"
+                :height="120"
               >
                 {{ simName }}
               </var-paper>

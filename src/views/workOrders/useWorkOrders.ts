@@ -13,7 +13,7 @@ export default function useWorkOrders() {
   // 获取AI周计划分析
   const getAiWeeklyPlanAnalysis = async () => {
     const { data } = await queryAiWeeklyPlanAnalysis({
-      company_id: '',
+      company_id: 'company11',
       index: '001'
     })
     analysisList.value = data
@@ -26,7 +26,7 @@ export default function useWorkOrders() {
   // 获取跟进线索列表
   const getFollowUpLeads = async () => {
     const { data } = await queryFollowUpLeads({
-      company_id: 'company1',
+      company_id: 'company11',
       index: '001'
     })
     followUpLeadsData.value = data
