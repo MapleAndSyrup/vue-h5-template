@@ -23,7 +23,12 @@ import type {
   AiFollowUpSuggestionData,
   HistoricalFollowUpNodesData,
   IndustryNewsParams,
-  IndustryNewsData
+  IndustryNewsData,
+  LoginParams,
+  LoginData,
+  UpdateCompanyStatusParams,
+  HistoricalFollowUpChangeParams,
+  ChatResponseData
 } from './types'
 
 /**
@@ -34,7 +39,7 @@ import type {
 export function queryAiWeeklyPlanAnalysis(
   data: AiWeeklyPlanAnalysisParams
 ): Promise<ApiResponse<AiWeeklyPlanAnalysisData>> {
-  return http.post(`/api/chat_business/ai_weekly_plan_analysis_mock`, data)
+  return http.post(`/chat/ai_weekly_plan_analysis_mock`, data)
 }
 
 /**
@@ -45,7 +50,7 @@ export function queryAiWeeklyPlanAnalysis(
 export function queryFollowUpLeads(
   data: AiWeeklyPlanAnalysisParams
 ): Promise<ApiResponse<FollowUpLeadsData>> {
-  return http.post(`/api/chat_business/follow_up_leads_mock`, data)
+  return http.post(`/chat/follow_up_leads_mock`, data)
 }
 
 /**
@@ -56,7 +61,7 @@ export function queryFollowUpLeads(
 export function queryChatBusinessSearch(
   data: ChatBusinessSearchParams
 ): Promise<ApiResponse<ChatBusinessSearchData>> {
-  return http.post(`/api/chat_business/search_mock`, data)
+  return http.post(`/chat/search_mock`, data)
 }
 
 /**
@@ -65,7 +70,7 @@ export function queryChatBusinessSearch(
  * @returns { Promise<ApiResponse<CompanyInfoData>> }
  */
 export function queryCompanyInfo(data: CompanyInfoParams): Promise<ApiResponse<CompanyInfoData>> {
-  return http.post(`/api/chat_business/company_info_mock`, data)
+  return http.post(`/chat/company_info_mock`, data)
 }
 
 /**
@@ -76,7 +81,7 @@ export function queryCompanyInfo(data: CompanyInfoParams): Promise<ApiResponse<C
 export function queryInvestmentMatch(
   data: CompanyInfoParams
 ): Promise<ApiResponse<InvestmentMatchData>> {
-  return http.post(`/api/chat_business/investment_match_mock`, data)
+  return http.post(`/chat/investment_match_mock`, data)
 }
 
 /**
@@ -87,7 +92,7 @@ export function queryInvestmentMatch(
 export function queryFutureDevelop(
   data: CompanyInfoParams
 ): Promise<ApiResponse<FutureDevelopData>> {
-  return http.post(`/api/chat_business/future_develop_mock`, data)
+  return http.post(`/chat/future_develop_mock`, data)
 }
 
 /**
@@ -96,7 +101,7 @@ export function queryFutureDevelop(
  * @returns { Promise<ApiResponse<EquityInfoData>> }
  */
 export function queryEquityInfo(data: CompanyInfoParams): Promise<ApiResponse<EquityInfoData>> {
-  return http.post(`/api/chat_business/equity_info_mock`, data)
+  return http.post(`/chat/equity_info_mock`, data)
 }
 
 /**
@@ -107,7 +112,7 @@ export function queryEquityInfo(data: CompanyInfoParams): Promise<ApiResponse<Eq
 export function queryRelatedOpinion(
   data: CompanyInfoParams
 ): Promise<ApiResponse<RelatedOpinionData>> {
-  return http.post(`/api/chat_business/related_opinion_mock`, data)
+  return http.post(`/chat/related_opinion_mock`, data)
 }
 
 /**
@@ -118,7 +123,7 @@ export function queryRelatedOpinion(
 export function queryOtherAttention(
   data: CompanyInfoParams
 ): Promise<ApiResponse<OtherAttentionData>> {
-  return http.post(`/api/chat_business/other_attention_mock`, data)
+  return http.post(`/chat/other_attention_mock`, data)
 }
 
 /**
@@ -129,7 +134,7 @@ export function queryOtherAttention(
 export function queryLandingRequirementDetail(
   data: CompanyInfoParams
 ): Promise<ApiResponse<LandingRequirementDetailData>> {
-  return http.post(`/api/chat_business/landing_requirement_detail_mock`, data)
+  return http.post(`/chat/landing_requirement_detail_mock`, data)
 }
 
 /**
@@ -140,7 +145,7 @@ export function queryLandingRequirementDetail(
 export function queryContactPerson(
   data: CompanyInfoParams
 ): Promise<ApiResponse<ContactPersonData>> {
-  return http.post(`/api/chat_business/contact_person_mock`, data)
+  return http.post(`/chat/contact_person_mock`, data)
 }
 
 /**
@@ -151,7 +156,7 @@ export function queryContactPerson(
 export function queryCurrentFollowUpNode(
   data: CompanyInfoParams
 ): Promise<ApiResponse<CurrentFollowUpNodeData>> {
-  return http.post(`/api/chat_business/current_follow_up_node_mock`, data)
+  return http.post(`/chat/current_follow_up_node_mock`, data)
 }
 
 /**
@@ -162,7 +167,7 @@ export function queryCurrentFollowUpNode(
 export function queryAiFollowUpSuggestion(
   data: CompanyInfoParams
 ): Promise<ApiResponse<AiFollowUpSuggestionData>> {
-  return http.post(`/api/chat_business/ai_follow_up_suggestion_mock`, data)
+  return http.post(`/chat/ai_follow_up_suggestion_mock`, data)
 }
 
 /**
@@ -173,7 +178,7 @@ export function queryAiFollowUpSuggestion(
 export function queryHistoricalFollowUpNodes(
   data: CompanyInfoParams
 ): Promise<ApiResponse<HistoricalFollowUpNodesData>> {
-  return http.post(`/api/chat_business/historical_follow_up_nodes_mock`, data)
+  return http.post(`/chat/historical_follow_up_nodes_mock`, data)
 }
 
 /**
@@ -184,7 +189,7 @@ export function queryHistoricalFollowUpNodes(
 export function queryIndustryNews(
   data: IndustryNewsParams
 ): Promise<ApiResponse<IndustryNewsData>> {
-  return http.post(`/api/chat_business/industry_news_mock`, data)
+  return http.post(`/chat/industry_news_mock`, data)
 }
 
 /**
@@ -193,7 +198,247 @@ export function queryIndustryNews(
  * @returns { Promise<ApiResponse<AiExpressData>> }
  */
 export function queryAiExpress(data: AiExpressParams): Promise<ApiResponse<AiExpressData>> {
-  return http.post(`/api/chat_business/ai_express_mock`, data)
+  return http.post(`/chat/ai_express_mock`, data)
+}
+
+// ==================== 认证接口 ====================
+
+/**
+ * 用户登录
+ * @param { LoginParams } data 请求参数
+ * @returns { Promise<ApiResponse<LoginData>> }
+ */
+export function queryLogin(data: LoginParams): Promise<ApiResponse<LoginData>> {
+  return http.post(`/auth/login`, data)
+}
+
+/**
+ * 用户注册
+ * @param { LoginParams } data 请求参数
+ * @returns { Promise<ApiResponse<LoginData>> }
+ */
+export function queryRegister(data: LoginParams): Promise<ApiResponse<LoginData>> {
+  return http.post(`/auth/register`, data)
+}
+
+/**
+ * 用户登出
+ * @param { LoginParams } data 请求参数
+ * @returns { Promise<ApiResponse<null>> }
+ */
+export function queryLogout(data: LoginParams): Promise<ApiResponse<null>> {
+  return http.post(`/auth/logout`, data)
+}
+
+// ==================== 线索接口 ====================
+
+/**
+ * 搜索线索（正式）
+ * @param { ChatBusinessSearchParams } data 请求参数
+ * @returns { Promise<ApiResponse<ChatBusinessSearchData>> }
+ */
+export function queryCompanySearch(
+  data: ChatBusinessSearchParams
+): Promise<ApiResponse<ChatBusinessSearchData>> {
+  return http.post(`/company/search`, data)
+}
+
+/**
+ * 公司信息（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<CompanyInfoData>> }
+ */
+export function queryCompanyInfoReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<CompanyInfoData>> {
+  return http.post(`/company/company_info`, data)
+}
+
+/**
+ * 股权情况（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<EquityInfoData>> }
+ */
+export function queryEquityInfoReal(data: CompanyInfoParams): Promise<ApiResponse<EquityInfoData>> {
+  return http.post(`/company/equity_info`, data)
+}
+
+/**
+ * 落地需求详情（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<LandingRequirementDetailData>> }
+ */
+export function queryLandingRequirementDetailReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<LandingRequirementDetailData>> {
+  return http.post(`/company/landing_requirement_detail`, data)
+}
+
+/**
+ * 修改公司收藏和手工录入状态
+ * @param { UpdateCompanyStatusParams } data 请求参数
+ * @returns { Promise<ApiResponse<null>> }
+ */
+export function queryUpdateCompanyStatus(
+  data: UpdateCompanyStatusParams
+): Promise<ApiResponse<null>> {
+  return http.post(`/company/update_company_status`, data)
+}
+
+/**
+ * 对接联系人（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<ContactPersonData>> }
+ */
+export function queryContactPersonReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<ContactPersonData>> {
+  return http.post(`/company/contact_person`, data)
+}
+
+// ==================== 跟进接口 ====================
+
+/**
+ * AI 周计划分析（正式）
+ * @param { AiWeeklyPlanAnalysisParams } data 请求参数
+ * @returns { Promise<ApiResponse<AiWeeklyPlanAnalysisData>> }
+ */
+export function queryAiWeeklyPlanAnalysisReal(
+  data: AiWeeklyPlanAnalysisParams
+): Promise<ApiResponse<AiWeeklyPlanAnalysisData>> {
+  return http.post(`/follow_up/ai_weekly_plan_analysis`, data)
+}
+
+/**
+ * 跟进中的线索（正式）
+ * @param { AiWeeklyPlanAnalysisParams } data 请求参数
+ * @returns { Promise<ApiResponse<FollowUpLeadsData>> }
+ */
+export function queryFollowUpLeadsReal(
+  data: AiWeeklyPlanAnalysisParams
+): Promise<ApiResponse<FollowUpLeadsData>> {
+  return http.post(`/follow_up/follow_up_leads`, data)
+}
+
+/**
+ * 当前跟进节点（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<CurrentFollowUpNodeData>> }
+ */
+export function queryCurrentFollowUpReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<CurrentFollowUpNodeData>> {
+  return http.post(`/follow_up/current_follow_up`, data)
+}
+
+/**
+ * AI 跟进建议（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<AiFollowUpSuggestionData>> }
+ */
+export function queryAiFollowUpSuggestionReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<AiFollowUpSuggestionData>> {
+  return http.post(`/follow_up/ai_follow_up_suggestion`, data)
+}
+
+/**
+ * 历史跟进节点（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<HistoricalFollowUpNodesData>> }
+ */
+export function queryHistoricalFollowUpNodesReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<HistoricalFollowUpNodesData>> {
+  return http.post(`/follow_up/historical_follow_up_nodes`, data)
+}
+
+/**
+ * 历史跟进节点变更（增删改）
+ * @param { HistoricalFollowUpChangeParams } data 请求参数
+ * @returns { Promise<ApiResponse<null>> }
+ */
+export function queryHistoricalFollowUpChange(
+  data: HistoricalFollowUpChangeParams
+): Promise<ApiResponse<null>> {
+  return http.post(`/follow_up/historical_follow_up_change`, data)
+}
+
+// ==================== 其他接口 ====================
+
+/**
+ * 招商匹配度（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<InvestmentMatchData>> }
+ */
+export function queryInvestmentMatchReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<InvestmentMatchData>> {
+  return http.post(`/other/investment_match`, data)
+}
+
+/**
+ * 未来发展（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<FutureDevelopData>> }
+ */
+export function queryFutureDevelopReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<FutureDevelopData>> {
+  return http.post(`/other/future_develop`, data)
+}
+
+/**
+ * 行业新闻动态（正式）
+ * @param { IndustryNewsParams } data 请求参数
+ * @returns { Promise<ApiResponse<IndustryNewsData>> }
+ */
+export function queryIndustryNewsReal(
+  data: IndustryNewsParams
+): Promise<ApiResponse<IndustryNewsData>> {
+  return http.post(`/other/industry_news`, data)
+}
+
+/**
+ * 其他注意事项（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<OtherAttentionData>> }
+ */
+export function queryOtherAttentionReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<OtherAttentionData>> {
+  return http.post(`/other/other_attention`, data)
+}
+
+/**
+ * 相关舆情（正式）
+ * @param { CompanyInfoParams } data 请求参数
+ * @returns { Promise<ApiResponse<RelatedOpinionData>> }
+ */
+export function queryRelatedOpinionReal(
+  data: CompanyInfoParams
+): Promise<ApiResponse<RelatedOpinionData>> {
+  return http.post(`/other/related_opinion`, data)
+}
+
+/**
+ * AI 快报（正式）
+ * @param { AiExpressParams } data 请求参数
+ * @returns { Promise<ApiResponse<AiExpressData>> }
+ */
+export function queryAiExpressReal(data: AiExpressParams): Promise<ApiResponse<AiExpressData>> {
+  return http.post(`/other/ai_express`, data)
+}
+
+// ==================== 聊天接口 ====================
+
+/**
+ * 非流式聊天
+ * @param { ChatStreamParams } data 请求参数
+ * @returns { Promise<ApiResponse<ChatResponseData>> }
+ */
+export function queryChatBusiness(data: ChatStreamParams): Promise<ApiResponse<ChatResponseData>> {
+  return http.post(`/chat/chat_business`, data)
 }
 
 /**
@@ -219,7 +464,7 @@ export function queryChatStream(
   }, 70000)
 
   const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://42.121.162.224:8004'
-  const url = `${baseURL}/api/chat_business/chat_business_stream`
+  const url = `${baseURL}/chat/chat_business_stream`
 
   fetch(url, {
     method: 'POST',

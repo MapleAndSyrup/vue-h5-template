@@ -17,7 +17,13 @@ export interface AiWeeklyPlanAnalysisItem {
 }
 
 /** AI 周报计划分析 - 响应数据 */
-export type AiWeeklyPlanAnalysisData = { weekly_plan_analysis: AiWeeklyPlanAnalysisItem[] }
+export interface AiWeeklyPlanAnalysisData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
+  weekly_plan_analysis: AiWeeklyPlanAnalysisItem[]
+}
 
 /** 跟进线索 - 单条线索 */
 export interface FollowUpLeadItem {
@@ -125,10 +131,18 @@ export interface CompanyInfoData {
   source_channel: string
   /** 负责人 */
   responsible_representative: string
+  /** 是否收藏 */
+  is_favorite: number
+  /** 是否手工录入 */
+  is_manual: number
 }
 
 /** 投资匹配 - 响应数据 */
 export interface InvestmentMatchData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
   /** 行业匹配度 */
   industry_match: number
   /** 政策匹配度 */
@@ -143,6 +157,10 @@ export interface InvestmentMatchData {
 
 /** 未来发展 - 响应数据 */
 export interface FutureDevelopData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
   /** 市场前景 */
   market_outlook: string
   /** 技术优势 */
@@ -179,6 +197,10 @@ export interface FundingHistoryItem {
 
 /** 股权信息 - 响应数据 */
 export interface EquityInfoData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
   /** 融资阶段 */
   funding_stage: string
   /** 主要投资方 */
@@ -208,7 +230,13 @@ export interface NewsItem {
 }
 
 /** 相关舆情 - 响应数据 */
-export type RelatedOpinionData = { news_list: NewsItem[] }
+export interface RelatedOpinionData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
+  news_list: NewsItem[]
+}
 
 /** 其他关注 - 单条 */
 export interface AttentionItem {
@@ -221,12 +249,20 @@ export interface AttentionItem {
 }
 
 /** 其他关注 - 响应数据 */
-export type OtherAttentionData = { attention_list: AttentionItem[] }
+export interface OtherAttentionData {
+  /** ID */
+  id: string
+  /** 公司ID */
+  company_id: string
+  attention_list: AttentionItem[]
+}
 
 /** 落地需求详情 - 响应数据 */
 export interface LandingRequirementDetailData {
   /** ID */
   id: string
+  /** 公司ID */
+  company_id: string
   /** 需求类型 */
   requirement_type: string
   /** 计划投资金额 */
@@ -291,6 +327,8 @@ export interface AiExpressData {
 export interface CurrentFollowUpNodeData {
   /** ID */
   id: string
+  /** 公司ID */
+  company_id: string
   /** 概览 */
   overview: string
   /** 详情 */
@@ -305,6 +343,8 @@ export interface CurrentFollowUpNodeData {
 export interface AiFollowUpSuggestionData {
   /** ID */
   id: string
+  /** 公司ID */
+  company_id: string
   /** 地方招商情况分析 */
   local_investment_analysis: string
   /** 企业情况分析 */
@@ -339,6 +379,8 @@ export interface HistoricalNodeItem {
 export interface HistoricalFollowUpNodesData {
   /** ID */
   id: string
+  /** 公司ID */
+  company_id: string
   /** 历史节点列表 */
   historical_nodes: HistoricalNodeItem[]
 }
@@ -383,6 +425,80 @@ export interface IndustryNewsData {
   id: string
   /** 新闻列表 */
   news_list: IndustryNewsItem[]
+}
+
+/** 登录/注册 - 请求参数 */
+export interface LoginParams {
+  /** 用户手机号 */
+  phone: string
+  /** 用户密码 */
+  password: string
+  /** 请求索引 */
+  index: number
+}
+
+/** 登录 - 响应数据 */
+export interface LoginData {
+  /** 用户ID */
+  user_id: string
+  /** 手机号 */
+  phone: string
+  /** 姓名 */
+  name: string
+  /** 角色 */
+  role: string
+  /** token */
+  token: string
+  /** 过期时间 */
+  expire_time: string
+}
+
+/** 修改公司状态 - 请求参数 */
+export interface UpdateCompanyStatusParams {
+  /** 索引 */
+  index: string
+  /** 公司ID */
+  company_id: string
+  /** 是否收藏 */
+  is_favorite: number
+  /** 是否手工录入 */
+  is_manual: number
+}
+
+/** 历史跟进节点变更 - 请求参数 */
+export interface HistoricalFollowUpChangeParams {
+  /** 索引 */
+  index: string
+  /** 公司ID */
+  company_id: string
+  /** 操作类型：add, update, delete */
+  operation: string
+  /** 节点ID，用于 update 和 delete 操作 */
+  node_id?: string | null
+  /** 节点概述 */
+  node_overview?: string | null
+  /** 节点详情 */
+  node_details?: string | null
+  /** 联系人 */
+  contact_person?: string | null
+  /** 创建日期，格式：YYYY-MM-DD */
+  create_date?: string | null
+}
+
+/** 非流式聊天 - 响应数据 */
+export interface ChatResponseData {
+  /** ID */
+  id: string
+  /** 助手回复 */
+  message: string
+  /** 会话ID（兼容字段） */
+  conversation_id: string
+  /** 会话ID */
+  session_id?: string | null
+  /** 时间戳 */
+  timestamp: string
+  /** 响应上下文 */
+  context?: Record<string, any> | null
 }
 
 /** 流式聊天 - 上下文 */
