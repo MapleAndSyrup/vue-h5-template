@@ -92,10 +92,19 @@ export function queryContactPerson(
 /**
  * 修改公司收藏和手工录入状态
  */
-export function queryUpdateCompanyStatus(
+export function updateCompanyStatus(
   data: UpdateCompanyStatusParams
 ): Promise<ApiResponse<null>> {
   return http.post(`/company/update_company_status`, data)
+}
+
+/**
+ * 修改公司收藏和手工录入状态接口
+ * @param data
+ * @returns
+ */
+export function updateCompanyFollow(data: UpdateCompanyStatusParams) {
+  return http.post(`/company/update_company_follow`, data)
 }
 
 // ==================== 跟进接口 ====================

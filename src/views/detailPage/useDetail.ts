@@ -131,6 +131,7 @@ export default function useDetail() {
 
   provide('companyInfoLoading', companyInfoLoading)
   provide('companyInfoData', companyInfoData)
+  provide('getCompanyInfo', getCompanyInfo)
 
   provide('investmentMatchLoading', investmentMatchLoading)
   provide('investmentMatchData', investmentMatchData)

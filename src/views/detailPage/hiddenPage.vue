@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { updateCompanyStatus, updateCompanyFollow } from '@/api'
+
 import type {
   CompanyInfoData,
   InvestmentMatchData,
@@ -11,8 +13,11 @@ import type {
 import JoTag from '../components/JoTag.vue'
 import JoChip from '../components/JoChip.vue'
 
+const router = useRouter()
+
 const companyInfoLoading = inject<Ref<boolean>>('companyInfoLoading')
 const companyInfoData = inject<Ref<CompanyInfoData | undefined>>('companyInfoData')
+const getCompanyInfo = inject('getCompanyInfo') as () => Promise<void>
 
 const investmentMatchLoading = inject<Ref<boolean>>('investmentMatchLoading')
 const investmentMatchData = inject<Ref<InvestmentMatchData | undefined>>('investmentMatchData')
@@ -28,6 +33,35 @@ const relatedOpinionData = inject<Ref<RelatedOpinionData | undefined>>('relatedO
 
 const otherAttentionLoading = inject<Ref<boolean>>('otherAttentionLoading')
 const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAttentionData')
+
+const handleFavorite = async (isFavorite: 0 | 1) => {
+  await updateCompanyStatus({
+    index: '1',
+    company_id: companyInfoData?.value?.company_id!,
+    is_favorite: isFavorite == 1 ? 0 : 1,
+    is_manual: companyInfoData?.value?.is_manual!
+  })
+  await getCompanyInfo()
+  isFavorite == 1 ? Snackbar.success('取消关注成功') : Snackbar.success('关注成功')
+}
+
+const handleManual = async (isManual: 0 | 1) => {
+  if (isManual == 1) {
+    router.push({
+      path: '/sub/follow-up',
+      query: { companyId: companyInfoData?.value?.company_id! }
+    })
+  } else {
+    await updateCompanyFollow({
+      index: '1',
+      company_id: companyInfoData?.value?.company_id!,
+      is_favorite: companyInfoData?.value?.is_favorite!,
+      is_manual: 1
+    })
+    await getCompanyInfo()
+    Snackbar.success('创建成功')
+  }
+}
 </script>
 <template>
   <var-space direction="column" style="padding: 10px">
@@ -66,7 +100,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in companyInfoData?.tag"
                 :key="index"
-                style=" color: #1a237e;background-color: #e8f0fe"
+                style="color: #1a237e; background-color: #e8f0fe"
               >
                 {{ tag }}
               </jo-tag>
@@ -104,7 +138,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
-                style=" color: #1a237e;background-color: #e8f0fe"
+                style="color: #1a237e; background-color: #e8f0fe"
               >
                 {{ tag }}
               </jo-tag>
@@ -197,6 +231,35 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
         </var-row>
       </var-card>
     </var-skeleton>
+
+    <var-row :gutter="[10, 10]">
+      <var-col :span="12">
+        <var-button
+          text
+          outline
+          text-color="#1a237e"
+          size="large"
+          @click="handleFavorite(companyInfoData?.is_favorite!)"
+        >
+          <var-icon
+            :name="companyInfoData?.is_favorite == 1 ? 'star' : 'star-outline'"
+            style="margin-right: 4px"
+          />
+          {{ companyInfoData?.is_favorite == 1 ? '取消关注' : '关注线索' }}
+        </var-button>
+      </var-col>
+      <var-col :span="12">
+        <var-button
+          type="primary"
+          color="linear-gradient(135deg, #1a237e, #3d5afe)"
+          size="large"
+          @click="handleManual(companyInfoData?.is_manual!)"
+        >
+          <var-icon name="format-list-checkbox" style="margin-right: 4px" />
+          {{ companyInfoData?.is_manual == 1 ? '查看跟进记录' : '创建工作单' }}
+        </var-button>
+      </var-col>
+    </var-row>
 
     <var-back-top :duration="300" :bottom="100" :right="10" />
   </var-space>

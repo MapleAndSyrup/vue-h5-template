@@ -132,9 +132,9 @@ export interface CompanyInfoData {
   /** 负责人 */
   responsible_representative: string
   /** 是否收藏 */
-  is_favorite: number
+  is_favorite: 0 | 1
   /** 是否手工录入 */
-  is_manual: number
+  is_manual: 0 | 1
 }
 
 /** 投资匹配 - 响应数据 */
@@ -470,9 +470,9 @@ export interface UpdateCompanyStatusParams {
   /** 公司ID */
   company_id: string
   /** 是否收藏 */
-  is_favorite: number
+  is_favorite?: number
   /** 是否手工录入 */
-  is_manual: number
+  is_manual?: number
 }
 
 /** 历史跟进节点变更 - 请求参数 */
