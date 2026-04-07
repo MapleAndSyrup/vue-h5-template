@@ -7,8 +7,15 @@ const router: Router = createRouter({
   routes: routes
 })
 
-router.beforeEach(async (_to, _from, next) => {
-  next()
+router.beforeEach((to, _from, next) => {
+  const token = localStorage.getItem('token')
+  if (!token && to.path !== '/login') {
+    next('/login')
+  } else if (token && to.path === '/login') {
+    next('/biz-pool')
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -427,11 +427,21 @@ export interface IndustryNewsData {
   news_list: IndustryNewsItem[]
 }
 
-/** 登录/注册 - 请求参数 */
+/** 登录 - 请求参数 */
 export interface LoginParams {
-  /** 用户手机号 */
+  /** 用户手机号/邮箱 */
   phone: string
   /** 用户密码 */
+  password: string
+  /** 请求索引 */
+  index: number
+}
+
+/** 注册 - 请求参数 */
+export interface RegisterParams {
+  /** 手机号 */
+  phone: string
+  /** 密码 */
   password: string
   /** 请求索引 */
   index: number

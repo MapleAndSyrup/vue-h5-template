@@ -4,6 +4,11 @@ import { BOTTOM_BAR } from '@/constant'
 
 export const routes: RouteRecordRaw[] = [
   {
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
+    meta: { title: '登录' }
+  },
+  {
     path: '/',
     redirect: '/biz-pool',
     component: () => import('@/layout/index.vue'),
@@ -71,11 +76,9 @@ export const routes: RouteRecordRaw[] = [
       }
     ]
   },
-  // 匹配不到重定向会主页
   {
-    // 找不到路由重定向到404页面
     path: '/:pathMatch(.*)',
-    redirect: '/Home'
+    redirect: '/login'
   }
 ]
 

@@ -1,44 +1,35 @@
-import { loginPassword } from '@/api';
-import { useCookies } from '@vueuse/integrations/useCookies';
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
+import type { LoginData } from '@/api/types'
 
-const { VITE_TOKEN_KEY } = import.meta.env;
-const token = useCookies().get(VITE_TOKEN_KEY as string);
-console.log(token);
+const TOKEN_KEY = 'token'
 
 interface StoreUser {
-  token: string;
-  info: Record<any, any>;
+  token: string
+  userInfo: Partial<LoginData>
 }
 
 export const useUserStore = defineStore('user', {
   state: (): StoreUser => ({
-    token: 'token',
-    info: {},
+    token: localStorage.getItem(TOKEN_KEY) || '',
+    userInfo: {}
   }),
   getters: {
-    getUserInfo(): any {
-      return this.info || {};
-    },
+    isLoggedIn(): boolean {
+      return !!this.token
+    }
   },
   actions: {
-    setInfo(info: any) {
-      this.info = info ?? '';
+    setToken(token: string) {
+      this.token = token
+      localStorage.setItem(TOKEN_KEY, token)
     },
-    async login() {
-      try {
-        const res = await loginPassword(); // 调用登录接口
-        this.setInfo(res); // 设置用户信息
-        this.token = res.token; // 假设返回的 res 包含 token
-        return res;
-      } catch (error) {
-        console.error('Login failed', error);
-        throw error;
-      }
+    setUserInfo(info: Partial<LoginData>) {
+      this.userInfo = info
     },
-  },
-  persist: {
-    pick: ['token'],
-    storage: localStorage,
-  },
-});
+    logout() {
+      this.token = ''
+      this.userInfo = {}
+      localStorage.removeItem(TOKEN_KEY)
+    }
+  }
+})
