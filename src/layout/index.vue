@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useLayout from './useLayout'
-const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLayout()
+const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange, handleLogout } = useLayout()
 </script>
 <template>
   <div class="layout-page">
@@ -16,6 +16,19 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange } = useLay
             id="toolbar-right"
             style="display: flex; gap: 8px; align-items: center; padding-right: 8px"
           ></div>
+
+          <var-button
+            type="primary"
+            round
+            icon-container
+            text
+            @click="$router.push('/sub/user-info')"
+          >
+            <var-icon name="account-circle" :size="24" />
+          </var-button>
+          <var-button type="primary" round icon-container text @click="handleLogout">
+            <var-icon name="power" :size="24" />
+          </var-button>
         </template>
 
         <template #content>

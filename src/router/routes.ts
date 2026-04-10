@@ -73,6 +73,15 @@ export const routes: RouteRecordRaw[] = [
           mainPage: false,
           key: 11
         }
+      },
+      {
+        path: 'user-info',
+        component: () => import('@/views/userInfo/index.vue'),
+        meta: {
+          title: '个人信息',
+          mainPage: false,
+          key: 12
+        }
       }
     ]
   },

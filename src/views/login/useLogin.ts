@@ -1,4 +1,4 @@
-import { queryLogin, queryRegister } from '@/api'
+import { queryLogin, queryRegister, queryUser } from '@/api'
 import { useUserStore } from '@/store/modules/user'
 import { useRequest } from '@/utils/tools'
 
@@ -25,9 +25,17 @@ export default function useLogin() {
   async function handleLogin() {
     try {
       await useRequest(loginLoading, async () => {
-        const res = await queryLogin({ phone: loginForm.account, password: loginForm.password, index: 0 })
+        const res = await queryLogin({
+          phone: loginForm.account,
+          password: loginForm.password,
+          index: 0
+        })
         userStore.setToken(res.data.token)
         userStore.setUserInfo(res.data)
+        // 登录后立即拉取最新用户信息
+        const userRes = await queryUser({ index: 0, user_id: res.data.user_id })
+        const found = userRes.data?.users?.[0]
+        if (found) userStore.setUserInfo({ ...userStore.userInfo, ...found })
         if (rememberMe.value) {
           localStorage.setItem('remembered_account', loginForm.account)
         } else {
@@ -42,7 +50,11 @@ export default function useLogin() {
   async function handleRegister() {
     try {
       await useRequest(registerLoading, async () => {
-        await queryRegister({ phone: registerForm.phone, password: registerForm.password, index: 0 })
+        await queryRegister({
+          phone: registerForm.phone,
+          password: registerForm.password,
+          index: 0
+        })
         Snackbar.success('注册成功，请登录')
         loginForm.account = registerForm.phone
         showRegister.value = false

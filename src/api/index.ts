@@ -27,29 +27,68 @@ import type {
   LoginParams,
   LoginData,
   RegisterParams,
+  UpdateUserParams,
+  QueryUserParams,
+  UserListData,
   UpdateCompanyStatusParams,
-  HistoricalFollowUpChangeParams,
+  FollowUpLeadsChangeParams,
+  ScheduleNewsParams,
   ChatResponseData
 } from './types'
 
 // ==================== 认证接口 ====================
 
+/**
+ * 用户登录
+ * @param {LoginParams} data - 手机号、密码、请求索引
+ * @returns {LoginData}
+ */
 export function queryLogin(data: LoginParams): Promise<ApiResponse<LoginData>> {
   return http.post(`/auth/login`, data)
 }
 
+/**
+ * 用户注册
+ * @param {RegisterParams} data - 手机号、密码、请求索引
+ * @returns {LoginData}
+ */
 export function queryRegister(data: RegisterParams): Promise<ApiResponse<LoginData>> {
   return http.post(`/auth/register`, data)
 }
 
-export function queryLogout(data: LoginParams): Promise<ApiResponse<null>> {
+/**
+ * 用户登出
+ * @param {object} data - 请求索引
+ * @returns {null}
+ */
+export function queryLogout(data: { index: number }): Promise<ApiResponse<null>> {
   return http.post(`/auth/logout`, data)
+}
+
+/**
+ * 查询用户
+ * @param {QueryUserParams} data - 可按用户ID或手机号查询
+ * @returns {UserListData}
+ */
+export function queryUser(data: QueryUserParams): Promise<ApiResponse<UserListData>> {
+  return http.post(`/auth/query_user`, data)
+}
+
+/**
+ * 修改用户信息
+ * @param {UpdateUserParams} data - 用户ID、可选姓名/密码
+ * @returns {null}
+ */
+export function queryUpdateUser(data: UpdateUserParams): Promise<ApiResponse<null>> {
+  return http.post(`/auth/update_user`, data)
 }
 
 // ==================== 线索接口 ====================
 
 /**
  * 招商线索搜索
+ * @param {ChatBusinessSearchParams} data
+ * @returns {ChatBusinessSearchData}
  */
 export function queryChatBusinessSearch(
   data: ChatBusinessSearchParams
@@ -59,20 +98,26 @@ export function queryChatBusinessSearch(
 
 /**
  * 公司详情
+ * @param {CompanyInfoParams} data
+ * @returns {CompanyInfoData}
  */
 export function queryCompanyInfo(data: CompanyInfoParams): Promise<ApiResponse<CompanyInfoData>> {
   return http.post(`/company/company_info`, data)
 }
 
 /**
- * 股权信息
+ * 股权情况
+ * @param {CompanyInfoParams} data
+ * @returns {EquityInfoData}
  */
 export function queryEquityInfo(data: CompanyInfoParams): Promise<ApiResponse<EquityInfoData>> {
   return http.post(`/company/equity_info`, data)
 }
 
 /**
- * 落地需求详情
+ * 选址需求详情
+ * @param {CompanyInfoParams} data
+ * @returns {LandingRequirementDetailData}
  */
 export function queryLandingRequirementDetail(
   data: CompanyInfoParams
@@ -82,6 +127,8 @@ export function queryLandingRequirementDetail(
 
 /**
  * 对接联系人
+ * @param {CompanyInfoParams} data
+ * @returns {ContactPersonData}
  */
 export function queryContactPerson(
   data: CompanyInfoParams
@@ -90,20 +137,20 @@ export function queryContactPerson(
 }
 
 /**
- * 修改公司收藏和手工录入状态
+ * 修改公司收藏和关注状态
+ * @param {UpdateCompanyStatusParams} data
+ * @returns {null}
  */
-export function updateCompanyStatus(
-  data: UpdateCompanyStatusParams
-): Promise<ApiResponse<null>> {
+export function updateCompanyStatus(data: UpdateCompanyStatusParams): Promise<ApiResponse<null>> {
   return http.post(`/company/update_company_status`, data)
 }
 
 /**
- * 修改公司收藏和手工录入状态接口
- * @param data
- * @returns
+ * 修改公司收藏和关注状态（follow版本）
+ * @param {UpdateCompanyStatusParams} data
+ * @returns {null}
  */
-export function updateCompanyFollow(data: UpdateCompanyStatusParams) {
+export function updateCompanyFollow(data: UpdateCompanyStatusParams): Promise<ApiResponse<null>> {
   return http.post(`/company/update_company_follow`, data)
 }
 
@@ -111,6 +158,8 @@ export function updateCompanyFollow(data: UpdateCompanyStatusParams) {
 
 /**
  * AI 周计划分析
+ * @param {AiWeeklyPlanAnalysisParams} data
+ * @returns {AiWeeklyPlanAnalysisData}
  */
 export function queryAiWeeklyPlanAnalysis(
   data: AiWeeklyPlanAnalysisParams
@@ -120,6 +169,8 @@ export function queryAiWeeklyPlanAnalysis(
 
 /**
  * 跟进中的线索
+ * @param {AiWeeklyPlanAnalysisParams} data
+ * @returns {FollowUpLeadsData}
  */
 export function queryFollowUpLeads(
   data: AiWeeklyPlanAnalysisParams
@@ -129,6 +180,8 @@ export function queryFollowUpLeads(
 
 /**
  * 当前跟进节点
+ * @param {CompanyInfoParams} data
+ * @returns {CurrentFollowUpNodeData}
  */
 export function queryCurrentFollowUpNode(
   data: CompanyInfoParams
@@ -138,6 +191,8 @@ export function queryCurrentFollowUpNode(
 
 /**
  * AI 跟进建议
+ * @param {CompanyInfoParams} data
+ * @returns {AiFollowUpSuggestionData}
  */
 export function queryAiFollowUpSuggestion(
   data: CompanyInfoParams
@@ -147,6 +202,8 @@ export function queryAiFollowUpSuggestion(
 
 /**
  * 历史跟进节点
+ * @param {CompanyInfoParams} data
+ * @returns {HistoricalFollowUpNodesData}
  */
 export function queryHistoricalFollowUpNodes(
   data: CompanyInfoParams
@@ -155,18 +212,22 @@ export function queryHistoricalFollowUpNodes(
 }
 
 /**
- * 历史跟进节点变更（增删改）
+ * 跟进中线索变更（增删改）
+ * @param {FollowUpLeadsChangeParams} data - operation: add | update | delete
+ * @returns {null}
  */
-export function queryHistoricalFollowUpChange(
-  data: HistoricalFollowUpChangeParams
+export function queryFollowUpLeadsChange(
+  data: FollowUpLeadsChangeParams
 ): Promise<ApiResponse<null>> {
-  return http.post(`/follow_up/historical_follow_up_change`, data)
+  return http.post(`/follow_up/follow_up_leads_change`, data)
 }
 
 // ==================== 其他接口 ====================
 
 /**
- * 投资匹配
+ * 招商匹配度
+ * @param {CompanyInfoParams} data
+ * @returns {InvestmentMatchData}
  */
 export function queryInvestmentMatch(
   data: CompanyInfoParams
@@ -176,6 +237,8 @@ export function queryInvestmentMatch(
 
 /**
  * 未来发展
+ * @param {CompanyInfoParams} data
+ * @returns {FutureDevelopData}
  */
 export function queryFutureDevelop(
   data: CompanyInfoParams
@@ -185,6 +248,8 @@ export function queryFutureDevelop(
 
 /**
  * 相关舆情
+ * @param {CompanyInfoParams} data
+ * @returns {RelatedOpinionData}
  */
 export function queryRelatedOpinion(
   data: CompanyInfoParams
@@ -193,7 +258,9 @@ export function queryRelatedOpinion(
 }
 
 /**
- * 其他关注
+ * 其他注意事项
+ * @param {CompanyInfoParams} data
+ * @returns {OtherAttentionData}
  */
 export function queryOtherAttention(
   data: CompanyInfoParams
@@ -202,7 +269,9 @@ export function queryOtherAttention(
 }
 
 /**
- * 行业动态
+ * 行业新闻动态
+ * @param {IndustryNewsParams} data
+ * @returns {IndustryNewsData}
  */
 export function queryIndustryNews(
   data: IndustryNewsParams
@@ -212,15 +281,28 @@ export function queryIndustryNews(
 
 /**
  * AI 快报
+ * @param {AiExpressParams} data
+ * @returns {AiExpressData}
  */
 export function queryAiExpress(data: AiExpressParams): Promise<ApiResponse<AiExpressData>> {
   return http.post(`/other/ai_express`, data)
+}
+
+/**
+ * 创建定时新闻拉取任务
+ * @param {ScheduleNewsParams} data - 行业、数量、执行时间（小时/分钟）
+ * @returns {null}
+ */
+export function queryScheduleNews(data: ScheduleNewsParams): Promise<ApiResponse<null>> {
+  return http.post(`/other/schedule_news`, data)
 }
 
 // ==================== 聊天接口 ====================
 
 /**
  * 非流式聊天
+ * @param {ChatStreamParams} data
+ * @returns {ChatResponseData}
  */
 export function queryChatBusiness(data: ChatStreamParams): Promise<ApiResponse<ChatResponseData>> {
   return http.post(`/chat/chat_business`, data)
@@ -228,6 +310,9 @@ export function queryChatBusiness(data: ChatStreamParams): Promise<ApiResponse<C
 
 /**
  * 流式聊天 - SSE
+ * @param {ChatStreamParams} params
+ * @param callbacks - onMessage 每帧回调, onError 错误回调, onComplete 结束回调
+ * @returns {AbortController} 可调用 .abort() 中断请求
  */
 export function queryChatStream(
   params: ChatStreamParams,

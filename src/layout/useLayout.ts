@@ -1,4 +1,9 @@
 import { BOTTOM_BAR } from '@/constant'
+import { Dialog } from '@varlet/ui'
+import '@varlet/ui/es/dialog/style/index.mjs'
+
+import { queryLogout } from '@/api'
+import { useUserStore } from '@/store/modules/user'
 
 export default function useLayout() {
   const router = useRouter()
@@ -42,5 +47,19 @@ export default function useLayout() {
     curPath.value = appBarKey.value
   })
 
-  return { isMainPage, appBarTitle, bottomBarList, curPath, handleChange }
+  const userStore = useUserStore()
+
+  const handleLogout = () => {
+    Dialog({
+      title: '您确定要退出登录吗？',
+      onConfirm: async () => {
+        await queryLogout({ index: 0 })
+        Dialog.close()
+        userStore.logout()
+        router.replace('/login')
+      }
+    })
+  }
+
+  return { isMainPage, appBarTitle, bottomBarList, curPath, handleChange, handleLogout }
 }
