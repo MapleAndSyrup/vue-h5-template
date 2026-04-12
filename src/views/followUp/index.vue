@@ -154,7 +154,7 @@ const rows = computed(() => {
     <var-skeleton card :rows="0" :loading="historicalFollowUpNodesLoading">
       <var-card title="历史跟进记录">
         <var-space direction="column">
-          <jo-chip v-for="lead in historicalFollowUpNodesData?.follow_up_leads" :key="lead?.id">
+          <jo-chip v-for="lead in historicalFollowUpNodesData" :key="lead?.id">
             <template #title>{{ lead?.lead_name }}</template>
             <template #subtitle>
               <var-space justify="space-between">

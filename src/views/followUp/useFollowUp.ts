@@ -57,15 +57,23 @@ export default function useFollowUp() {
     aiFollowUpSuggestionData.value = data
   }
 
-  // 跟进线索 loading
+  // 全量跟进线索 loading
   const historicalFollowUpNodesLoading = ref(true)
-  // 跟进线索
-  const historicalFollowUpNodesData = ref<FollowUpLeadsData>()
-  // 请求跟进线索
+  // 全量跟进线索
+  const allFollowUpLeadsData = ref<FollowUpLeadsData>()
+  // 请求全量跟进线索（不传 company_id）
   const getHistoricalFollowUpNodes = async () => {
-    const { data } = await queryFollowUpLeads(params.value)
-    historicalFollowUpNodesData.value = data
+    const { data } = await queryFollowUpLeads({ index: '1', company_id: '' })
+    allFollowUpLeadsData.value = data
   }
+
+  // 当前公司的所有历史跟进记录
+  const historicalFollowUpNodesData = computed(
+    () =>
+      allFollowUpLeadsData.value?.follow_up_leads.filter(
+        (item) => item.company_id === params.value.company_id
+      ) ?? []
+  )
 
   const route = useRoute()
   onMounted(() => {

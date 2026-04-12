@@ -1,5 +1,5 @@
 import { queryAiWeeklyPlanAnalysis, queryFollowUpLeads } from '@/api'
-import type { AiWeeklyPlanAnalysisData, FollowUpLeadsData } from '@/api/types'
+import type { AiWeeklyPlanAnalysisData, FollowUpLeadsData, FollowUpLeadItem } from '@/api/types'
 
 import { useRequest } from '@/utils/tools'
 
@@ -32,6 +32,18 @@ export default function useWorkOrders() {
     followUpLeadsData.value = data
   }
 
+  // 每个公司取 create_date 最新的一条
+  const latestLeads = computed<FollowUpLeadItem[]>(() => {
+    const map = new Map<string, FollowUpLeadItem>()
+    for (const item of followUpLeadsData.value?.follow_up_leads ?? []) {
+      const existing = map.get(item.company_id)
+      if (!existing || item.create_date > existing.create_date) {
+        map.set(item.company_id, item)
+      }
+    }
+    return Array.from(map.values())
+  })
+
   onMounted(() => {
     // 获取AI周计划分析
     useRequest(analysisLoading, getAiWeeklyPlanAnalysis)
@@ -50,8 +62,8 @@ export default function useWorkOrders() {
     analysisList,
     /** 跟进线索loading */
     followUpLeadsLoading,
-    /** 跟进线索 */
-    followUpLeadsData,
+    /** 跟进线索（每公司最新一条） */
+    latestLeads,
     /** 去详情页面 */
     handleToDetail
   }

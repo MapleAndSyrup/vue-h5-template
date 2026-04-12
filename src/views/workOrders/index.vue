@@ -3,7 +3,7 @@ import JoCard from '../components/JoCard.vue'
 import JoChip from '../components/JoChip.vue'
 
 import useWorkOrders from './useWorkOrders'
-const { analysisLoading, analysisList, followUpLeadsLoading, followUpLeadsData, handleToDetail } =
+const { analysisLoading, analysisList, followUpLeadsLoading, latestLeads, handleToDetail } =
   useWorkOrders()
 
 const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?.time_period)
@@ -54,11 +54,7 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
       <var-skeleton card :loading="followUpLeadsLoading">
         <var-space direction="column" style="padding: 0 10px 10px">
           <!-- 有数据时显示卡片 -->
-          <var-card
-            v-for="item in followUpLeadsData?.follow_up_leads"
-            :key="item?.lead_name"
-            :title="item?.lead_name"
-          >
+          <var-card v-for="item in latestLeads" :key="item?.lead_name" :title="item?.lead_name">
             <var-space class="lead-content" direction="column">
               <span>线索简述</span>
               <p>{{ item?.lead_intro }}</p>
