@@ -142,7 +142,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <div style="display: flex; gap: 10px">
                 <jo-tag
                   style="
-                    color: var(--color-primary);
+                    color: var(--color-on-primary);
                     background-color: var(--color-primary-container);
                   "
                   v-for="(tag, index) in companyInfoData?.tag"
@@ -190,7 +190,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
                 style="
-                  color: var(--color-primary);
+                  color: var(--color-on-primary);
                   background-color: var(--color-primary-container);
                 "
               >
@@ -240,7 +240,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
                 v-for="(tag, index) in futureDevelopData?.advantages"
                 :key="index"
                 style="
-                  color: var(--color-primary);
+                  color: var(--color-on-primary);
                   background-color: var(--color-primary-container);
                 "
               >
