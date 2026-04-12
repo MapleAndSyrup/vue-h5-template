@@ -82,6 +82,15 @@ export const routes: RouteRecordRaw[] = [
           mainPage: false,
           key: 12
         }
+      },
+      {
+        path: 'follow-up-leads-change',
+        component: () => import('@/views/followUpLeadsChange/index.vue'),
+        meta: {
+          title: '跟进记录',
+          mainPage: false,
+          key: 13
+        }
       }
     ]
   },

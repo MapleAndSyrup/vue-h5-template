@@ -38,7 +38,7 @@ service.interceptors.response.use(
     const res = response.data as ApiResponse
     if (res.code !== 200) {
       Snackbar.error(res.msg)
-      return Promise.reject(res.msg || 'Error')
+      return Promise.reject(res)
     } else {
       return response
     }

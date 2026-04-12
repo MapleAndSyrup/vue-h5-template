@@ -7,7 +7,7 @@ const curStyle = computed<CSSProperties>(() => {
   if (props?.type === 'warning')
     return {
       borderLeft: '3px solid #ffa726',
-      background: '#fff8e1'
+      background: 'rgb(255 167 38 / 12%)'
     }
 
   return {
@@ -39,7 +39,7 @@ const slot = useSlots()
   padding: 10px;
   font-size: 15px;
   line-height: 1.5;
-  color: #444;
+  color: var(--color-text);
   background-color: rgb(26 109 255 / 10%);
   border-radius: 10px;
 
@@ -49,7 +49,7 @@ const slot = useSlots()
 
   .jo-chip-subtitle {
     font-size: 12px;
-    color: #999;
+    color: var(--color-hint);
   }
 }
 </style>

@@ -132,7 +132,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
             <var-col :span="24">
               <jo-chip>
                 <template #title>
-                  <span style="color: #1a237e">企业简介</span>
+                  <span style="color: var(--color-primary)">企业简介</span>
                 </template>
                 <p>{{ companyInfoData?.company_intro }}</p>
               </jo-chip>
@@ -141,7 +141,10 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
             <var-col :span="24">
               <div style="display: flex; gap: 10px">
                 <jo-tag
-                  style="color: #1a237e; background-color: #e8f0fe"
+                  style="
+                    color: var(--color-primary);
+                    background-color: var(--color-primary-container);
+                  "
                   v-for="(tag, index) in companyInfoData?.tag"
                   :key="index"
                 >
@@ -176,7 +179,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">匹配分析详情</p>
+              <p style="font-weight: bold; color: var(--color-primary)">匹配分析详情</p>
               <p>{{ investmentMatchData?.match_analysis }}</p>
             </jo-chip>
           </var-col>
@@ -186,7 +189,10 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
-                style="color: #1a237e; background-color: #e8f0fe"
+                style="
+                  color: var(--color-primary);
+                  background-color: var(--color-primary-container);
+                "
               >
                 {{ tag }}
               </jo-tag>
@@ -202,28 +208,28 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
         <var-row :gutter="[10, 10]">
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">市场前景</p>
+              <p style="font-weight: bold; color: var(--color-primary)">市场前景</p>
               <p>{{ futureDevelopData?.market_outlook }}</p>
             </jo-chip>
           </var-col>
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">技术优势</p>
+              <p style="font-weight: bold; color: var(--color-primary)">技术优势</p>
               <p>{{ futureDevelopData?.technical_advantage }}</p>
             </jo-chip>
           </var-col>
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">扩张计划</p>
+              <p style="font-weight: bold; color: var(--color-primary)">扩张计划</p>
               <p>{{ futureDevelopData?.expansion_plan }}</p>
             </jo-chip>
           </var-col>
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">预期产值</p>
+              <p style="font-weight: bold; color: var(--color-primary)">预期产值</p>
               <p>{{ futureDevelopData?.expected_output_value }}</p>
             </jo-chip>
           </var-col>
@@ -233,7 +239,10 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
               <jo-tag
                 v-for="(tag, index) in futureDevelopData?.advantages"
                 :key="index"
-                style="color: #1a237e; background-color: #e8f0fe"
+                style="
+                  color: var(--color-primary);
+                  background-color: var(--color-primary-container);
+                "
               >
                 {{ tag }}
               </jo-tag>
@@ -268,16 +277,16 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
           <var-col :span="24">
             <jo-chip>
               <template #title>
-                <p style="font-weight: bold; color: #1a237e">融资历史</p>
+                <p style="font-weight: bold; color: var(--color-primary)">融资历史</p>
               </template>
 
               <var-table>
                 <thead>
                   <tr>
-                    <th style="color: #1a237e">轮次</th>
-                    <th style="color: #1a237e">时间</th>
-                    <th style="color: #1a237e">投资方</th>
-                    <th style="color: #1a237e">金额</th>
+                    <th style="color: var(--color-primary)">轮次</th>
+                    <th style="color: var(--color-primary)">时间</th>
+                    <th style="color: var(--color-primary)">投资方</th>
+                    <th style="color: var(--color-primary)">金额</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -298,7 +307,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">股权结构</p>
+              <p style="font-weight: bold; color: var(--color-primary)">股权结构</p>
               <p>{{ equityStructure }}</p>
             </jo-chip>
           </var-col>
@@ -330,7 +339,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">具体需求</p>
+              <p style="font-weight: bold; color: var(--color-primary)">具体需求</p>
               <p
                 v-for="(specific, index) in landingRequirementData?.specific_requirements"
                 :key="index"
@@ -342,7 +351,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 
           <var-col :span="24">
             <jo-chip>
-              <p style="font-weight: bold; color: #1a237e">选址偏好</p>
+              <p style="font-weight: bold; color: var(--color-primary)">选址偏好</p>
               <p>{{ landingRequirementData?.location_preference }}</p>
             </jo-chip>
           </var-col>
@@ -467,7 +476,7 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 }
 
 .var-card {
-  --card-title-color: #1a237e;
+  --card-title-color: var(--color-primary);
   --card-border-radius: 16px;
 
   :deep(.var-card__title) {

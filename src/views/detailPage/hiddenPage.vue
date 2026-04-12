@@ -37,26 +37,30 @@ const otherAttentionData = inject<Ref<OtherAttentionData | undefined>>('otherAtt
 const handleFavorite = async (isFavorite: 0 | 1) => {
   await updateCompanyStatus({
     index: '1',
-    company_id: companyInfoData?.value?.company_id!,
+    company_id: companyInfoData?.value?.company_id ?? '',
     is_favorite: isFavorite == 1 ? 0 : 1,
-    is_manual: companyInfoData?.value?.is_manual!
+    is_follow: companyInfoData?.value?.is_follow ?? 0
   })
   await getCompanyInfo()
-  isFavorite == 1 ? Snackbar.success('取消关注成功') : Snackbar.success('关注成功')
+  if (isFavorite == 1) {
+    Snackbar.success('取消关注成功')
+  } else {
+    Snackbar.success('关注成功')
+  }
 }
 
 const handleManual = async (isManual: 0 | 1) => {
   if (isManual == 1) {
     router.push({
       path: '/sub/follow-up',
-      query: { companyId: companyInfoData?.value?.company_id! }
+      query: { companyId: companyInfoData?.value?.company_id ?? '' }
     })
   } else {
     await updateCompanyFollow({
       index: '1',
-      company_id: companyInfoData?.value?.company_id!,
-      is_favorite: companyInfoData?.value?.is_favorite!,
-      is_manual: 1
+      company_id: companyInfoData?.value?.company_id ?? '',
+      is_favorite: companyInfoData?.value?.is_favorite ?? 0,
+      is_follow: 1
     })
     await getCompanyInfo()
     Snackbar.success('创建成功')
@@ -100,7 +104,10 @@ const handleManual = async (isManual: 0 | 1) => {
               <jo-tag
                 v-for="(tag, index) in companyInfoData?.tag"
                 :key="index"
-                style="color: #1a237e; background-color: #e8f0fe"
+                style="
+                  color: var(--color-on-primary);
+                  background-color: var(--color-primary-container);
+                "
               >
                 {{ tag }}
               </jo-tag>
@@ -138,7 +145,10 @@ const handleManual = async (isManual: 0 | 1) => {
               <jo-tag
                 v-for="(tag, index) in investmentMatchData?.tag"
                 :key="index"
-                style="color: #1a237e; background-color: #e8f0fe"
+                style="
+                  color: var(--color-on-primary);
+                  background-color: var(--color-primary-container);
+                "
               >
                 {{ tag }}
               </jo-tag>
@@ -253,10 +263,10 @@ const handleManual = async (isManual: 0 | 1) => {
           type="primary"
           color="linear-gradient(135deg, #1a237e, #3d5afe)"
           size="large"
-          @click="handleManual(companyInfoData?.is_manual!)"
+          @click="handleManual(companyInfoData?.is_follow!)"
         >
           <var-icon name="format-list-checkbox" style="margin-right: 4px" />
-          {{ companyInfoData?.is_manual == 1 ? '查看跟进记录' : '创建工作单' }}
+          {{ companyInfoData?.is_follow == 1 ? '查看跟进记录' : '创建工作单' }}
         </var-button>
       </var-col>
     </var-row>

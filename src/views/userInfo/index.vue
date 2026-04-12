@@ -161,7 +161,7 @@ const roleLabel: Record<string, string> = {
   min-height: 100%;
   padding: 10px;
   overflow-y: auto;
-  background: #e6eff3;
+  background: var(--color-body);
 }
 
 .avatar-section {
@@ -180,18 +180,18 @@ const roleLabel: Record<string, string> = {
     margin-top: 12px;
     font-size: 20px;
     font-weight: 600;
-    color: #1a237e;
+    color: var(--color-primary);
   }
 
   .avatar-role {
     margin-top: 4px;
     font-size: 13px;
-    color: #7a8a9a;
+    color: var(--color-hint);
   }
 }
 
 .var-card {
-  --card-title-color: #1a237e;
+  --card-title-color: var(--color-primary);
   --card-border-radius: 16px;
 
   :deep(.var-card__title) {
@@ -222,14 +222,14 @@ const roleLabel: Record<string, string> = {
 
   .info-label {
     font-size: 14px;
-    color: #7a8a9a;
+    color: var(--color-hint);
   }
 
   .info-value {
     max-width: 60%;
     font-size: 14px;
     font-weight: 500;
-    color: #1a237e;
+    color: var(--color-primary);
     text-align: right;
     word-break: break-all;
   }

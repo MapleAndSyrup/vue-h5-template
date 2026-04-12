@@ -64,7 +64,7 @@ onMounted(() => {
           <div class="message-content">
             <!-- streaming 且内容为空：显示 loading -->
             <template v-if="msg.status === 'streaming' && msg.content === ''">
-              <var-loading style="display: inline-block" type="cube" color="#1a237e" />
+              <var-loading style="display: inline-block" type="cube" color="var(--color-primary)" />
             </template>
             <!-- 有内容时显示文本 -->
             <template v-else>
@@ -107,7 +107,7 @@ onMounted(() => {
     justify-content: center;
     height: 200px;
     font-size: 14px;
-    color: #ccc;
+    color: var(--color-hint);
   }
 
   .message-item {
@@ -124,8 +124,8 @@ onMounted(() => {
       }
 
       .message-content {
-        color: #333;
-        background: #fff;
+        color: var(--color-text);
+        background: var(--color-surface-container);
         border-radius: 0 12px 12px;
         box-shadow: 0 2px 12px 0 rgb(0 0 0 / 8%);
       }
@@ -174,12 +174,12 @@ onMounted(() => {
       .name {
         font-size: 12px;
         font-weight: 600;
-        color: #666;
+        color: var(--color-hint);
       }
 
       .time {
         font-size: 11px;
-        color: #aaa;
+        color: var(--color-hint);
       }
     }
 
@@ -187,7 +187,7 @@ onMounted(() => {
       padding: 10px 12px;
       font-size: 14px;
       line-height: 1.6;
-      color: #333;
+      color: var(--color-text);
       overflow-wrap: anywhere;
       white-space: pre-wrap;
 
@@ -202,7 +202,7 @@ onMounted(() => {
         height: 14px;
         margin-left: 2px;
         vertical-align: middle;
-        background: #4a90e2;
+        background: var(--color-primary);
         animation: blink 0.8s step-end infinite;
       }
     }

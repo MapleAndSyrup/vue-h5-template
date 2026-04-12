@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import JoChip from '../components/JoChip.vue'
 
-import { formatDate } from '@/utils/tools'
-
 import useFollowUp from './useFollowUp'
 
 const {
@@ -93,10 +91,12 @@ const rows = computed(() => {
         <var-row :gutter="[10, 10]">
           <template v-for="{ label, value } in rows" :key="label">
             <var-col :span="6">
-              <span style="font-size: 14px; color: #666">{{ label }}</span>
+              <span style="font-size: 14px; color: var(--color-hint)">{{ label }}</span>
             </var-col>
             <var-col :span="18">
-              <span style="font-size: 14px; font-weight: 500; color: #1a1a1a">{{ value }}</span>
+              <span style="font-size: 14px; font-weight: 500; color: var(--color-text)">
+                {{ value }}
+              </span>
             </var-col>
           </template>
         </var-row>
@@ -116,13 +116,17 @@ const rows = computed(() => {
             direction="column"
             style="padding: var(--card-title-padding); margin: var(--card-title-margin)"
           >
-            <p style="font-size: 16px; font-weight: 600; color: #1a1a1a">AI跟进分析建议</p>
-            <span style="font-size: 12px; color: #999">基于企业数据和区域招商情况生成</span>
+            <p style="font-size: 16px; font-weight: 600; color: var(--color-text)">
+              AI跟进分析建议
+            </p>
+            <span style="font-size: 12px; color: var(--color-hint)">
+              基于企业数据和区域招商情况生成
+            </span>
           </var-space>
         </template>
 
         <var-space style="flex-flow: column" direction="column">
-          <var-tabs elevation color="#fff" v-model:active="active">
+          <var-tabs elevation v-model:active="active">
             <var-tab v-for="(item, index) in tabs" :key="index" :name="item">{{ item }}</var-tab>
           </var-tabs>
 
@@ -131,7 +135,11 @@ const rows = computed(() => {
               <var-space direction="column">
                 <template v-for="{ label, value } in list" :key="label">
                   <span style="font-weight: 600; color: var(--color-primary)">{{ label }}</span>
-                  <p v-for="(line, i) in splitLines(value)" :key="i" style="color: #333">
+                  <p
+                    v-for="(line, i) in splitLines(value)"
+                    :key="i"
+                    style="color: var(--color-text)"
+                  >
                     {{ line }}
                   </p>
                 </template>
@@ -146,18 +154,17 @@ const rows = computed(() => {
     <var-skeleton card :rows="0" :loading="historicalFollowUpNodesLoading">
       <var-card title="历史跟进记录">
         <var-space direction="column">
-          <jo-chip
-            v-for="historical in historicalFollowUpNodesData?.historical_nodes"
-            :key="historical?.time"
-          >
-            <template #title>{{ historical?.node_overview }}</template>
+          <jo-chip v-for="lead in historicalFollowUpNodesData?.follow_up_leads" :key="lead?.id">
+            <template #title>{{ lead?.lead_name }}</template>
             <template #subtitle>
               <var-space justify="space-between">
-                <span>{{ historical?.contact_person }}</span>
-                <span>{{ formatDate(historical?.time) }}</span>
+                <span>{{ lead?.company_name }}</span>
+                <span>{{ lead?.create_date }}</span>
               </var-space>
             </template>
-            <p>{{ historical?.node_details }}</p>
+            <p>{{ lead?.lead_intro }}</p>
+            <p>当前跟进：{{ lead?.current_follow_up_status }}</p>
+            <p>下一节点：{{ lead?.next_follow_up_node }}</p>
           </jo-chip>
         </var-space>
       </var-card>
@@ -182,7 +189,7 @@ const rows = computed(() => {
   row-gap: 10px;
   padding: 10px;
   overflow-y: auto;
-  background: #e6eff3;
+  background: var(--color-body);
 
   .var-tabs {
     padding: 0;

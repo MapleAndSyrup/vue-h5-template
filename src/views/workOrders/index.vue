@@ -26,7 +26,9 @@ const timePeriod = computed(() => analysisList.value?.weekly_plan_analysis?.[0]?
               <template #title>
                 <var-space align="center">
                   <var-badge type="warning" dot />
-                  <span style="font-size: 20px; color: #000">{{ item?.overview }}</span>
+                  <span style="font-size: 20px; color: var(--color-text)">
+                    {{ item?.overview }}
+                  </span>
                 </var-space>
               </template>
 

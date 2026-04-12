@@ -528,23 +528,23 @@ export interface FollowUpLeadsChangeParams {
   /** 操作类型：add, update, delete */
   operation: string
   /** 线索ID，用于 update 和 delete 操作 */
-  lead_id?: string | null
+  lead_id: string
   /** 线索名称 */
-  lead_name?: string | null
+  lead_name: string
   /** 公司名称 */
-  company_name?: string | null
+  company_name: string
   /** 线索介绍 */
-  lead_intro?: string | null
+  lead_intro: string
   /** 当前跟进状态 */
-  current_follow_up_status?: string | null
+  current_follow_up_status: string
   /** 下一步跟进节点 */
-  next_follow_up_node?: string | null
+  next_follow_up_node: string
   /** 注意事项 */
-  precautions?: string | null
+  precautions: string
   /** 创建日期，格式：YYYY-MM-DD */
-  create_date?: string | null
+  create_date: string
   /** 关注用户ID，逗号分隔 */
-  userid_follow?: string | null
+  userid_follow: string
 }
 
 /** 定时新闻拉取任务 - 请求参数 */

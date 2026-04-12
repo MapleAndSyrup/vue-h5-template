@@ -23,7 +23,9 @@ import BizItem from '@/views/components/BizItem.vue'
 <template>
   <div ref="bizPoolRef" class="biz-pool" @scroll="handleScroll">
     <Teleport v-if="showSearchIcon" to="#toolbar-right">
-      <var-icon name="magnify" @click="handleSearchIconClick" />
+      <var-button type="primary" round icon-container text @click="handleSearchIconClick">
+        <var-icon name="magnify" :size="24" />
+      </var-button>
     </Teleport>
 
     <div class="scroll-content">
@@ -60,8 +62,8 @@ import BizItem from '@/views/components/BizItem.vue'
       <var-skeleton card :loading="listLoading">
         <div class="list" v-if="chatBusinessSearchData?.search_results?.length">
           <BizItem
-            v-for="item in chatBusinessSearchData?.search_results"
-            :key="item?.id"
+            v-for="(item, index) in chatBusinessSearchData?.search_results"
+            :key="index"
             :biz-item="item"
             @click="handleToDetail($router, item?.company_id)"
           />

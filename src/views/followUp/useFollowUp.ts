@@ -4,14 +4,14 @@ import {
   queryCompanyInfo,
   queryCurrentFollowUpNode,
   queryAiFollowUpSuggestion,
-  queryHistoricalFollowUpNodes,
+  queryFollowUpLeads,
   queryContactPerson
 } from '@/api'
 import type {
   CompanyInfoData,
   CurrentFollowUpNodeData,
   AiFollowUpSuggestionData,
-  HistoricalFollowUpNodesData,
+  FollowUpLeadsData,
   ContactPersonData
 } from '@/api/types'
 
@@ -57,13 +57,13 @@ export default function useFollowUp() {
     aiFollowUpSuggestionData.value = data
   }
 
-  // 历史跟进节点 loading
+  // 跟进线索 loading
   const historicalFollowUpNodesLoading = ref(true)
-  // 历史跟进节点
-  const historicalFollowUpNodesData = ref<HistoricalFollowUpNodesData>()
-  // 请求历史跟进节点
+  // 跟进线索
+  const historicalFollowUpNodesData = ref<FollowUpLeadsData>()
+  // 请求跟进线索
   const getHistoricalFollowUpNodes = async () => {
-    const { data } = await queryHistoricalFollowUpNodes(params.value)
+    const { data } = await queryFollowUpLeads(params.value)
     historicalFollowUpNodesData.value = data
   }
 

@@ -183,108 +183,112 @@ async function onRegisterSubmit() {
 </template>
 
 <style scoped lang="scss">
-.login-page {
-  background: linear-gradient(145deg, #eef5ff 0%, #e0edfc 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-}
 
-.login-wrapper {
-  width: 100%;
-  max-width: 400px;
-  animation: fadeUp 0.4s ease;
-}
 
-@keyframes fadeUp {
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--color-body);
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 400px;
+  animation: fade-up 0.4s ease;
+}
+
 .brand {
-  text-align: center;
   margin-bottom: 32px;
+  text-align: center;
 
   .brand-icon {
+    margin-bottom: 16px;
     background: linear-gradient(135deg, #1890ff, #40a9ff) !important;
     border-radius: 20px !important;
-    box-shadow: 0 12px 20px rgba(24, 144, 255, 0.25);
-    margin-bottom: 16px;
+    box-shadow: 0 12px 20px rgb(24 144 255 / 25%);
   }
 
   h1 {
     font-size: 28px;
     font-weight: 700;
-    background: linear-gradient(135deg, #0958d9, #1890ff);
-    -webkit-background-clip: text;
-    background-clip: text;
     color: transparent;
+    background: linear-gradient(135deg, #0958d9, #1890ff);
+    background-clip: text;
+    background-clip: text;
   }
 
   p {
-    color: #5a6874;
-    font-size: 14px;
     margin-top: 6px;
+    font-size: 14px;
+    color: var(--color-hint);
   }
 }
 
 .login-card {
-  background: #fff;
+  padding: 32px 24px 28px;
+  background: var(--color-surface-container);
   border-radius: 32px;
   box-shadow:
-    0 20px 35px -12px rgba(0, 0, 0, 0.12),
-    0 1px 3px rgba(0, 0, 0, 0.02);
-  padding: 32px 24px 28px;
+    0 20px 35px -12px rgb(0 0 0 / 12%),
+    0 1px 3px rgb(0 0 0 / 2%);
 }
 
 .form-options {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin: 4px 0 20px;
 }
 
 .forgot-link {
-  background: none;
-  border: none;
-  color: #1890ff;
+  padding: 0;
   font-size: 13px;
   font-weight: 500;
+  color: var(--color-primary);
   cursor: pointer;
-  padding: 0;
+  background: none;
+  border: none;
 }
 
 /* 胶囊按钮 */
 .pill-btn {
   --button-border-radius: 40px;
   --button-normal-height: 52px;
+
   font-size: 17px;
   font-weight: 600;
 }
 
 .register-trigger {
-  text-align: center;
   margin-top: 4px;
+  text-align: center;
 }
 
 .legal-note {
-  text-align: center;
-  font-size: 12px;
-  color: #8c9aa8;
-  margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid #eff2f6;
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--color-hint);
+  text-align: center;
+  border-top: 1px solid var(--color-outline-variant);
 
   a {
-    color: #1890ff;
+    color: var(--color-primary);
     text-decoration: none;
   }
 }
@@ -293,14 +297,14 @@ async function onRegisterSubmit() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  z-index: 1000;
   display: flex;
+  visibility: hidden;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  visibility: hidden;
+  background: rgb(0 0 0 / 50%);
   opacity: 0;
+  backdrop-filter: blur(4px);
   transition:
     visibility 0.2s,
     opacity 0.2s;
@@ -308,6 +312,7 @@ async function onRegisterSubmit() {
   &.active {
     visibility: visible;
     opacity: 1;
+
     .modal-container {
       transform: scale(1);
     }
@@ -317,43 +322,44 @@ async function onRegisterSubmit() {
 .modal-container {
   width: 90%;
   max-width: 340px;
-  background: #fff;
-  border-radius: 32px;
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
   overflow: hidden;
+  overflow-y: auto;
+  background: var(--color-surface-container);
+  border-radius: 32px;
+  box-shadow: 0 25px 40px rgb(0 0 0 / 20%);
   transform: scale(0.95);
   transition: transform 0.25s ease;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 20px;
-  border-bottom: 1px solid #eff2f6;
   position: sticky;
   top: 0;
-  background: #fff;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: var(--color-surface-container);
+  border-bottom: 1px solid var(--color-outline-variant);
 
   h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2a3e;
     display: flex;
     align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text);
   }
 }
 
 .modal-close {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-hint);
+  cursor: pointer;
   background: none;
   border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #8c9aa8;
-  line-height: 1;
+
   &:hover {
     color: #ff4d4f;
   }

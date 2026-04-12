@@ -12,23 +12,33 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange, handleLog
         color="linear-gradient(135deg, #1a6dff 0%, #0d4cd3 100%)"
       >
         <template #right>
-          <div
-            id="toolbar-right"
-            style="display: flex; gap: 8px; align-items: center; padding-right: 8px"
-          ></div>
+          <div id="toolbar-right" style="display: flex; gap: 8px; align-items: center"></div>
 
-          <var-button
-            type="primary"
-            round
-            icon-container
-            text
-            @click="$router.push('/sub/user-info')"
-          >
-            <var-icon name="account-circle" :size="24" />
-          </var-button>
-          <var-button type="primary" round icon-container text @click="handleLogout">
-            <var-icon name="power" :size="24" />
-          </var-button>
+          <var-menu>
+            <var-button type="primary" round icon-container text>
+              <var-icon name="format-list-checkbox" :size="24" />
+            </var-button>
+
+            <template #menu>
+              <var-cell>
+                <var-button
+                  type="primary"
+                  text
+                  @click="$router.push('/sub/follow-up-leads-change')"
+                >
+                  跟进记录
+                </var-button>
+              </var-cell>
+              <var-cell>
+                <var-button type="primary" text @click="$router.push('/sub/user-info')">
+                  个人信息
+                </var-button>
+              </var-cell>
+              <var-cell>
+                <var-button type="primary" text @click="handleLogout">退出登录</var-button>
+              </var-cell>
+            </template>
+          </var-menu>
         </template>
 
         <template #content>
@@ -48,10 +58,21 @@ const { isMainPage, appBarTitle, bottomBarList, curPath, handleChange, handleLog
     </RouterView>
     <!-- 子页面 -->
     <RouterView v-else v-slot="{ Component }">
-      <var-app-bar safe-area-top :title="appBarTitle" color="#fff" text-color="#1a237e">
+      <var-app-bar
+        safe-area-top
+        :title="appBarTitle"
+        color="var(--color-surface-container)"
+        text-color="var(--color-primary)"
+      >
         <template #left>
-          <var-button color="transparent" text-color="#1a237e" round text @click="$router.back()">
-            <var-icon color="#1a237e" name="chevron-left" :size="24" />
+          <var-button
+            color="transparent"
+            text-color="var(--color-primary)"
+            round
+            text
+            @click="$router.back()"
+          >
+            <var-icon color="var(--color-primary)" name="chevron-left" :size="24" />
           </var-button>
         </template>
       </var-app-bar>

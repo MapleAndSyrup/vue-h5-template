@@ -110,7 +110,7 @@ const {
                   <var-col :span="12">
                     <var-space direction="column">
                       <span>影响主体</span>
-                      <p style="color: #222">
+                      <p style="color: var(--color-text)">
                         {{ news?.related_entities?.join('、') }}
                       </p>
                     </var-space>
@@ -119,21 +119,21 @@ const {
                   <var-col :span="12">
                     <var-space direction="column">
                       <span>涉及概念</span>
-                      <p style="color: #222">{{ news?.concepts?.join('、') }}</p>
+                      <p style="color: var(--color-text)">{{ news?.concepts?.join('、') }}</p>
                     </var-space>
                   </var-col>
 
                   <var-col :span="12">
                     <var-space direction="column">
                       <span>来源</span>
-                      <p style="color: #222">{{ news?.source }}</p>
+                      <p style="color: var(--color-text)">{{ news?.source }}</p>
                     </var-space>
                   </var-col>
 
                   <var-col :span="12">
                     <var-space direction="column">
                       <span>招商相关性</span>
-                      <p style="color: #222">{{ news?.relevance }}</p>
+                      <p style="color: var(--color-text)">{{ news?.relevance }}</p>
                     </var-space>
                   </var-col>
                 </var-row>
@@ -198,9 +198,9 @@ const {
       padding-top: 15px;
       padding-bottom: 15px;
       font-size: 13px;
-      color: #777;
-      background-color: #f9f9f9;
-      border-top: 1px solid #eee;
+      color: var(--color-hint);
+      background-color: var(--color-surface-container);
+      border-top: 1px solid var(--color-outline-variant);
     }
   }
 }
